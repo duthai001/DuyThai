@@ -1,0 +1,9 @@
+<div class="input-group row">
+  <span class="input-group-text left-text" [ngClass]="textClass">{{text}}</span>
+  <p-multiSelect [options]="options"
+    [ngClass]="'multi-select ' + labelClass"
+    [style]="{'width': '107%','height':'100%','border-radius':'0','background-color':isRequire ? '#ffc' : '#fff'}"
+    [(ngModel)]="selectedItems" (onChange)="changeValue($event)"
+    [defaultLabel]="defaultLabel" [disabled]="isDisabled" [required]="isRequire">
+  </p-multiSelect>
+</div>

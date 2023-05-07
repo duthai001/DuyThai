@@ -1,0 +1,38 @@
+.checkbox-control {
+    width: 2.2rem !important;
+    height: calc(3em + -1.4rem + 5.7px);
+    background-color: white;
+    vertical-align: middle;
+    border: 1px solid #cccccc;
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.checkbox-control:disabled {
+    color: #555555;
+}
+
+.checkbox-control:checked {
+    background-color: #0075FF;
+    border-color: #0075FF;
+}
+
+.checkbox-control:checked::after {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 16px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) translate(8px, -4px);
+}
+
+.ml--5px {
+    margin-left: -5px;
+}
+
+// .input-group-text.left-text.label-checkbox{
+// width: 80%;
+// }

@@ -1,0 +1,15 @@
+<div class="input-group" [ngClass]="className ? className : ''">
+	<span class="input-group-text left-text label-checkbox" *ngIf="rightCheckbox">{{ text }}</span>
+	<input
+		type="checkbox"
+		#iCheckBox
+        [ngClass]="rightCheckbox ? 'ml--5px' : ''"
+		class="checkbox-control"
+		(change)="onChangeValue($event.currentTarget.checked)"
+		name="name"
+		[checked]="selectedValue"
+		[value]="value"
+		[disabled]="isDisabled ? true : null"
+	/>
+	<span class="input-group-text left-text" *ngIf="!rightCheckbox">{{ text }}</span>
+</div>

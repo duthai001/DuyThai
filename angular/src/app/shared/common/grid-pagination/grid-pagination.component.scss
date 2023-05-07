@@ -1,0 +1,20 @@
+.page-container {
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+}
+
+.record-container {
+    float: left;
+    padding: 4px 0;
+}
+
+.nav-container {
+    float: right;
+}
+
+.btn {
+    border: none;
+    padding: 4px 8px;
+    cursor: pointer;
+}

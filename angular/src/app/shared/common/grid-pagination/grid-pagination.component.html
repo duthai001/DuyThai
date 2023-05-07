@@ -1,0 +1,53 @@
+<div class="primeng-paging-container">
+  <div class="clearfix">
+    <div class="record-container">
+      <span class="total-records-count">
+        {{ fromRecord }} {{ l("đến") }} {{ toRecord }} trong tổng số
+        {{ paginationParams.totalCount }}
+      </span>
+    </div>
+    <div class="nav-container">
+      <span>
+        <button class="btn" (click)="goToPage(1)"
+          [disabled]="paginationParams.pageNum === 1 || paginationParams.pageNum === 0">
+          <i class="pi pi-step-backward"></i>
+        </button>
+
+        <button class="btn" (click)="goToPrevious()"
+          [disabled]="paginationParams.pageNum === 1 || paginationParams.pageNum === 0">
+          <i class="pi pi-caret-left"></i>
+        </button>
+        <span>
+          Trang {{ this.paginationParams.totalCount / this.pageSize === 0 ? 0 : paginationParams.pageNum }} /
+          {{ paginationParams.totalPage }}
+        </span>
+        <button class="btn" (click)="goToNext()" [disabled]="
+                        paginationParams.pageNum ===
+                        this.paginationParams.totalPage
+                    ">
+          <i class="pi pi-caret-right"></i>
+        </button>
+        <button class="btn" (click)="goToPage(this.paginationParams.totalPage)" [disabled]="
+                        paginationParams.pageNum ===
+                        this.paginationParams.totalPage
+                    ">
+          <i class="pi pi-step-forward"></i>
+        </button>
+
+        <span class="total-records-count ml-1">Hiển thị </span>
+        <select (change)="onPageSizeChanged()" [(ngModel)]="pageSize">
+          <option value="10" selected="">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+          <option value="500">500</option>
+          <option value="1000">1000</option>
+          <option value="5000">5000</option>
+          <option value="10000">10000</option>
+          <option value="20000">20000</option>
+          <option value="50000">50000</option>
+        </select>
+      </span>
+    </div>
+  </div>
+</div>

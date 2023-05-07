@@ -1,0 +1,16 @@
+<div class="input-group" [ngClass]="className ? className : ''">
+  <span class="input-group-text left-text" *ngIf="text">{{ text }}</span>
+  <input
+    currencyMask
+    [class.required]="isRequired"
+		[readonly]="isReadonly"
+		[disabled]="isDisabled ? true : null"
+		[attr.placeholder]="placeholder"
+    [options]="options"
+    (ngModelChange)="changeValue($event)"
+    [maxlength]="maxLength"
+    [(ngModel)]="value"
+    [ngStyle]="{'background-color': isRequired ? '#FFFFCC' : '' }"
+    (focusout)="onFocusOutEvent($event)"
+		[className]="classNameInput ? 'form-control tmss-form-control ' + classNameInput :'form-control tmss-form-control'"/>
+</div>

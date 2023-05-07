@@ -1,0 +1,23 @@
+<span class="fileinput-button">
+	<!--multiple="multiple" add this to p-fileUpload for select multi file-->
+	<p-fileUpload customUpload="true" name="FileUpload" #FileUpload id="DefaultFileUploadFileInput"
+		name="DefaultFileUploadFileInput[]" [url]="uploadUrl" accept=".pdf" maxFileSize="10485760"
+		(uploadHandler)="uploadFile($event)" (onError)="onUploadFileError()"
+		chooseLabel="{{'MstSleVehicleProductChoseFile' | localize}}">
+
+		<ng-template pTemplate="content">
+			<ul *ngIf="uploadedFiles.length">
+				<li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+			</ul>
+		</ng-template>
+	</p-fileUpload>
+	<span class="upload" *ngIf="!progress && !messages">
+		{{l("MstSleVehicleProductSupportWithPdfFileOnly")}}
+	</span>
+	<span class="upload" *ngIf="progress > 0">
+		{{progress}}%
+	</span>
+	<span class="upload" *ngIf="messages">
+		{{messages}}
+	</span>
+</span>

@@ -1,0 +1,44 @@
+<div appBsModal #modal="bs-modal" class="modal fade " tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true" >
+  <div class="modal-dialog tmss-modal-tn-plus">
+    <div class="modal-content tmss-modal ">
+      <div class="modal-header tmss-modal-header">
+        <h5 class="modal-title">
+          <span>{{headerText}}</span>
+        </h5>
+        <button type="button" class="close" (click)="close()" aria-label="Close">
+          <span class="tmss-close" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div >
+        <!-- Body Modal -->
+        <div class="modal-body tmss-modal-body pt-1">
+        <div class="ui-g-12 ph-0" *ngIf=" text1 != null && text1 != undefined && text1 != ''">
+            <tmss-text-input [text]="text1" [(ngModel)]="text1Value"></tmss-text-input>
+        </div>
+
+        <div class="ui-g-6 ph-0" *ngIf=" dateFrom != null && dateFrom != undefined && dateFrom != ''">
+            <tmss-datepicker  [text]="'From Date'" [(ngModel)]="dateFromValue"></tmss-datepicker>
+        </div>
+        <div class="ui-g-6 ph-0" *ngIf=" dateTo != null && dateTo != undefined && dateTo != ''">
+            <tmss-datepicker  [text]="'To Date'" [(ngModel)]="dateToValue"></tmss-datepicker>
+        </div>
+
+        <!-- Footer Modal -->
+        <div class="ui-g-12 mt-2" style="display: flex;justify-content: space-around;">
+            <div style="display: flex;">
+                <button  type="submit" class="tmss-btn btn-outline-primary" (click)="getData()">
+                    <i class="fa tmss-fa fa-check mr-1"></i>
+                    <span>{{submitText ? submitText : 'Get Data'}}</span>
+                  </button>
+              <button type="button" class="tmss-btn btn-outline-danger" (click)="modal.hide()">
+                <i class="fa tmss-fa fa-times"></i>
+                Hủy
+              </button>
+            </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,17 @@
+<span class="fileinput-button">
+	<!--multiple="multiple" add this to p-fileUpload for select multi file-->
+	<p-fileUpload customUpload="true" name="FileUpload" #FileUpload id="DefaultFileUploadFileInput"
+		name="DefaultFileUploadFileInput[]" [url]="uploadUrl" accept=".pdf,.xlsx" maxFileSize="10485760"
+		(uploadHandler)="uploadFile($event)" (onError)="onUploadFileError()"
+		chooseLabel="{{'MstSleVehicleProductChoseFile' | localize}}">
+	</p-fileUpload>
+	<!-- <span class="upload" *ngIf="!progress && !messages">
+		{{l("SalesSupportWithExcelFileOnly")}}
+	</span> -->
+	<span class="upload" *ngIf="(progress > 0) && (isImported == false)">
+		{{progress}}%
+	</span>
+	<span class="upload" *ngIf="messages && (isImported == false)">
+		{{messages}}
+	</span>
+</span>

@@ -1,0 +1,13 @@
+<div class="input-group" [ngClass]="className ? className : ''">
+	<span class="input-group-text left-text" *ngIf="text">{{ text }}</span>
+	<select
+		#input
+		[class.required]="isRequired"
+		class="form-control tmss-form-control"
+		[(ngModel)]="value"
+		[disabled]="isDisabled ? true : null"
+		(change)="changeValue($event)"
+	>
+		<option *ngFor="let item of items" [value]="item[key]" [selected]="selectedItem !== null && item[key] === selectedItem ? true : false">{{ item[label] }}</option>
+	</select>
+</div>

@@ -1,0 +1,100 @@
+<div
+  appBsModal
+  #modal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="modal"
+  aria-hidden="true"
+  [config]="{ backdrop: 'static' }"
+>
+  <div class="modal-dialog tmss-modal-sm-plus" [ngClass]="modalClass ? modalClass : ''" *ngIf="modal.isShown">
+    <form #reportForm="ngForm"  autocomplete="off" >
+      <div class="modal-content tmss-modal">
+        <div class="modal-header tmss-modal-header">
+          <h5 class="modal-title text-left">{{headerText || ''}}</h5>
+          <button type="button" class="close" (click)="onCancelBtn()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body tmss-modal-body ph-0">
+          <div *ngIf="showCombobox" class="ui-g-12 ph-0">
+            <tmss-combobox #combobox [text]="comboboxText" [items]="list" [(ngModel)]="comboboxValue" [isDisabled]="isDisabledCombobox" name="comboBoxText">
+            </tmss-combobox>
+          </div>
+          <div *ngIf="inputText1 || inputText2" class="ui-g-12 ui-md-12 mt-1 ph-0">
+            <div class="ph-0" [ngClass]="inputText2 ? 'ui-g-6 ui-md-6' : 'ui-g-12 ui-md-12'">
+              <tmss-search-input *ngIf="inputText1" [isRequired]="isRequiredInput1" #searchInput1 [text]="inputText1" (onSearch)="showPartList.show(inputText1Value)" [(ngModel)]="inputText1Value" name="inputText1Value" [showModal]="isShowModal" (onClickInput)="showPartList.show(inputText1Value)"></tmss-search-input>
+            </div>
+            <div class="ui-g-6 ui-md-6 pr-0">
+              <tmss-text-input *ngIf="inputText2" [text]="inputText2" [(ngModel)]="inputText2Value" name="inputText2Value"></tmss-text-input>
+            </div>
+          </div>
+          <div *ngIf="showCheckbox1 || showCheckbox2 || showCheckbox3" class="ui-g-12">
+            <!-- Checkbox 1 -->
+            <tmss-checkbox #checkbox1 *ngIf="showCheckbox1" [text]="checkBoxText1" [(ngModel)]="checked1" name="checkBoxText1">
+            </tmss-checkbox>
+
+            <!-- Checkbox 2 -->
+            <tmss-checkbox *ngIf="showCheckbox2" [text]="checkBoxText1" name="checkBoxText2"></tmss-checkbox>
+
+            <!-- Checkbox 3 -->
+            <tmss-checkbox *ngIf="showCheckbox3" [text]="checkBoxText1" name="checkBoxText3"></tmss-checkbox>
+          </div>
+          <div class="ui-g-12 ph-0">
+            <!-- Date Picker -->
+            <div class=" ui-g-12 ui-md-12 ph-0" *ngIf="showSingleDate" [ngClass]="className">
+              <tmss-datepicker [(ngModel)]="date" [defaultValue]="defaultDateValue" [hasTimePicker]="hasTimePicker" [dateInputFormat]="dateInputFormat"
+                [text]="l('Time')" name="datepicker" [minMode]="minMode"></tmss-datepicker>
+            </div>
+
+            <!-- From Date -->
+            <div class="ui-g-12 ui-md-12 pl-0" *ngIf="!hideDateRange" [ngClass]="className">
+              <tmss-datepicker #fromDate [text]="l('FromDate')" [(ngModel)]="fromDatePicker" name="fromDate"></tmss-datepicker>
+            </div>
+
+            <!-- To Date -->
+            <div class="ui-g-12 ui-md-12 pr-0" *ngIf="!hideDateRange" [ngClass]="className">
+              <tmss-datepicker [text]="l('ToDate')" [(ngModel)]="toDatePicker" name="toDate"></tmss-datepicker>
+            </div>
+
+            <!-- Region Type -->
+            <div class="mt-1 ui-g-12 ui-md-12 pl-0" *ngIf="!hideRegionType" [ngClass]="className">
+              <tmss-combobox [text]="l('Region')" [items]="regionTypes" name="regionName"></tmss-combobox>
+            </div>
+
+            <!-- Combobox 1 -->
+            <div class="mt-1 ui-g-12 ui-md-12 pl-0" *ngIf="showCombobox1" [ngClass]="className">
+                <tmss-combobox [text]="comboboxText1" [items]="combobox1Items" [(ngModel)]="combobox1Value" name="cb1"></tmss-combobox>
+              </div>
+
+            <!-- Report Type -->
+            <div class="mt-1 ui-g-12 ui-md-12 " *ngIf="!hideReportType"
+              [ngClass]="className && !rpTypeFullRow ? (className + ' ' + (showCombobox1 || showSingleDate ? 'pr-0': 'pl-0')) : 'ui-g-12'" style="padding: 0;">
+              <tmss-combobox #doc [text]="l('ReportType')" [items]="reportTypes" [(ngModel)]="docReport" name="reportType">
+              </tmss-combobox>
+            </div>
+
+             <!-- Combobox 2 -->
+             <div class="mt-1 ui-g-12 ui-md-12 pl-0" *ngIf="showCombobox2" [ngClass]="className">
+                <tmss-combobox [text]="comboboxText2" [items]="combobox2Items" [(ngModel)]="combobox2Value" name="cb2"></tmss-combobox>
+              </div>
+          </div>
+
+        </div>
+        <div class="modal-footer tmss-modal-footer">
+          <input type="submit" style="display: none" />
+          <button type="submit" class="tmss-btn tmss-footer-btn btn-outline-primary" (click)="print()">
+            <i class="fa tmss-fa fa-print"></i>
+            <span class="ml-1">{{ leftButton }}</span>
+          </button>
+          <button type="button" class="tmss-btn tmss-footer-btn btn-outline-danger" (click)="onCancelBtn()"
+            *ngIf="!hideLeftButton">
+            <i class="fa tmss-fa fa-times"></i>
+            <span class="ml-1">{{ rightButton }}</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

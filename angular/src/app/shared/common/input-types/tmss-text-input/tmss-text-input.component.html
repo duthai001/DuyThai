@@ -1,0 +1,36 @@
+<div class="input-group" [ngClass]="className ? className : ''">
+	<span class="input-group-text left-text" *ngIf="text">{{ text }}</span>
+	<input
+		#input [attr.type]="type"
+		[class.required]="isRequired"
+		[readonly]="isReadonly"
+		[required]="isRequired"
+		[disabled]="isDisabled ? true : null"
+		*ngIf="!hideInput"
+		[attr.placeholder]="placeholder"
+		(input)="changeValue($event)"
+		(keyup)="openModal($event)"
+		[(ngModel)]="value"
+		[attr.maxlength]="maxLength ? maxLength : 999"
+		[attr.min]="min"
+        [attr.max]="max"
+		[ngStyle]="{'background-color': isRequired ? '#FFFFCC' : '' }"
+		(focusout)="onFocusOutEvent($event)"
+		[className]="classNameInput ? 'form-control tmss-form-control ' + classNameInput :'form-control tmss-form-control'"
+	>
+	<span *ngIf="showSearch" class="button-search input-group-text right-text hover-search" style="padding: 0px; width: 100%" (click)="search()">
+		<i class="fa tmss-fa fa-search"></i>
+	</span>
+	<span *ngIf="showCaret">
+		<i class="fa fa-angle-down"></i>
+	</span>
+	<span *ngIf="showModal" (click)="onClickInputValue($event)" class="input-group-text right-text">
+		<i class="fa tmss-fa fas fa-external-link-alt"></i>
+	</span>
+	<span *ngIf="showTrash" class="input-group-text right-text" (click)="refresh()">
+		<i class="tmss-fa far fa-trash-alt"></i>
+	</span>
+	<span *ngIf="showUpload" class="button-search input-group-text right-text" (click)="chooseFile()">
+		<i class="fa tmss-fa fa-file"></i>
+	</span>
+</div>

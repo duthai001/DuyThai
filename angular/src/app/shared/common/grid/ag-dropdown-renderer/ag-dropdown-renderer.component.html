@@ -1,0 +1,19 @@
+<form #form="ngForm" *ngIf="!isSearch">
+    <select #selectTag [disabled]="disableSelect" [ngClass]="noPadding ? 'p-0' : ''" class="form-control" [(ngModel)]="select" name="select" (ngModelChange)="onValueChange($event)" (blur)="onBlur($event)">
+    <option *ngFor="let select of selectList" [ngValue]="select[value]">
+      {{select[label]}}
+    </option>
+  </select>
+</form>
+<form #form="ngForm" *ngIf="isSearch">
+    <div style="position: absolute; width: 90%">
+        <select style="-webkit-text-fill-color: #FFC;" #selectTag [disabled]="disableSelect" [ngClass]="noPadding ? 'p-0' : ''" class="form-control" [(ngModel)]="select" name="select" (ngModelChange)="onValueChange($event)" (blur)="onBlur($event)">
+        <option *ngFor="let select of selectListFilter" [ngValue]="select[value]" style="color:black !important;">
+          {{select[label]}}
+        </option>
+      </select>
+    </div>
+    <div style="position: relative; width: 85%">
+        <input [disabled]="disableSelect" [ngClass]="noPadding ? 'p-0' : ''" class="form-control" [(ngModel)]="inputSelect" name="inputSelect" (change)="onChangeInput()" style="color: black;">
+    </div>
+</form>
