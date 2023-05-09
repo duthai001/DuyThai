@@ -5946,6 +5946,310 @@ export class LanguageServiceProxy {
 }
 
 @Injectable()
+export class MstSleReaderServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param nameReader (optional) 
+     * @param listTypeOfCardId (optional) 
+     * @param isStatus (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAllReader(nameReader: string | null | undefined, listTypeOfCardId: number | undefined, isStatus: number | undefined, sorting: string | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetReaderForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/MstSleReader/GetAllReader?";
+        if (nameReader !== undefined)
+            url_ += "NameReader=" + encodeURIComponent("" + nameReader) + "&"; 
+        if (listTypeOfCardId === null)
+            throw new Error("The parameter 'listTypeOfCardId' cannot be null.");
+        else if (listTypeOfCardId !== undefined)
+            url_ += "ListTypeOfCardId=" + encodeURIComponent("" + listTypeOfCardId) + "&"; 
+        if (isStatus === null)
+            throw new Error("The parameter 'isStatus' cannot be null.");
+        else if (isStatus !== undefined)
+            url_ += "IsStatus=" + encodeURIComponent("" + isStatus) + "&"; 
+        if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllReader(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllReader(<any>response_);
+                } catch (e) {
+                    return <Observable<PagedResultDtoOfGetReaderForViewDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PagedResultDtoOfGetReaderForViewDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllReader(response: HttpResponseBase): Observable<PagedResultDtoOfGetReaderForViewDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetReaderForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PagedResultDtoOfGetReaderForViewDto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEditReader(body: CreateOrEditReaderDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/MstSleReader/CreateOrEditReader";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEditReader(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEditReader(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateOrEditReader(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    deleteReader(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/MstSleReader/DeleteReader?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteReader(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteReader(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteReader(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getTypeOfCard(): Observable<GetListTypeOfCardDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/MstSleReader/getTypeOfCard";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetTypeOfCard(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetTypeOfCard(<any>response_);
+                } catch (e) {
+                    return <Observable<GetListTypeOfCardDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<GetListTypeOfCardDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetTypeOfCard(response: HttpResponseBase): Observable<GetListTypeOfCardDto[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(GetListTypeOfCardDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<GetListTypeOfCardDto[]>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getMstSleReaderForEdit(id: number | undefined): Observable<GetMstSleReaderValueForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/MstSleReader/GetMstSleReaderForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetMstSleReaderForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetMstSleReaderForEdit(<any>response_);
+                } catch (e) {
+                    return <Observable<GetMstSleReaderValueForEditOutput>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<GetMstSleReaderValueForEditOutput>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetMstSleReaderForEdit(response: HttpResponseBase): Observable<GetMstSleReaderValueForEditOutput> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetMstSleReaderValueForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<GetMstSleReaderValueForEditOutput>(<any>null);
+    }
+}
+
+@Injectable()
 export class NotificationServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -19481,6 +19785,258 @@ export interface IUpdateLanguageTextInput {
     sourceName: string;
     key: string;
     value: string;
+}
+
+export class GetReaderForViewDto implements IGetReaderForViewDto {
+    name!: string | undefined;
+    nameCard!: string | undefined;
+    phoneNumber!: string | undefined;
+    address!: string | undefined;
+    expiredDayFrom!: string | undefined;
+    expiredDayTo!: string | undefined;
+    isStatus!: string | undefined;
+    id!: number | undefined;
+
+    constructor(data?: IGetReaderForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.nameCard = _data["nameCard"];
+            this.phoneNumber = _data["phoneNumber"];
+            this.address = _data["address"];
+            this.expiredDayFrom = _data["expiredDayFrom"];
+            this.expiredDayTo = _data["expiredDayTo"];
+            this.isStatus = _data["isStatus"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): GetReaderForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetReaderForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["nameCard"] = this.nameCard;
+        data["phoneNumber"] = this.phoneNumber;
+        data["address"] = this.address;
+        data["expiredDayFrom"] = this.expiredDayFrom;
+        data["expiredDayTo"] = this.expiredDayTo;
+        data["isStatus"] = this.isStatus;
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface IGetReaderForViewDto {
+    name: string | undefined;
+    nameCard: string | undefined;
+    phoneNumber: string | undefined;
+    address: string | undefined;
+    expiredDayFrom: string | undefined;
+    expiredDayTo: string | undefined;
+    isStatus: string | undefined;
+    id: number | undefined;
+}
+
+export class PagedResultDtoOfGetReaderForViewDto implements IPagedResultDtoOfGetReaderForViewDto {
+    totalCount!: number;
+    items!: GetReaderForViewDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfGetReaderForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetReaderForViewDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetReaderForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetReaderForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface IPagedResultDtoOfGetReaderForViewDto {
+    totalCount: number;
+    items: GetReaderForViewDto[] | undefined;
+}
+
+export class CreateOrEditReaderDto implements ICreateOrEditReaderDto {
+    name!: string | undefined;
+    phoneNumber!: string | undefined;
+    address!: string | undefined;
+    expiredDayTo!: moment.Moment;
+    expiredDayFrom!: moment.Moment;
+    isStatus!: boolean | undefined;
+    typeId!: number | undefined;
+    id!: number | undefined;
+
+    constructor(data?: ICreateOrEditReaderDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.phoneNumber = _data["phoneNumber"];
+            this.address = _data["address"];
+            this.expiredDayTo = _data["expiredDayTo"] ? moment(_data["expiredDayTo"].toString()) : <any>undefined;
+            this.expiredDayFrom = _data["expiredDayFrom"] ? moment(_data["expiredDayFrom"].toString()) : <any>undefined;
+            this.isStatus = _data["isStatus"];
+            this.typeId = _data["typeId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditReaderDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditReaderDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["phoneNumber"] = this.phoneNumber;
+        data["address"] = this.address;
+        data["expiredDayTo"] = this.expiredDayTo ? this.expiredDayTo.toISOString() : <any>undefined;
+        data["expiredDayFrom"] = this.expiredDayFrom ? this.expiredDayFrom.toISOString() : <any>undefined;
+        data["isStatus"] = this.isStatus;
+        data["typeId"] = this.typeId;
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface ICreateOrEditReaderDto {
+    name: string | undefined;
+    phoneNumber: string | undefined;
+    address: string | undefined;
+    expiredDayTo: moment.Moment;
+    expiredDayFrom: moment.Moment;
+    isStatus: boolean | undefined;
+    typeId: number | undefined;
+    id: number | undefined;
+}
+
+export class GetListTypeOfCardDto implements IGetListTypeOfCardDto {
+    cardName!: string | undefined;
+    id!: number | undefined;
+
+    constructor(data?: IGetListTypeOfCardDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.cardName = _data["cardName"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): GetListTypeOfCardDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetListTypeOfCardDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["cardName"] = this.cardName;
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface IGetListTypeOfCardDto {
+    cardName: string | undefined;
+    id: number | undefined;
+}
+
+export class GetMstSleReaderValueForEditOutput implements IGetMstSleReaderValueForEditOutput {
+    createOrEdiReaderVlue!: CreateOrEditReaderDto;
+
+    constructor(data?: IGetMstSleReaderValueForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.createOrEdiReaderVlue = _data["createOrEdiReaderVlue"] ? CreateOrEditReaderDto.fromJS(_data["createOrEdiReaderVlue"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetMstSleReaderValueForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetMstSleReaderValueForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["createOrEdiReaderVlue"] = this.createOrEdiReaderVlue ? this.createOrEdiReaderVlue.toJSON() : <any>undefined;
+        return data; 
+    }
+}
+
+export interface IGetMstSleReaderValueForEditOutput {
+    createOrEdiReaderVlue: CreateOrEditReaderDto;
 }
 
 export enum UserNotificationState {

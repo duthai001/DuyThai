@@ -1,5 +1,5 @@
 import { style } from '@angular/animations';
-import { GridTableService } from './../../services/grid-table.service';
+import { GridTableService } from '../../services/grid-table.service';
 import { Component, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ICellRendererAngularComp } from '@ag-grid-community/angular';

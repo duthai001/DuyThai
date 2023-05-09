@@ -49,8 +49,6 @@ import { CheckboxInputTypeComponent } from './input-types/checkbox-input-type/ch
 import { MultipleSelectComboboxInputTypeComponent } from './input-types/multiple-select-combobox-input-type/multiple-select-combobox-input-type.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { AgGridModule } from "@ag-grid-community/angular";
-import { GridTableComponent } from './grid-table/grid-table.component';
-import { GridPaginationComponent } from './grid-pagination/grid-pagination.component';
 import { AgTimeEditorComponent } from './grid/ag-timepicker-editor/ag-time-editor.component';
 import { AgDateEditorComponent } from './grid/ag-datepicker-editor/ag-date-editor.component';
 import { AgDatepickerRendererComponent } from './grid/ag-datepicker-renderer/ag-datepicker-renderer.component';
@@ -96,6 +94,10 @@ import { TmssNumberInputComponent } from './input-types/tmss-number-input/tmss-n
 import { GetDataModalComponent } from './get-data-modal/get-data-modal.component';
 // import { UploadFileVodComponent } from '@app/admin/sales/master/mst-sle-vod-issue/upload-file-vod/upload-file-vod.component';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { GridTableComponent } from './grid-table/grid-table.component';
+import { GridPaginationComponent } from './grid-pagination/grid-pagination.component';
+import { CommonDeclareModule } from './common-declare.module';
+import { WidgetHostTopStatsComponent } from './customizable-dashboard/widgets/widget-host-top-stats/widget-host-top-stats.component';
 
 
 @NgModule({
@@ -193,7 +195,7 @@ import { NgxCurrencyModule } from 'ngx-currency';
         GetDataModalComponent,
         SimpleAgGridComponent,
         TmssSearchInputComponent,
-        
+        WidgetHostTopStatsComponent
                 // UploadFileVodComponent
     ],
     exports: [
@@ -281,6 +283,7 @@ import { NgxCurrencyModule } from 'ngx-currency';
         TmssSelectGridModalComponent,
         GetDataModalComponent,
         TmssSearchInputComponent,
+        WidgetHostTopStatsComponent
     ]
 })
 export class AppCommonModule {

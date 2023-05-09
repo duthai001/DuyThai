@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { ChatSignalrService } from '@app/shared/layout/chat/chat-signalr.service';
 import { LinkAccountModalComponent } from '@app/shared/layout/link-account-modal.component';
@@ -86,6 +86,9 @@ import { MenuSearchBarComponent } from './shared/layout/nav/menu-search-bar/menu
 import { NgxSpinnerModule, NgxSpinnerComponent } from 'ngx-spinner';
 import { ScrollTopComponent } from './shared/layout/scroll-top.component';
 import { AppBsModalModule } from '@shared/common/appBsModal/app-bs-modal.module';
+import { AdminModule } from './admin/admin.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EmployeeComponent } from './admin/employee/employee.component';
 
 
 @NgModule({
@@ -140,7 +143,7 @@ import { AppBsModalModule } from '@shared/common/appBsModal/app-bs-modal.module'
         SessionTimeoutModalComponent,
         SessionTimeoutComponent,
         MenuSearchBarComponent,
-        ActiveDelegatedUsersComboComponent
+        ActiveDelegatedUsersComboComponent,
     ],
     imports: [
         CommonModule,
@@ -169,13 +172,16 @@ import { AppBsModalModule } from '@shared/common/appBsModal/app-bs-modal.module'
         ImageCropperModule,
         AutoCompleteModule,
         NgxSpinnerModule,
-        AppBsModalModule
+        AppBsModalModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule
     ],
     providers: [
         ImpersonationService,
         LinkedAccountService,
         UserNotificationHelper,
         ChatSignalrService,
+        AdminModule,
         {
             provide: PERFECT_SCROLLBAR_CONFIG,
             useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG

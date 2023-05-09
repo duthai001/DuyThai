@@ -106,6 +106,7 @@ import { CreateEntityDynamicParameterModalComponent } from './dynamic-entity-par
 import { EntityDynamicParameterValueComponent } from './dynamic-entity-parameters/entity-dynamic-parameter/entity-dynamic-parameter-value/entity-dynamic-parameter-value.component';
 import { ManageEntityDynamicParameterValuesModalComponent } from './dynamic-entity-parameters/entity-dynamic-parameter/entity-dynamic-parameter-value/manage-entity-dynamic-parameter-values-modal.component';
 import { EmployeeComponent } from './employee/employee.component';
+import { CreateOrEditEmployeeComponent } from './employee/create-or-edit-employee/create-or-edit-employee.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -220,6 +221,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         EntityDynamicParameterValueComponent,
         ManageEntityDynamicParameterValuesModalComponent,
         EmployeeComponent,
+        CreateOrEditEmployeeComponent,
     ],
     exports: [
         AddMemberModalComponent,

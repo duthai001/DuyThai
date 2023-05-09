@@ -1,6 +1,6 @@
 import { finalize } from 'rxjs/operators';
 import { CustomColDef, GridParams, PaginationParamsModel } from './../../models/base.model';
-import { GridTableService } from './../../services/grid-table.service';
+import { GridTableService } from '../../services/grid-table.service';
 import {
     Component,
     OnInit,

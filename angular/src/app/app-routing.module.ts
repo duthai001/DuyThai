@@ -33,7 +33,13 @@ import { NgxSpinnerService } from 'ngx-spinner';
                         canLoad: [AppRouteGuard]
                     },
                     {
-                        path: '**', redirectTo: 'notifications'
+                        path: 'admin',
+                        loadChildren: () => import('app/admin/admin.module').then(m => m.AdminModule), //Lazy load admin module
+                        data: { preload: true },
+                        canLoad: [AppRouteGuard]
+                    },
+                    {
+                        path: '**', redirectTo: 'main/home'
                     }
                 ]
             }

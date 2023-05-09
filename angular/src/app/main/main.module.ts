@@ -16,16 +16,21 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BsDatepickerConfig, BsDaterangepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgxBootstrapDatePickerConfigService } from 'assets/ngx-bootstrap/ngx-bootstrap-datepicker-config.service';
-import { EmployeeComponent } from '@app/admin/employee/employee.component';
+import { CommonDeclareModule } from '@app/shared/common/common-declare.module';
+import { AutoCompleteModule, CarouselModule, EditorModule, FileUploadModule, InputMaskModule, PaginatorModule, TableModule } from 'primeng';
 
 NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
 @NgModule({
     imports: [
+        AutoCompleteModule,
+        PaginatorModule,
+        EditorModule,
+        InputMaskModule,
         CommonModule,
         FormsModule,
         ModalModule,
-        TabsModule,
+        // TabsModule,
         TooltipModule,
         AppCommonModule,
         UtilsModule,
@@ -34,7 +39,9 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
         NgxChartsModule,
         BsDatepickerModule.forRoot(),
         BsDropdownModule.forRoot(),
-        PopoverModule.forRoot()
+        PopoverModule.forRoot(),
+        CommonDeclareModule,
+        FileUploadModule,
     ],
     declarations: [
         DashboardComponent,

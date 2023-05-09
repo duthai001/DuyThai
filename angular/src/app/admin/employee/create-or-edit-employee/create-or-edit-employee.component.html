@@ -1,0 +1,83 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditReaderModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog tmss-modal-md">
+        <div class="modal-content">
+            <form *ngIf="active" #JoinCourseForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="createOrEditReader.id">{{l("Thêm dôc giả")}}</span>
+                        <span *ngIf="!createOrEditReader.id">{{l("Sửa độc giả")}}</span>
+
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+                        <div class="kt-portlet kt-portlet--mobile">
+                            <div class="kt-portlet__body">
+                                <div class="row">
+                                     <div class="col-md-4">
+                                        <div class="form-group">
+                                            <tmss-combobox [isRequired]="true" [isDisabled]="false" [items]="listTypeOfCardFilter"
+                                                [text]="l('Tên')" name="Exam" 
+                                                [(ngModel)]="createOrEditReader.typeId"></tmss-combobox>
+                                        </div>
+                                    </div>
+                                     <!--<div class="col-md-4">
+                                        <div class="form-group">
+                                            <tmss-combobox [isRequired]="true" [isDisabled]="false" [items]="listExamDetail"
+                                                [text]="l('ExamDetail')" name="ExamDetail"
+                                                [(ngModel)]="Score.examDetailId"></tmss-combobox>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <tmss-datepicker [isRequired]="true" [text]="l('JoinDate')"
+                                                [(ngModel)]="Score.joinDate" name="JoinDate" required>
+                                            </tmss-datepicker>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <tmss-text-input [type]="'number'" [className]="'ipStRequire'"
+                                                [isDisabled]="false" [(ngModel)]="Score.times" name="Times"
+                                                [text]="l('Times')" maxlength="255">
+                                            </tmss-text-input>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <tmss-text-input [type]="'number'" [className]="'ipStRequire'"
+                                                [isDisabled]="false" [(ngModel)]="Score.result" name="Result"
+                                                [text]="l('Result')" maxlength="255">
+                                            </tmss-text-input>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <tmss-text-input [type]="'text'" [className]="'ipStRequire'"
+                                                [isDisabled]="false" [(ngModel)]="Score.note" name="EmpNote"
+                                                [text]="l('EmpNote')" maxlength="255">
+                                            </tmss-text-input>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="tmss-btn btn-outline-dark"
+                        (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="tmss-btn btn-outline-primary"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save mr-1"></i>
+                        <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
