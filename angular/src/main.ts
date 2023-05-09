@@ -6,6 +6,13 @@ import { environment } from './environments/environment';
 import { hmrBootstrap } from './hmr';
 import './polyfills.ts';
 import { RootModule } from './root.module';
+import { LicenseManager } from "@ag-grid-enterprise/core";
+import "@ag-grid-enterprise/all-modules";
+
+// set ag-grid-enterprise license
+LicenseManager.setLicenseKey(
+    "[v2]-_TMV_TMSS_18_May_2033_MjAwMDAwMDAwMDAwMA==70837a4d6bc7393fe5e607db4c051b42"
+);
 
 if (environment.production) {
     enableProdMode();

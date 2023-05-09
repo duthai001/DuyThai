@@ -5,18 +5,19 @@ import { GetReaderForViewDto, MstSleReaderServiceProxy } from '@shared/service-p
 import { ceil } from 'lodash';
 import { Paginator, Table } from 'primeng';
 import { CreateOrEditEmployeeComponent } from './create-or-edit-employee/create-or-edit-employee.component';
+import { appModuleAnimation } from '@shared/animations/routerTransition';
 
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
-  styleUrls: ['./employee.component.less']
+  styleUrls: ['./employee.component.less'],
+  animations: [appModuleAnimation()]
 })
 export class EmployeeComponent extends AppComponentBase {
 
   @ViewChild('paginator', { static: true }) paginator: Paginator;
   @ViewChild('dataTable', { static: true }) dataTable: Table;
   @ViewChild('createOrEditReaderModal') createOrEditReaderModal: CreateOrEditEmployeeComponent;
-  // @ViewChild('createOrEditReader', { static: true }) createOrEditReader: CreateOrEditEmployeeComponent;
   columnDefs;
   rowData: any;
   defaultColDef;
