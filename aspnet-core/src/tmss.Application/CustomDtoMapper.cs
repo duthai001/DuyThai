@@ -31,6 +31,8 @@ using tmss.Friendships;
 using tmss.Friendships.Cache;
 using tmss.Friendships.Dto;
 using tmss.Localization.Dto;
+using tmss.MstSle;
+using tmss.MstSle.Readerer.Dto;
 using tmss.MultiTenancy;
 using tmss.MultiTenancy.Dto;
 using tmss.MultiTenancy.HostDashboard.Dto;
@@ -161,6 +163,8 @@ namespace tmss
 
 
             /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
+
+            configuration.CreateMap<CreateOrEditReaderDto, Readers>().ReverseMap(); 
         }
     }
 }

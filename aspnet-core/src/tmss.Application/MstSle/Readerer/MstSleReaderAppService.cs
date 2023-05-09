@@ -76,6 +76,7 @@ namespace tmss.MstSle.Readerer
             {
                 input.ExpiredDayTo = input.ExpiredDayTo.AddHours(7);
                 var mstSleReader = ObjectMapper.Map<Readers>(input);
+                mstSleReader.IsStatus = false;
                 await _reader.InsertAsync(mstSleReader);
             }
         }
