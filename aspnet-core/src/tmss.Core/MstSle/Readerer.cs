@@ -25,7 +25,6 @@ namespace tmss.MstSle
         [MaxLength(MaxPhoneNumberLength)]
         public string PhoneNumber { get; set; }
 
-        [Required]
         [MaxLength(MaxNameLength)]
         public string Address { get; set; }
 

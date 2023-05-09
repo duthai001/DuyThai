@@ -75,6 +75,7 @@ namespace tmss.MstSle.Readerer
             else
             {
                 input.ExpiredDayTo = input.ExpiredDayTo.AddHours(7);
+                input.ExpiredDayFrom = input.ExpiredDayFrom.AddHours(7);
                 var mstSleReader = ObjectMapper.Map<Readers>(input);
                 mstSleReader.IsStatus = false;
                 await _reader.InsertAsync(mstSleReader);
@@ -83,6 +84,8 @@ namespace tmss.MstSle.Readerer
         protected virtual async Task Update(CreateOrEditReaderDto input)
         {
             var mstSleReader = await _reader.FirstOrDefaultAsync((long)input.Id);
+            input.ExpiredDayTo = input.ExpiredDayTo.AddHours(7);
+            input.ExpiredDayFrom = input.ExpiredDayFrom.AddHours(7);
             ObjectMapper.Map(input, mstSleReader);
         }
         public async Task DeleteReader(EntityDto<long> input)

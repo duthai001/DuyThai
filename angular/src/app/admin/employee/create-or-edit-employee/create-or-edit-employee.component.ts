@@ -45,8 +45,8 @@ export class CreateOrEditEmployeeComponent extends AppComponentBase {
   show(selected?: number): void {
     if (!selected) {
       this.createOrEditReader = new CreateOrEditReaderDto();
-      this.createOrEditReader.expiredDayFrom = moment();
-      this.createOrEditReader.expiredDayTo = moment().add(30);
+      this.createOrEditReader.expiredDayFrom = moment().startOf('month');
+      this.createOrEditReader.expiredDayTo = moment().endOf('month');
       this.createOrEditReader.isStatus = false;
       this.active = true;
       this.modal.show();
