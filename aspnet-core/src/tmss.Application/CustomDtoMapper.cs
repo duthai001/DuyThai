@@ -31,6 +31,8 @@ using tmss.Friendships;
 using tmss.Friendships.Cache;
 using tmss.Friendships.Dto;
 using tmss.Localization.Dto;
+using tmss.MstSle;
+using tmss.MstSle.MstSleBook.Dto;
 using tmss.MultiTenancy;
 using tmss.MultiTenancy.Dto;
 using tmss.MultiTenancy.HostDashboard.Dto;
@@ -159,6 +161,7 @@ namespace tmss
             //User Delegations
             configuration.CreateMap<CreateUserDelegationDto, UserDelegation>();
 
+            configuration.CreateMap<CreateOrEditBookDto, Book>().ReverseMap();
 
             /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
         }

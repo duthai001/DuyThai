@@ -25,6 +25,7 @@ import { DynamicParameterDetailComponent } from './dynamic-entity-parameters/dyn
 import { EntityDynamicParameterComponent } from './dynamic-entity-parameters/entity-dynamic-parameter/entity-dynamic-parameter.component';
 import { EntityDynamicParameterValueComponent } from './dynamic-entity-parameters/entity-dynamic-parameter/entity-dynamic-parameter-value/entity-dynamic-parameter-value.component';
 import { EmployeeComponent } from './employee/employee.component';
+import { BooksComponent } from './books/books.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { EmployeeComponent } from './employee/employee.component';
                     { path: 'tenantSettings', component: TenantSettingsComponent, data: { permission: 'Pages.Administration.Tenant.Settings' } },
                     { path: 'hostDashboard', component: HostDashboardComponent, data: { permission: 'Pages.Administration.Host.Dashboard' } },
                     { path: 'employee', component: EmployeeComponent, data: { permission: 'Pages.Administration.Host.Dashboard' } },
+                    { path: 'book', component: BooksComponent, data: { permission: 'Pages.Administration.Host.Dashboard' } },
                     { path: 'demo-ui-components', component: DemoUiComponentsComponent, data: { permission: 'Pages.DemoUiComponents' } },                  
                     { path: 'install', component: InstallComponent },
                     { path: 'ui-customization', component: UiCustomizationComponent },

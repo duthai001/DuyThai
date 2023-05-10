@@ -39,6 +39,9 @@ namespace tmss.EntityFrameworkCore
         public virtual DbSet<UserDelegation> UserDelegations { get; set; }
         public virtual DbSet<Readers> Readerers { get; set; }
         public virtual DbSet<TypeOfCard> TypeOfCards { get; set; }
+        public virtual DbSet<TypeOfBook> TypeOfBooks { get; set; }
+
+        public virtual DbSet<Book> Books { get; set; }
         public tmssDbContext(DbContextOptions<tmssDbContext> options)
             : base(options)
         {

@@ -88,7 +88,7 @@ import { ScrollTopComponent } from './shared/layout/scroll-top.component';
 import { AppBsModalModule } from '@shared/common/appBsModal/app-bs-modal.module';
 import { AdminModule } from './admin/admin.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { EmployeeComponent } from './admin/employee/employee.component';
+
 
 
 @NgModule({
