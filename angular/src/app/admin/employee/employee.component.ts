@@ -47,6 +47,14 @@ export class EmployeeComponent extends AppComponentBase {
     super(injector);
     this.columnDefs = [
       {
+        headerName: "STT",
+        headerTooltip: "STT",
+        cellRenderer: (params) => params.rowIndex + 1 ,
+        field: "stt",
+        pinned: true,
+        width:45,
+    },
+      {
         headerName: this.l('Họ và tên'),
         headerTooltip: this.l('Họ và tên'),
         field: 'name',
