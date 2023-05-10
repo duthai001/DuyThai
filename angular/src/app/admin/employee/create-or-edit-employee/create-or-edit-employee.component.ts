@@ -37,7 +37,6 @@ export class CreateOrEditEmployeeComponent extends AppComponentBase {
 
   ngOnInit() {
     this._mtsSleReaderServiceProxy.getTypeOfCard().subscribe(re => {
-      this.listTypeOfCardFilter.push({ value: -1, label: "Tất cả" });
       re.forEach(e => this.listTypeOfCardFilter.push({ value: e.id, label: e.cardName }));
   });
       
@@ -46,7 +45,8 @@ export class CreateOrEditEmployeeComponent extends AppComponentBase {
   show(selected?: number): void {
     if (!selected) {
       this.createOrEditReader = new CreateOrEditReaderDto();
-      this.createOrEditReader.expiredDayFrom = moment();
+      this.createOrEditReader.expiredDayFrom = moment().startOf('month');
+      this.createOrEditReader.expiredDayTo = moment().endOf('month');
       this.createOrEditReader.isStatus = false;
       this.active = true;
       this.modal.show();

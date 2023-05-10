@@ -18,8 +18,12 @@ export class AppNavigationService {
     getMenu(): AppMenu {
         return new AppMenu('MainMenu', 'MainMenu', [
             new AppMenuItem('Dashboard', 'Pages.Administration.Host.Dashboard', 'flaticon-line-graph', '/app/admin/hostDashboard'),
+
             new AppMenuItem('Quản lý độc giả', 'Pages.Administration.Host.Dashboard', 'flaticon-line-graph', '/app/admin/employee'),
             new AppMenuItem('Quản lý sách', 'Pages.Administration.Host.Dashboard', 'flaticon-line-graph', '/app/admin/book'),
+// =======
+//             new AppMenuItem('Quản lý độc giả', null, 'flaticon-line-graph', '/app/admin/employee'),
+// >>>>>>> 2c89440d2c519f1f4445cc02970e23a201609748
             new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),          
             new AppMenuItem('Administration', '', 'flaticon-interface-8', '', [], [
                 new AppMenuItem('OrganizationUnits', 'Pages.Administration.OrganizationUnits', 'flaticon-map', '/app/admin/organization-units'),

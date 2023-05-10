@@ -87,7 +87,12 @@ import { NgxSpinnerModule, NgxSpinnerComponent } from 'ngx-spinner';
 import { ScrollTopComponent } from './shared/layout/scroll-top.component';
 import { AppBsModalModule } from '@shared/common/appBsModal/app-bs-modal.module';
 import { AdminModule } from './admin/admin.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// <<<<<<< HEAD
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+// =======
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { EmployeeComponent } from './admin/employee/employee.component';
 
 
 
@@ -174,7 +179,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         NgxSpinnerModule,
         AppBsModalModule,
         BrowserAnimationsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        NoopAnimationsModule
     ],
     providers: [
         ImpersonationService,
