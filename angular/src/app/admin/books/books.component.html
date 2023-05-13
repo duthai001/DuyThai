@@ -1,4 +1,3 @@
-<div [@routerTransition]>
   <div class="kt-content kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
       <div class="kt-subheader kt-grid__item redline-header">
           <div [class]="containerClass">
@@ -7,9 +6,7 @@
                       <span>{{ l("Quản lý độc giả") }}</span>
                   </h3>
                   <span class="kt-subheader__separator kt-subheader__separator--v"></span>
-
               </div>
-
               <div class="kt-subheader__toolbar">
                   <div class="kt-subheader__wrapper">
                       <button class="tmss-btn btn-outline-primary" *ngIf="!advancedFiltersAreShown"
@@ -79,11 +76,11 @@
                                   <div class="primeng-paging-container" style="float: right; margin: 5px;">
 
                                       <button type="button" class="tmss-btn btn-outline-primary"
-                                          >
+                                      (click)="createBook()">
                                           <i class="fa fa-plus"></i> {{l("Add")}}
                                       </button>
                                       <button type="button" class="tmss-btn btn-outline-primary"
-                                           [disabled]="!selected">
+                                           [disabled]="!selected" (click)="editBook()">
                                           <i class="fa fa-edit"></i> {{ l("Edit") }}
                                       </button>
                                       <button type="button" class="tmss-btn btn-outline-danger"
@@ -99,5 +96,4 @@
           </div>
       </div>
   </div>
-  <!-- <app-create-or-edit-employee #createOrEditReaderModal (modalSave)="onGridReady(paginationParams)">
-  </app-create-or-edit-employee> -->
+  <app-create-or-edit-books #createOrEditBookModal (modalSave)="onGridReady(paginationParams)"></app-create-or-edit-books>

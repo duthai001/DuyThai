@@ -108,6 +108,8 @@ import { ManageEntityDynamicParameterValuesModalComponent } from './dynamic-enti
 import { EmployeeComponent } from './employee/employee.component';
 import { CreateOrEditEmployeeComponent } from './employee/create-or-edit-employee/create-or-edit-employee.component';
 import { BooksComponent } from './books/books.component';
+import { CreateOrEditBooksComponent } from './books/create-or-edit-books/create-or-edit-books.component';
+import { NgxCurrencyModule } from 'ngx-currency';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -144,7 +146,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         ImageCropperModule,
         PerfectScrollbarModule,
         DropdownModule,
-        AppBsModalModule
+        AppBsModalModule,
+        NgxCurrencyModule
     ],
     declarations: [
         UsersComponent,
@@ -224,6 +227,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         EmployeeComponent,
         CreateOrEditEmployeeComponent,
         BooksComponent,
+        CreateOrEditBooksComponent,
     ],
     exports: [
         AddMemberModalComponent,

@@ -1,0 +1,74 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="createOrEditReaderModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+  <div class="modal-dialog tmss-modal-md">
+    <div class="modal-content">
+      <form *ngIf="active" #BookForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+        <div class="modal-header">
+          <h4 class="modal-title">
+            <span *ngIf="!createOrEditBookDto.id">{{l("Thêm dôc giả")}}</span>
+            <span *ngIf="createOrEditBookDto.id">{{l("Sửa độc giả")}}</span>
+          </h4>
+          <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+            <div class="kt-portlet kt-portlet--mobile">
+              <div class="kt-portlet__body">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <tmss-text-input [isDisabled]="false" required [isRequired]="true" type="text"
+                        [text]="l('Tên sách')" name="bookName" [(ngModel)]="createOrEditBookDto.bookName">
+                      </tmss-text-input>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <tmss-combobox [isRequired]="true" [isDisabled]="false" [items]="listTypeOfBookFilter"
+                        [text]="l('Loại thẻ')" name="cardType"
+                        [(ngModel)]="createOrEditBookDto.typeOfBookId"></tmss-combobox>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <tmss-text-input [isDisabled]="false" type="text" [text]="l('Tác giả')" name="address"
+                        [(ngModel)]="createOrEditBookDto.author">
+                      </tmss-text-input>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <tmss-text-input [isDisabled]="false" type="text" [text]="l('Số lượng')" name="amuont"
+                        [(ngModel)]="createOrEditBookDto.amuont">
+                      </tmss-text-input>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="form-group input-group">
+                      <span class="col-md-6 input-group-text left-text">{{ l('Giá tiền') }}</span>
+                      <input class="form-control tmss-form-control right-text"  currencyMask
+                        [(ngModel)]="createOrEditBookDto.price" [options]="options" 
+                        name="remainingAmount" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button [disabled]="saving" type="button" class="tmss-btn btn-outline-dark"
+              (click)="close()">{{l("Cancel")}}</button>
+            <button type="submit" class="tmss-btn btn-outline-primary" [buttonBusy]="saving"
+            [disabled]="!BookForm.form.valid"
+              [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save mr-1"></i>
+              <span>{{l("Save")}}</span></button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

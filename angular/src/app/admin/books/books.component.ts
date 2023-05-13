@@ -4,6 +4,7 @@ import { AppComponentBase } from '@shared/common/app-component-base';
 import { GetBookForViewDto, MstsleBookAppserviceServiceProxy } from '@shared/service-proxies/service-proxies';
 import { ceil } from 'lodash';
 import { Paginator, Table } from 'primeng';
+import { CreateOrEditBooksComponent } from './create-or-edit-books/create-or-edit-books.component';
 
 @Component({
   selector: 'app-books',
@@ -14,7 +15,7 @@ export class BooksComponent extends AppComponentBase {
 
   @ViewChild('paginator', { static: true }) paginator: Paginator;
   @ViewChild('dataTable', { static: true }) dataTable: Table;
-  // @ViewChild('createOrEditReaderModal') createOrEditReaderModal: CreateOrEditEmployeeComponent;
+   @ViewChild('createOrEditBookModal') createOrEditBookModal: CreateOrEditBooksComponent;
  
   columnDefs;
   rowData: any;
@@ -164,13 +165,13 @@ export class BooksComponent extends AppComponentBase {
   onChangeFilterShown() {
     this.advancedFiltersAreShown = !this.advancedFiltersAreShown
 }
-// createEmployee() {
-//   this.createOrEditReaderModal.show();
-// }
+createBook() {
+  this.createOrEditBookModal.show();
+}
 
-// editEmployee() {
-//   this.createOrEditReaderModal.show(this.selected);
-// }
+editBook() {
+  this.createOrEditBookModal.show(this.selected);
+}
 
 deleteEmployee() {
   this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
