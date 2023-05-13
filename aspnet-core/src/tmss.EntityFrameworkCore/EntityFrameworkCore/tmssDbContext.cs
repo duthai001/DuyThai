@@ -42,6 +42,12 @@ namespace tmss.EntityFrameworkCore
         public virtual DbSet<TypeOfBook> TypeOfBooks { get; set; }
 
         public virtual DbSet<Book> Books { get; set; }
+        public virtual DbSet<Situation> Situations { get; set; }
+        public virtual DbSet<ReturnBookDetails> ReturnBookDetailss { get; set; }
+        public virtual DbSet<ReturnBook> ReturnBooks { get; set; }
+        public virtual DbSet<Punish> Punishs { get; set; }
+        public virtual DbSet<BorrowDetails> BorrowDetailss { get; set; }
+        public virtual DbSet<BorrowBook> BorrowBooks { get; set; }
         public tmssDbContext(DbContextOptions<tmssDbContext> options)
             : base(options)
         {
