@@ -6549,6 +6549,62 @@ export class MstSleReaderServiceProxy {
         }
         return _observableOf<GetMstSleReaderValueForEditOutput>(<any>null);
     }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    exportExcel(body: GetReaderForInputDto | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/MstSleReader/ExportExcel";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json", 
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processExportExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processExportExcel(<any>response_);
+                } catch (e) {
+                    return <Observable<FileDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FileDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processExportExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FileDto>(<any>null);
+    }
 }
 
 @Injectable()
@@ -20575,6 +20631,62 @@ export class GetMstSleReaderValueForEditOutput implements IGetMstSleReaderValueF
 
 export interface IGetMstSleReaderValueForEditOutput {
     createOrEdiReaderVlue: CreateOrEditReaderDto;
+}
+
+export class GetReaderForInputDto implements IGetReaderForInputDto {
+    nameReader!: string | undefined;
+    listTypeOfCardId!: number;
+    isStatus!: number;
+    sorting!: string | undefined;
+    skipCount!: number;
+    maxResultCount!: number;
+
+    constructor(data?: IGetReaderForInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.nameReader = _data["nameReader"];
+            this.listTypeOfCardId = _data["listTypeOfCardId"];
+            this.isStatus = _data["isStatus"];
+            this.sorting = _data["sorting"];
+            this.skipCount = _data["skipCount"];
+            this.maxResultCount = _data["maxResultCount"];
+        }
+    }
+
+    static fromJS(data: any): GetReaderForInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetReaderForInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["nameReader"] = this.nameReader;
+        data["listTypeOfCardId"] = this.listTypeOfCardId;
+        data["isStatus"] = this.isStatus;
+        data["sorting"] = this.sorting;
+        data["skipCount"] = this.skipCount;
+        data["maxResultCount"] = this.maxResultCount;
+        return data; 
+    }
+}
+
+export interface IGetReaderForInputDto {
+    nameReader: string | undefined;
+    listTypeOfCardId: number;
+    isStatus: number;
+    sorting: string | undefined;
+    skipCount: number;
+    maxResultCount: number;
 }
 
 export enum UserNotificationState {

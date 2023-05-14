@@ -14,7 +14,10 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Abp.EntityFrameworkCore.EFPlus" Version="5.6.0" />
+    <PackageReference Include="GemBox.Document" Version="35.0.1076" />
+    <PackageReference Include="GemBox.Spreadsheet" Version="49.0.1335" />
     <PackageReference Include="NPOI" Version="2.4.1" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\tmss.Application.Shared\tmss.Application.Shared.csproj" />

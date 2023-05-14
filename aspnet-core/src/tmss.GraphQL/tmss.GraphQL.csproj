@@ -9,6 +9,7 @@
     <PackageReference Include="GraphQL" Version="2.4.0" />
     <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="3.4.0" />
     <PackageReference Include="GraphQL.Server.Ui.Playground" Version="3.4.0" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\tmss.Application.Shared\tmss.Application.Shared.csproj" />
