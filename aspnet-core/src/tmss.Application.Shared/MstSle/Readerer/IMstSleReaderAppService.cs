@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using tmss.Dto;
 using tmss.MstSle.Readerer.Dto;
 
 namespace tmss.MstSle.Readerer
@@ -15,5 +16,6 @@ namespace tmss.MstSle.Readerer
         Task DeleteReader(EntityDto<long> input);
         Task<List<GetListTypeOfCardDto>> getTypeOfCard();
         Task<GetMstSleReaderValueForEditOutput> GetMstSleReaderForEdit(EntityDto<long> input);
+        Task<FileDto> ExportExcel(GetReaderForInputDto input);
     }
 }

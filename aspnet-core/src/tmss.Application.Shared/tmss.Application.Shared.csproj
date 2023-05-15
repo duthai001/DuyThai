@@ -6,7 +6,9 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Abp.Web.Common" Version="5.6.0" />
+    <PackageReference Include="GemBox.Document" Version="35.0.1076" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\tmss.Core.Shared\tmss.Core.Shared.csproj" />

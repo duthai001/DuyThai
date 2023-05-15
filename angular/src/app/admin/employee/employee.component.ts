@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Injector, OnInit, Output, ViewChild } from '@angular/core';
 import { CustomColDef, GridParams, PaginationParamsModel } from '@app/shared/common/models/base.model';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { GetReaderForViewDto, MstSleReaderServiceProxy } from '@shared/service-proxies/service-proxies';
+import { GetReaderForInputDto, GetReaderForViewDto, MstSleReaderServiceProxy } from '@shared/service-proxies/service-proxies';
 import { ceil } from 'lodash';
 import { Paginator, Table } from 'primeng';
 import { CreateOrEditEmployeeComponent } from './create-or-edit-employee/create-or-edit-employee.component';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
-
-
+import { FileDownloadService } from '@shared/utils/file-download.service';
+import { finalize } from 'rxjs/operators';
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
@@ -24,15 +24,19 @@ export class EmployeeComponent extends AppComponentBase {
   defaultColDef;
   listStatus = [{ value: 0, label: "Tất cả" }, { value: 1, label: "Chưa mượn sách" }, { value: 2, label: "Đang mượn sách" }]
   listTypeOfCardFilter = [];
-  nameReader;
+  nameReader: string;
   selectReader: number;
-  isStatus = 0;
+  isStatus: number = 0;
   test: boolean;
-  typeOfCardId:number = -1;
+  typeOfCardId: number = -1;
   advancedFiltersAreShown: boolean;
   getReaderForView: GetReaderForViewDto[];
   selected;
   selectedRow: any;
+
+  body : GetReaderForInputDto = new GetReaderForInputDto();
+
+  isExporting = false;
 
   frameworkComponents;
   sorting: string = "";
@@ -44,18 +48,18 @@ export class EmployeeComponent extends AppComponentBase {
   constructor(
     injector: Injector,
     private _mtsSleReaderServiceProxy: MstSleReaderServiceProxy,
-
+    private _fileDownloadService: FileDownloadService
   ) {
     super(injector);
     this.columnDefs = [
       {
         headerName: "STT",
         headerTooltip: "STT",
-        cellRenderer: (params) => params.rowIndex + 1 ,
+        cellRenderer: (params) => params.rowIndex + 1,
         field: "stt",
         pinned: true,
-        width:45,
-    },
+        width: 45,
+      },
       {
         headerName: this.l('Họ và tên'),
         headerTooltip: this.l('Họ và tên'),
@@ -127,8 +131,8 @@ export class EmployeeComponent extends AppComponentBase {
     this._mtsSleReaderServiceProxy.getTypeOfCard().subscribe(re => {
       this.listTypeOfCardFilter.push({ value: -1, label: "Tất cả" });
       re.forEach(e => this.listTypeOfCardFilter.push({ value: e.id, label: e.cardName }));
-  });
-   
+    });
+
   }
 
   onGridReady(paginationParams) {
@@ -169,12 +173,11 @@ export class EmployeeComponent extends AppComponentBase {
       this.paginationParams.totalPage = ceil(result.totalCount / this.maxResultCount);
     });
   }
-  refresh()
-{
-  this.nameReader="";
-  this.typeOfCardId=-1;
-  this.isStatus=0;
-}
+  refresh() {
+    this.nameReader = "";
+    this.typeOfCardId = -1;
+    this.isStatus = 0;
+  }
   eventEnter(event) {
     if (event.keyCode === 13) {
       this.search()
@@ -182,26 +185,26 @@ export class EmployeeComponent extends AppComponentBase {
   }
   onChangeFilterShown() {
     this.advancedFiltersAreShown = !this.advancedFiltersAreShown
-}
-createEmployee() {
-  this.createOrEditReaderModal.show();
-}
+  }
+  createEmployee() {
+    this.createOrEditReaderModal.show();
+  }
 
-editEmployee() {
-  this.createOrEditReaderModal.show(this.selected);
-}
+  editEmployee() {
+    this.createOrEditReaderModal.show(this.selected);
+  }
 
-deleteEmployee() {
-  this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
-    if (isConfirmed) {
-      this._mtsSleReaderServiceProxy
-        .deleteReader(this.selected)
-        .subscribe(() => {
-          this.onGridReady(this.paginationParams);
-          this.notify.success(this.l('SuccessfullyDeleted'));
-        });
-    }
-  });
+  deleteEmployee() {
+    this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
+      if (isConfirmed) {
+        this._mtsSleReaderServiceProxy
+          .deleteReader(this.selected)
+          .subscribe(() => {
+            this.onGridReady(this.paginationParams);
+            this.notify.success(this.l('SuccessfullyDeleted'));
+          });
+      }
+    });
   }
 
 
@@ -214,5 +217,27 @@ deleteEmployee() {
     if (selected) {
       this.selected = selected.id;
     }
+  }
+
+  exportToExcel() {
+    this.message.confirm('', this.l('DoYouWantToDownloadAFile'), (isConfirmed) => {
+      if (isConfirmed) {
+        this.isExporting = true;
+        var input = new GetReaderForInputDto();
+        input.isStatus = this.isStatus;
+        input.listTypeOfCardId = this.typeOfCardId;
+        input.nameReader = this.nameReader;
+        input.sorting = this.sorting ?? null;
+        input.skipCount = this.skipCount;
+        input.maxResultCount = this.maxResultCount;
+        this._mtsSleReaderServiceProxy.exportExcel
+          (
+            input
+          ).pipe(finalize(() => this.isExporting = false))
+          .subscribe((result) => {
+            this._fileDownloadService.downloadTempFile(result);
+          }, err => this.isExporting = false);
+      }
+    });
   }
 }

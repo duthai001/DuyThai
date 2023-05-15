@@ -1,14 +1,25 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
-using Abp.UI;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using tmss.MstSle.Readerer;
-using System.Threading.Tasks;
-using tmss.MstSle.Readerer.Dto;
 using Abp.Linq.Extensions;
+using System.Threading.Tasks;
+using tmss.Dto;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using NUglify.Helpers;
+using Abp.Domain.Uow;
+using Abp.Authorization;
+using tmss.Authorization;
+using Abp.UI;
+using System;
+using GemBox.Spreadsheet;
+using Abp.AspNetZeroCore.Net;
+using System.IO;
+using tmss.Storage;
+using System.Text.RegularExpressions;
+using Abp.Collections.Extensions;
+using tmss.Authorization.Users;
+using tmss.MstSle.Readerer.Dto;
 
 namespace tmss.MstSle.Readerer
 {
@@ -16,13 +27,15 @@ namespace tmss.MstSle.Readerer
     {
 
         private readonly IRepository<Readers, long> _reader;
-         private readonly IRepository<TypeOfCard, long> _TypeOfCard;
+        private readonly IRepository<TypeOfCard, long> _TypeOfCard;
+        private readonly ITempFileCacheManager _tempFileCacheManager;
 
         public MstSleReaderAppService(IRepository<Readers, long> reader,
-            IRepository<TypeOfCard, long> typeOfCard)
+            IRepository<TypeOfCard, long> typeOfCard, ITempFileCacheManager tempFileCacheManager)
         {
             _reader = reader;
             _TypeOfCard = typeOfCard;
+            _tempFileCacheManager = tempFileCacheManager;
         }
         public async Task<PagedResultDto<GetReaderForViewDto>> GetAllReader(GetReaderForInputDto input)
         {
@@ -112,5 +125,67 @@ namespace tmss.MstSle.Readerer
 
             return output;
         }
+
+        #region Export
+        public async Task<FileDto> ExportExcel(GetReaderForInputDto input)
+        {
+            var _status = input.IsStatus == 1 ? false : true;
+            var query = (from reader in _reader.GetAll().AsNoTracking()
+                       .Where(e => input.NameReader == null || e.Name.Contains(input.NameReader))
+                       .Where(e => input.ListTypeOfCardId == -1 || input.ListTypeOfCardId == e.TypeId)
+                       .Where(e => input.IsStatus == 0 || _status == e.IsStatus)
+                        join type in _TypeOfCard.GetAll().AsNoTracking()
+                        on reader.TypeId equals type.Id
+                        into types
+                        from type in types.DefaultIfEmpty()
+                        select new GetReaderForExportDto
+                        {
+                            Id = reader.Id,
+                            Name = reader.Name,
+                            CardType = type.NameCard,
+                            PhoneNumber = reader.PhoneNumber,
+                            Address = reader.Address,
+                            Start = reader.ExpiredDayFrom.ToString("dd/MM/yyyy HH:mm"),
+                            End = reader.ExpiredDayTo.ToString("dd/MM/yyyy HH:mm"),
+                            Status = reader.IsStatus == true ? "Đang mượn sách" : "Chưa mượn sách",
+                        }).ToList();
+
+            string fileName = $"ListReaders.xlsx";
+
+            var file = new FileDto(fileName, MimeTypeNames.ApplicationVndOpenxmlformatsOfficedocumentSpreadsheetmlSheet);
+            SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
+
+            // Path to File Template
+            string p_template = "wwwroot/Excel";
+            string path = "";
+            path = Path.Combine(Directory.GetCurrentDirectory(), p_template, "Export_Readers.xlsx");
+
+            var xlWorkBook = ExcelFile.Load(path);
+            var v_worksheet = xlWorkBook.Worksheets[0];
+            v_worksheet.Cells[$"B{1}"].Value = $"Ngày xuất: {DateTime.Now.ToString("dd/MM/yyyy")}";
+            v_worksheet.Cells.GetSubrange($"A3:H{query.Count() + 3}").Style.Borders.SetBorders(MultipleBorders.All, SpreadsheetColor.FromName(ColorName.Green), LineStyle.Thin);
+            for (var i = 1; i <= query.Count(); i++)
+            {
+                v_worksheet.Cells[$"A{i + 3}"].Value = i;
+                v_worksheet.Cells[$"B{i + 3}"].Value = query[i - 1].Name;
+                v_worksheet.Cells[$"C{i + 3}"].Value = query[i - 1].CardType;
+                v_worksheet.Cells[$"D{i + 3}"].Value = query[i - 1].PhoneNumber;
+                v_worksheet.Cells[$"E{i + 3}"].Value = query[i - 1].Address;
+                v_worksheet.Cells[$"F{i + 3}"].Value = query[i - 1].Start;
+                v_worksheet.Cells[$"G{i + 3}"].Value = query[i - 1].End;
+                v_worksheet.Cells[$"H{i + 3}"].Value = query[i - 1].Status;
+            }
+
+            MemoryStream obj_stream = new MemoryStream();
+            var tempFile = Path.Combine(Path.GetTempPath(), Guid.NewGuid() + $".xlsx");
+            xlWorkBook.Save(tempFile);
+
+            obj_stream = new MemoryStream(File.ReadAllBytes(tempFile));
+            _tempFileCacheManager.SetFile(file.FileToken, obj_stream.ToArray());
+            File.Delete(tempFile);
+            obj_stream.Position = 0;
+            return await Task.Run(() => file);
+        }
+        #endregion
     }
 }
