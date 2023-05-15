@@ -48,6 +48,8 @@ namespace tmss.EntityFrameworkCore
         public virtual DbSet<Punish> Punishs { get; set; }
         public virtual DbSet<BorrowDetails> BorrowDetailss { get; set; }
         public virtual DbSet<BorrowBook> BorrowBooks { get; set; }
+
+        public virtual DbSet<MstSleBookTemporary> MstSleBookTemporarys { get; set; }
         public tmssDbContext(DbContextOptions<tmssDbContext> options)
             : base(options)
         {

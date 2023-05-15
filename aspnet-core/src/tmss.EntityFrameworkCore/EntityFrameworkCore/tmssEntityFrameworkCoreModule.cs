@@ -1,4 +1,5 @@
 ﻿using Abp;
+using Abp.Dapper;
 using Abp.Dependency;
 using Abp.EntityFrameworkCore.Configuration;
 using Abp.IdentityServer4;
@@ -14,6 +15,7 @@ namespace tmss.EntityFrameworkCore
     [DependsOn(
         typeof(AbpZeroCoreEntityFrameworkCoreModule),
         typeof(tmssCoreModule),
+        typeof(AbpDapperModule),
         typeof(AbpZeroCoreIdentityServerEntityFrameworkCoreModule)
         )]
     public class tmssEntityFrameworkCoreModule : AbpModule

@@ -6245,6 +6245,113 @@ export class MstsleBookAppserviceServiceProxy {
         }
         return _observableOf<GetMstSleBookValueForEditOutput>(<any>null);
     }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    validateImportAndReturnData(body: ListMstSleBookTemporary | undefined): Observable<MstSleBookTemporary[]> {
+        let url_ = this.baseUrl + "/api/services/app/MstsleBookAppservice/ValidateImportAndReturnData";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json", 
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processValidateImportAndReturnData(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processValidateImportAndReturnData(<any>response_);
+                } catch (e) {
+                    return <Observable<MstSleBookTemporary[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<MstSleBookTemporary[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processValidateImportAndReturnData(response: HttpResponseBase): Observable<MstSleBookTemporary[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(MstSleBookTemporary.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<MstSleBookTemporary[]>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    saveDataToMainTable(): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/MstsleBookAppservice/SaveDataToMainTable";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processSaveDataToMainTable(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processSaveDataToMainTable(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processSaveDataToMainTable(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
 }
 
 @Injectable()
@@ -20323,6 +20430,142 @@ export class GetMstSleBookValueForEditOutput implements IGetMstSleBookValueForEd
 
 export interface IGetMstSleBookValueForEditOutput {
     createOrEditBookValue: CreateOrEditBookDto;
+}
+
+export class MstSleBookTemporary implements IMstSleBookTemporary {
+    typeOfBook!: string | undefined;
+    bookName!: string | undefined;
+    author!: string | undefined;
+    amuont!: number | undefined;
+    price!: number | undefined;
+    note!: string | undefined;
+    isLog!: boolean | undefined;
+    isDeleted!: boolean;
+    deleterUserId!: number | undefined;
+    deletionTime!: moment.Moment | undefined;
+    lastModificationTime!: moment.Moment | undefined;
+    lastModifierUserId!: number | undefined;
+    creationTime!: moment.Moment;
+    creatorUserId!: number | undefined;
+    id!: number;
+
+    constructor(data?: IMstSleBookTemporary) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.typeOfBook = _data["typeOfBook"];
+            this.bookName = _data["bookName"];
+            this.author = _data["author"];
+            this.amuont = _data["amuont"];
+            this.price = _data["price"];
+            this.note = _data["note"];
+            this.isLog = _data["isLog"];
+            this.isDeleted = _data["isDeleted"];
+            this.deleterUserId = _data["deleterUserId"];
+            this.deletionTime = _data["deletionTime"] ? moment(_data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = _data["lastModifierUserId"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): MstSleBookTemporary {
+        data = typeof data === 'object' ? data : {};
+        let result = new MstSleBookTemporary();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["typeOfBook"] = this.typeOfBook;
+        data["bookName"] = this.bookName;
+        data["author"] = this.author;
+        data["amuont"] = this.amuont;
+        data["price"] = this.price;
+        data["note"] = this.note;
+        data["isLog"] = this.isLog;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface IMstSleBookTemporary {
+    typeOfBook: string | undefined;
+    bookName: string | undefined;
+    author: string | undefined;
+    amuont: number | undefined;
+    price: number | undefined;
+    note: string | undefined;
+    isLog: boolean | undefined;
+    isDeleted: boolean;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    id: number;
+}
+
+export class ListMstSleBookTemporary implements IListMstSleBookTemporary {
+    listImportTemp!: MstSleBookTemporary[] | undefined;
+
+    constructor(data?: IListMstSleBookTemporary) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["listImportTemp"])) {
+                this.listImportTemp = [] as any;
+                for (let item of _data["listImportTemp"])
+                    this.listImportTemp!.push(MstSleBookTemporary.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ListMstSleBookTemporary {
+        data = typeof data === 'object' ? data : {};
+        let result = new ListMstSleBookTemporary();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.listImportTemp)) {
+            data["listImportTemp"] = [];
+            for (let item of this.listImportTemp)
+                data["listImportTemp"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface IListMstSleBookTemporary {
+    listImportTemp: MstSleBookTemporary[] | undefined;
 }
 
 export class GetReaderForViewDto implements IGetReaderForViewDto {

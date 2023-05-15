@@ -11,9 +11,11 @@ namespace tmss.MstSle.MstSleBook
      public  interface  IMstSleBookAppService : IApplicationService
     {
         Task<PagedResultDto<GetBookForViewDto>> GetAllBook(GetBookForInputDto input);
-      Task CreateOrEditBook(CreateOrEditBookDto input);
+         Task CreateOrEditBook(CreateOrEditBookDto input);
         Task DeleteBook(EntityDto<long> input);
         Task<List<GetListTypeOfBookDto>> getTypeOfBook();
         Task<GetMstSleBookValueForEditOutput> GetMstSleBookForEdit(EntityDto<long> input);
+
+         Task SaveDataToMainTable();
     }
 }

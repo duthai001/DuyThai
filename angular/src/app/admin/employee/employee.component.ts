@@ -7,6 +7,7 @@ import { Paginator, Table } from 'primeng';
 import { CreateOrEditEmployeeComponent } from './create-or-edit-employee/create-or-edit-employee.component';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 
+
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
@@ -43,6 +44,7 @@ export class EmployeeComponent extends AppComponentBase {
   constructor(
     injector: Injector,
     private _mtsSleReaderServiceProxy: MstSleReaderServiceProxy,
+
   ) {
     super(injector);
     this.columnDefs = [
@@ -58,42 +60,44 @@ export class EmployeeComponent extends AppComponentBase {
         headerName: this.l('Họ và tên'),
         headerTooltip: this.l('Họ và tên'),
         field: 'name',
-        minWidth: 80,
+        flex: 1,
         cellClass: ["text-right"],
       },
       {
         headerName: this.l('Loại thẻ'),
         headerTooltip: this.l('Loại thẻ'),
         field: 'nameCard',
-        minWidth: 80,
+        flex: 1,
         cellClass: ["text-right"],
       },
       {
         headerName: this.l('Số điện thoại'),
         headerTooltip: this.l('Số điện thoại'),
         field: 'phoneNumber',
-        minWidth: 80,
+        flex: 1,
         cellClass: ["text-right"],
       },
       {
         headerName: this.l('Địa chỉ'),
         headerTooltip: this.l('Địa chỉ'),
         field: 'address',
-        minWidth: 80,
+        flex: 1,
         cellClass: ["text-right"],
       },
       {
         headerName: this.l('Ngày Cấp'),
         headerTooltip: this.l('Ngày Cấp'),
         field: 'expiredDayFrom',
-        minWidth: 80,
+        flex: 1,
+   
         cellClass: ["text-right"],
       },
       {
         headerName: this.l('Ngày hết hạn'),
         headerTooltip: this.l('Ngày hết hạn'),
         field: 'expiredDayTo',
-        minWidth: 150,
+        flex: 1,
+    
         cellClass: ["text-center"],
       },
 
@@ -101,7 +105,7 @@ export class EmployeeComponent extends AppComponentBase {
         headerName: this.l('Trạng Thái'),
         headerTooltip: this.l('Trạng Thái'),
         field: 'isStatus',
-        minWidth: 150,
+        flex: 1.2,
         cellClass: ["text-left"],
       }
     ];

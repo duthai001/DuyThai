@@ -42,8 +42,8 @@ namespace tmss.MstSle.Readerer
                             NameCard = type.NameCard,
                             PhoneNumber = reader.PhoneNumber,
                             Address = reader.Address,
-                            ExpiredDayFrom = reader.ExpiredDayFrom.ToString("dd/MM/yyyy HH:mm"),
-                            ExpiredDayTo = reader.ExpiredDayTo.ToString("dd/MM/yyyy HH:mm"),
+                            ExpiredDayFrom = reader.ExpiredDayFrom.ToString("dd/MM/yyyy"),
+                            ExpiredDayTo = reader.ExpiredDayTo.ToString("dd/MM/yyyy"),
                             IsStatus = reader.IsStatus == true ? "Đang mượn sách" : "Chưa mượn sách",
                         };
             var totalCount = await query.CountAsync();

@@ -110,6 +110,7 @@ import { CreateOrEditEmployeeComponent } from './employee/create-or-edit-employe
 import { BooksComponent } from './books/books.component';
 import { CreateOrEditBooksComponent } from './books/create-or-edit-books/create-or-edit-books.component';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { ImportBooksComponent } from './books/import-books/import-books.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -228,6 +229,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         CreateOrEditEmployeeComponent,
         BooksComponent,
         CreateOrEditBooksComponent,
+        ImportBooksComponent,
     ],
     exports: [
         AddMemberModalComponent,

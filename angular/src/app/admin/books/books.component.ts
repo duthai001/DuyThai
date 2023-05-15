@@ -5,6 +5,7 @@ import { GetBookForViewDto, MstsleBookAppserviceServiceProxy } from '@shared/ser
 import { ceil } from 'lodash';
 import { Paginator, Table } from 'primeng';
 import { CreateOrEditBooksComponent } from './create-or-edit-books/create-or-edit-books.component';
+import { ImportBooksComponent } from './import-books/import-books.component';
 
 @Component({
   selector: 'app-books',
@@ -16,7 +17,7 @@ export class BooksComponent extends AppComponentBase {
   @ViewChild('paginator', { static: true }) paginator: Paginator;
   @ViewChild('dataTable', { static: true }) dataTable: Table;
    @ViewChild('createOrEditBookModal') createOrEditBookModal: CreateOrEditBooksComponent;
- 
+   @ViewChild('importBookModal') importBookModal: ImportBooksComponent;
   columnDefs;
   rowData: any;
   defaultColDef;
@@ -58,35 +59,35 @@ export class BooksComponent extends AppComponentBase {
         headerName: this.l('Tên sách'),
         headerTooltip: this.l('Tên sách'),
         field: 'bookName',
-        minWidth: 80,
+        flex: 2,
         cellClass: ["text-right"],
       },
       {
         headerName: this.l('Thể loại'),
         headerTooltip: this.l('Thể loại'),
         field: 'bookTypeName',
-        minWidth: 80,
+        flex: 1,
         cellClass: ["text-right"],
       },
       {
         headerName: this.l('Tác giả'),
         headerTooltip: this.l('Tác giả'),
         field: 'author',
-        minWidth: 80,
+        flex: 1,
         cellClass: ["text-right"],
       },
       {
         headerName: this.l('Số lượng'),
         headerTooltip: this.l('Số lượng'),
         field: 'amuont',
-        minWidth: 80,
+        flex: 1,
         cellClass: ["text-right"],
       },
       {
         headerName: this.l('Giá tiền'),
         headerTooltip: this.l('Giá tiền'),
         field: 'price',
-        minWidth: 80,
+        flex: 1,
         cellClass: ["text-right"],
       },
      
@@ -171,6 +172,10 @@ createBook() {
 
 editBook() {
   this.createOrEditBookModal.show(this.selected);
+}
+importmodeal()
+{
+  this.importBookModal.show();
 }
 
 deleteEmployee() {

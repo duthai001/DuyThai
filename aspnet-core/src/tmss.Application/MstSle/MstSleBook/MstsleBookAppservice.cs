@@ -1,6 +1,8 @@
 ﻿using Abp.Application.Services;
 using Abp.Application.Services.Dto;
+using Abp.Authorization;
 using Abp.Domain.Repositories;
+using Abp.EntityFrameworkCore.Uow;
 using Abp.Linq.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,21 +10,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using tmss.Authorization;
+using tmss.EntityFrameworkCore;
 using tmss.MstSle.MstSleBook.Dto;
 using tmss.MstSle.Readerer.Dto;
+using Abp.Dapper.Repositories;
 
 namespace tmss.MstSle.MstSleBook
 {
-    public class MstsleBookAppservice:tmssAppServiceBase, IMstSleBookAppService
+    public class MstsleBookAppservice:tmssAppServiceBase, IApplicationService
     {
         private readonly IRepository<Book, long> _books;
         private readonly IRepository<TypeOfBook, long> _typeOfBook;
+        private readonly IDapperRepository<Book, long> _dapperRepo;
 
         public MstsleBookAppservice(IRepository<Book, long> book,
-            IRepository<TypeOfBook, long> typeOfBook)
+            IRepository<TypeOfBook, long> typeOfBook,
+            IDapperRepository<Book, long> dapperRepo
+           )
         {
             _books = book;
             _typeOfBook = typeOfBook;
+            _dapperRepo = dapperRepo;
         }
         public async Task<PagedResultDto<GetBookForViewDto>> GetAllBook(GetBookForInputDto input)
         {
@@ -96,6 +105,24 @@ namespace tmss.MstSle.MstSleBook
                 CreateOrEditBookValue = ObjectMapper.Map<CreateOrEditBookDto>(mstSlebook)
             };
             return output;
+        }
+        public async Task<List<MstSleBookTemporary>> ValidateImportAndReturnData(ListMstSleBookTemporary input)
+        {
+            var tenantId = AbpSession.TenantId;
+            var userId = AbpSession.UserId;
+            await _dapperRepo.ExecuteAsync("DELETE FROM MstSleBookTemporary WHERE CreatorUserId = @CurrentUserId", new { CurrentUserId = userId });
+            CurrentUnitOfWork.GetDbContext<tmssDbContext>().AddRange(input.listImportTemp);
+            CurrentUnitOfWork.SaveChanges();
+            await _dapperRepo.ExecuteAsync("EXEC ValidateMstSleBookTemporary @CurrentDealerId, @CurrentUserId", new { CurrentDealerId = tenantId, CurrentUserId = userId });
+            IEnumerable<MstSleBookTemporary> result = await _dapperRepo.QueryAsync<MstSleBookTemporary>(@"
+                SELECT BookName,TypeOfBook,Author,Amuont,Price,Note,IsLog FROM MstSleBookTemporary WHERE CreatorUserId = @CurrentUserId ORDER BY Id", new { CurrentUserId = userId });
+            return result.ToList();
+        }
+        public async Task SaveDataToMainTable()
+        {
+            var tenantId = AbpSession.TenantId;
+            var userId = AbpSession.UserId;
+            await _dapperRepo.ExecuteAsync("EXEC Migrate_MstSleBooksTemporary @CurrentDealerId, @CurrentUserId", new { CurrentDealerId = tenantId, CurrentUserId = userId });
         }
     }
   

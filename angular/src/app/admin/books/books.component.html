@@ -69,7 +69,7 @@
                               <grid-table [columnDefs]="columnDefs" [paginationParams]="paginationParams"
                                   [defaultColDef]="defaultColDef" (callBackEvent)="callBackGrid($event)"
                                   [rowData]="rowData" (changePaginationParams)="changePage($event)"
-                                  (onChangeSelection)="onChangeSelection($event)" [height]="'280px'"
+                                  (onChangeSelection)="onChangeSelection($event)" [height]="'600px'"
                                   [frameworkComponents]="frameworkComponents">
                               </grid-table>
                               <div class="primeng-paging-container">
@@ -87,6 +87,10 @@
                                           (click)="deleteEmployee()" [disabled]="!selected">
                                           <i class="fa fa-trash"></i> {{ l("Delete") }}
                                       </button>
+                                      <button  (click)="importmodeal()"  
+                                      class="tmss-btn btn-outline-primary mr-0" type="submit"  >
+                                         <i class="tmss-fa fas fa-file-alt mr-1"></i>{{l('Import')}}
+                                     </button>
                                   </div>
                               </div>
                           </div>
@@ -97,3 +101,4 @@
       </div>
   </div>
   <app-create-or-edit-books #createOrEditBookModal (modalSave)="onGridReady(paginationParams)"></app-create-or-edit-books>
+  <app-import-books #importBookModal (modalSave)="onGridReady(paginationParams)"></app-import-books>
