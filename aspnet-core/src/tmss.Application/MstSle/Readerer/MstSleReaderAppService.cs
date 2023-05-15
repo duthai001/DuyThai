@@ -1,25 +1,18 @@
 ﻿using Abp.Application.Services.Dto;
+using Abp.AspNetZeroCore.Net;
 using Abp.Domain.Repositories;
 using Abp.Linq.Extensions;
+using Abp.UI;
+using GemBox.Spreadsheet;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using tmss.Dto;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using NUglify.Helpers;
-using Abp.Domain.Uow;
-using Abp.Authorization;
-using tmss.Authorization;
-using Abp.UI;
-using System;
-using GemBox.Spreadsheet;
-using Abp.AspNetZeroCore.Net;
-using System.IO;
-using tmss.Storage;
-using System.Text.RegularExpressions;
-using Abp.Collections.Extensions;
-using tmss.Authorization.Users;
 using tmss.MstSle.Readerer.Dto;
+using tmss.Storage;
 
 namespace tmss.MstSle.Readerer
 {

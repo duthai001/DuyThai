@@ -43,6 +43,7 @@
   <ItemGroup>
     <PackageReference Include="Abp.Castle.Log4Net" Version="5.6.0" />
     <PackageReference Include="AspNetCore.HealthChecks.UI" Version="3.0.11" />
+    <PackageReference Include="GemBox.Document" Version="35.0.1076" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.10" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
   </ItemGroup>
