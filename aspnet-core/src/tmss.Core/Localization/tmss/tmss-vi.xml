@@ -414,6 +414,7 @@
       ]]>
     </text>
     <text name="AddFriend">Thêm bạn</text>
+	<text name="Add">Thêm mới</text>
     <text name="TypeAMessageHere">Nhập tin nhắn tại đây ...</text>
     <text name="Chat">Trò chuyện</text>
     <text name="ChatFeature">Trò chuyện</text>
