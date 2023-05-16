@@ -5,8 +5,8 @@
       <form *ngIf="active" #BookForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
         <div class="modal-header">
           <h4 class="modal-title">
-            <span *ngIf="!createOrEditBookDto.id">{{l("Thêm dôc giả")}}</span>
-            <span *ngIf="createOrEditBookDto.id">{{l("Sửa độc giả")}}</span>
+            <span *ngIf="!createOrEditBookDto.id">{{l("Thêm sách")}}</span>
+            <span *ngIf="createOrEditBookDto.id">{{l("Sửa sách")}}</span>
           </h4>
           <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
             <span aria-hidden="true">&times;</span>
@@ -48,11 +48,12 @@
                     </div>
                   </div>
                   <div class="col-4">
-                    <div class="form-group input-group">
-                      <span class="col-md-6 input-group-text left-text">{{ l('Giá tiền') }}</span>
-                      <input class="form-control tmss-form-control right-text"  currencyMask
-                        [(ngModel)]="createOrEditBookDto.price" [options]="options" 
-                        name="remainingAmount" />
+                    <div class="form-group">
+                      <div class="form-group input-group">
+                        <span class="col-md-6 input-group-text left-text">{{ l('Giá tiền') }}</span>
+                        <input class="form-control tmss-form-control right-text" currencyMask
+                          [(ngModel)]="createOrEditBookDto.price" [options]="options" name="remainingAmount" />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -63,8 +64,7 @@
             <button [disabled]="saving" type="button" class="tmss-btn btn-outline-dark"
               (click)="close()">{{l("Cancel")}}</button>
             <button type="submit" class="tmss-btn btn-outline-primary" [buttonBusy]="saving"
-            [disabled]="!BookForm.form.valid"
-              [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save mr-1"></i>
+              [disabled]="!BookForm.form.valid" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save mr-1"></i>
               <span>{{l("Save")}}</span></button>
           </div>
         </div>
