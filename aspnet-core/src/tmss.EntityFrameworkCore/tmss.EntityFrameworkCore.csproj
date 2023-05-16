@@ -15,6 +15,12 @@
     <Compile Remove="Migrations\20230507100352_Added_Persons_Table.Designer.cs" />
     <Compile Remove="Migrations\20230507100716_Added_Persons_Table.cs" />
     <Compile Remove="Migrations\20230507100716_Added_Persons_Table.Designer.cs" />
+    <Compile Remove="Migrations\20230516031758_Added_Persons_Tablene.cs" />
+    <Compile Remove="Migrations\20230516031758_Added_Persons_Tablene.Designer.cs" />
+    <Compile Remove="Migrations\20230516032135_Added_Persons_Tablehr.cs" />
+    <Compile Remove="Migrations\20230516032135_Added_Persons_Tablehr.Designer.cs" />
+    <Compile Remove="Migrations\20230516032300_Added_Persons_Tablexo.cs" />
+    <Compile Remove="Migrations\20230516032300_Added_Persons_Tablexo.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Abp.Dapper" Version="5.6.0" />
