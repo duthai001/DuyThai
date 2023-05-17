@@ -47,13 +47,16 @@
                       </tmss-text-input>
                     </div>
                   </div>
-                  <div class="col-4">
+                  <div class="col-md-4">
                     <div class="form-group">
-                      <div class="form-group input-group">
-                        <span class="col-md-6 input-group-text left-text">{{ l('Giá tiền') }}</span>
-                        <input class="form-control tmss-form-control right-text" currencyMask
-                          [(ngModel)]="createOrEditBookDto.price" [options]="options" name="remainingAmount" />
-                      </div>
+                      <tmss-text-input [isRequired]="true" required [isDisabled]="false" 
+                        type="number" [text]="l('Giá tiền')" name="remainingAmount"
+                        [(ngModel)]="createOrEditBookDto.price">
+                      </tmss-text-input>
+                      <!-- <span class="col-md-6 input-group-text left-text">{{ l('Giá tiền') }}</span>
+                      <input class="form-control tmss-form-control right-text"  currencyMask
+                        [(ngModel)]="createOrEditBookDto.price" [options]="options" 
+                        name="remainingAmount" /> -->
                     </div>
                   </div>
                 </div>
@@ -64,7 +67,8 @@
             <button [disabled]="saving" type="button" class="tmss-btn btn-outline-dark"
               (click)="close()">{{l("Cancel")}}</button>
             <button type="submit" class="tmss-btn btn-outline-primary" [buttonBusy]="saving"
-              [disabled]="!BookForm.form.valid" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save mr-1"></i>
+            [disabled]="!BookForm.form.valid"
+              [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save mr-1"></i>
               <span>{{l("Save")}}</span></button>
           </div>
         </div>

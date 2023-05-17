@@ -12,4 +12,9 @@ namespace tmss.MstSle.MstSleBook.Dto
 
         public int TypeOfBookId { get; set; }
     }
+
+    public class GetOrderForInputDto : PagedAndSortedResultRequestDto
+    {
+        public long? BookId { get; set; }
+    }
 }

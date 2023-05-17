@@ -6352,6 +6352,233 @@ export class MstsleBookAppserviceServiceProxy {
         }
         return _observableOf<void>(<any>null);
     }
+
+    /**
+     * @param bookId (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAllOrder(bookId: number | null | undefined, sorting: string | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetOrderForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/MstsleBookAppservice/GetAllOrder?";
+        if (bookId !== undefined)
+            url_ += "BookId=" + encodeURIComponent("" + bookId) + "&"; 
+        if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllOrder(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllOrder(<any>response_);
+                } catch (e) {
+                    return <Observable<PagedResultDtoOfGetOrderForViewDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PagedResultDtoOfGetOrderForViewDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllOrder(response: HttpResponseBase): Observable<PagedResultDtoOfGetOrderForViewDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetOrderForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PagedResultDtoOfGetOrderForViewDto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEditOrder(body: CreateOrEditOrderDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/MstsleBookAppservice/CreateOrEditOrder";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEditOrder(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEditOrder(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateOrEditOrder(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    deleteOrder(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/MstsleBookAppservice/DeleteOrder?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteOrder(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteOrder(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteOrder(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getOrderForEdit(id: number | undefined): Observable<GetMstSleOrderForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/MstsleBookAppservice/GetOrderForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetOrderForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetOrderForEdit(<any>response_);
+                } catch (e) {
+                    return <Observable<GetMstSleOrderForEditOutput>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<GetMstSleOrderForEditOutput>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetOrderForEdit(response: HttpResponseBase): Observable<GetMstSleOrderForEditOutput> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetMstSleOrderForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<GetMstSleOrderForEditOutput>(<any>null);
+    }
 }
 
 @Injectable()
@@ -20622,6 +20849,190 @@ export class ListMstSleBookTemporary implements IListMstSleBookTemporary {
 
 export interface IListMstSleBookTemporary {
     listImportTemp: MstSleBookTemporary[] | undefined;
+}
+
+export class GetOrderForViewDto implements IGetOrderForViewDto {
+    quantity!: number | undefined;
+    publishing!: string | undefined;
+    date!: string | undefined;
+    id!: number | undefined;
+
+    constructor(data?: IGetOrderForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.quantity = _data["quantity"];
+            this.publishing = _data["publishing"];
+            this.date = _data["date"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): GetOrderForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetOrderForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["quantity"] = this.quantity;
+        data["publishing"] = this.publishing;
+        data["date"] = this.date;
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface IGetOrderForViewDto {
+    quantity: number | undefined;
+    publishing: string | undefined;
+    date: string | undefined;
+    id: number | undefined;
+}
+
+export class PagedResultDtoOfGetOrderForViewDto implements IPagedResultDtoOfGetOrderForViewDto {
+    totalCount!: number;
+    items!: GetOrderForViewDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfGetOrderForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetOrderForViewDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetOrderForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetOrderForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface IPagedResultDtoOfGetOrderForViewDto {
+    totalCount: number;
+    items: GetOrderForViewDto[] | undefined;
+}
+
+export class CreateOrEditOrderDto implements ICreateOrEditOrderDto {
+    bookId!: number | undefined;
+    quantity!: number | undefined;
+    publishing!: string | undefined;
+    date!: moment.Moment | undefined;
+    id!: number | undefined;
+
+    constructor(data?: ICreateOrEditOrderDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.bookId = _data["bookId"];
+            this.quantity = _data["quantity"];
+            this.publishing = _data["publishing"];
+            this.date = _data["date"] ? moment(_data["date"].toString()) : <any>undefined;
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditOrderDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditOrderDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["bookId"] = this.bookId;
+        data["quantity"] = this.quantity;
+        data["publishing"] = this.publishing;
+        data["date"] = this.date ? this.date.toISOString() : <any>undefined;
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface ICreateOrEditOrderDto {
+    bookId: number | undefined;
+    quantity: number | undefined;
+    publishing: string | undefined;
+    date: moment.Moment | undefined;
+    id: number | undefined;
+}
+
+export class GetMstSleOrderForEditOutput implements IGetMstSleOrderForEditOutput {
+    orderBook!: CreateOrEditOrderDto;
+
+    constructor(data?: IGetMstSleOrderForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.orderBook = _data["orderBook"] ? CreateOrEditOrderDto.fromJS(_data["orderBook"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetMstSleOrderForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetMstSleOrderForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["orderBook"] = this.orderBook ? this.orderBook.toJSON() : <any>undefined;
+        return data; 
+    }
+}
+
+export interface IGetMstSleOrderForEditOutput {
+    orderBook: CreateOrEditOrderDto;
 }
 
 export class GetReaderForViewDto implements IGetReaderForViewDto {

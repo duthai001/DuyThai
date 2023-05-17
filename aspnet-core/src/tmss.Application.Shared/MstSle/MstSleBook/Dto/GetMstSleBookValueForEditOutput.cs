@@ -9,4 +9,9 @@ namespace tmss.MstSle.MstSleBook.Dto
     {
         public CreateOrEditBookDto CreateOrEditBookValue{ get; set; }
     }
+
+    public class GetMstSleOrderForEditOutput
+    {
+        public CreateOrEditOrderDto orderBook { get; set; }
+    }
 }

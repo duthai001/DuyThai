@@ -169,7 +169,8 @@ namespace tmss
 
             /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
 
-            configuration.CreateMap<CreateOrEditReaderDto, Readers>().ReverseMap(); 
+            configuration.CreateMap<CreateOrEditReaderDto, Readers>().ReverseMap();
+            configuration.CreateMap<CreateOrEditOrderDto, OrderBook>().ReverseMap();
         }
     }
 }
