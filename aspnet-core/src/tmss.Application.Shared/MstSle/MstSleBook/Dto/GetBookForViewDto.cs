@@ -13,4 +13,11 @@ namespace tmss.MstSle.MstSleBook.Dto
         public long Amuont { get; set; }
         public long Price { get; set; }
     }
+
+    public class GetOrderForViewDto : EntityDto<long?>
+    {
+        public int? Quantity { get; set; }
+        public string Publishing { get; set; }
+        public string Date { get; set; }
+    }
 }

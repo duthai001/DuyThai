@@ -94,7 +94,7 @@ export class EmployeeComponent extends AppComponentBase {
         field: 'expiredDayFrom',
         flex: 1,
    
-        cellClass: ["text-right"],
+        cellClass: ["text-left"],
       },
       {
         headerName: this.l('Ngày hết hạn'),
@@ -102,7 +102,7 @@ export class EmployeeComponent extends AppComponentBase {
         field: 'expiredDayTo',
         flex: 1,
     
-        cellClass: ["text-center"],
+        cellClass: ["text-left"],
       },
 
       {
