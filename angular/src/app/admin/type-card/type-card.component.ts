@@ -58,8 +58,8 @@ export class TypeCardComponent extends AppComponentBase  {
         cellClass: ["text-right"],
       },
       {
-        headerName: this.l('Tỷ lệ'),
-        headerTooltip: this.l('Tỷ lệ'),
+        headerName: this.l('Tỷ lệ(%)'),
+        headerTooltip: this.l('Tỷ lệ(%)'),
         field: 'rate',
         flex: 1,
         cellClass: ["text-right"],

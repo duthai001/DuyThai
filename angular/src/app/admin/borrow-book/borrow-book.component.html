@@ -3,7 +3,7 @@
         <div [class]="containerClass">
             <div class="kt-subheader__main">
                 <h3 class="kt-subheader__title">
-                    <span>{{ l("Quản lý sách") }}</span>
+                    <span>{{ l("Quản lý mượn sách") }}</span>
                 </h3>
                 <span class="kt-subheader__separator kt-subheader__separator--v"></span>
             </div>
@@ -78,7 +78,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-12">
                         <div class="item ">
-                            <div class="tbContent ">{{ l("Danh sách sách") }}</div>
+                            <div class="tbContent ">{{ l("Danh sách mượn sách") }}</div>
                             <grid-table [columnDefs]="columnDefs" [paginationParams]="paginationParams"
                                 [defaultColDef]="defaultColDef" (callBackEvent)="callBackGrid($event)"
                                 [rowData]="rowData" (changePaginationParams)="changePage($event)"
@@ -92,7 +92,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-12">
                         <div class="item ">
-                            <div class="tbContent ">{{ l("Nhập sách") }}</div>
+                            <div class="tbContent ">{{ l("Chi tiết sách mượn") }}</div>
                             <grid-table [columnDefs]="columnDefsDetail" [paginationParams]="paginationParamsDetail"
                                 [defaultColDef]="defaultColDef" 
                                 [rowData]="rowDataDetail" 

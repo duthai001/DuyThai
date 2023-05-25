@@ -17,15 +17,23 @@ export class AppNavigationService {
 
     getMenu(): AppMenu {
         return new AppMenu('MainMenu', 'MainMenu', [
-            new AppMenuItem('Dashboard', 'Pages.Administration.Host.Dashboard', 'flaticon-line-graph', '/app/admin/hostDashboard'),
-
-            new AppMenuItem('Quản lý độc giả', 'Pages.Administration.Host.Dashboard', 'flaticon-line-graph', '/app/admin/employee'),
-            new AppMenuItem('Quản lý sách', 'Pages.Administration.Host.Dashboard', 'flaticon-line-graph', '/app/admin/book'),
-            new AppMenuItem('Quản lý mượn sách', null, 'flaticon-line-graph', '/app/admin/borrow-book'),
-            new AppMenuItem('Quản  lý thể loại thẻ', 'Pages.Administration.Host.Dashboard', 'flaticon-line-graph', '/app/admin/typecard'),
-            new AppMenuItem('Quản  lý thể loại sách', 'Pages.Administration.Host.Dashboard', 'flaticon-line-graph', '/app/admin/typebook'),
-            new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),          
-            new AppMenuItem('Administration', '', 'flaticon-interface-8', '', [], [
+            new AppMenuItem('1. Dashboard', 'Pages.Administration.Host.Dashboard', 'flaticon-line-graph', '/app/admin/hostDashboard'),
+            new AppMenuItem('2. Quản lý độc giả', '', 'flaticon2-user', '', [], [
+                new AppMenuItem('2.1 Độc giả', 'Pages.Administration.Host.Dashboard', 'flaticon-users-1', '/app/admin/employee'),
+                new AppMenuItem('2.2 Thể loại thẻ', 'Pages.Administration.Host.Dashboard', 'flaticon2-tag', '/app/admin/typecard'),
+            ]),
+            new AppMenuItem('3. Quản lý sách', '', 'flaticon2-layers', '', [], [
+                new AppMenuItem('3.1 Sách', 'Pages.Administration.Host.Dashboard', 'flaticon2-open-text-book', '/app/admin/book'),
+                new AppMenuItem('3.2. Thể loại sách', 'Pages.Administration.Host.Dashboard', 'flaticon2-layers-2', '/app/admin/typebook'),
+            ]),
+            new AppMenuItem('4. Quản lý mượn trả', '', 'flaticon2-list', '', [], [
+                new AppMenuItem('4.1 Mượn sách', null, 'flaticon-file-1', '/app/admin/borrow-book'),
+                new AppMenuItem('4.2 Trả sách', null, 'flaticon-interface-4', null),
+                new AppMenuItem('4.3 Phạt', null, 'flaticon-coins', null),
+            ]),
+            //new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),          
+            
+            new AppMenuItem('5. Administration', '', 'flaticon-interface-8', '', [], [
                 new AppMenuItem('OrganizationUnits', 'Pages.Administration.OrganizationUnits', 'flaticon-map', '/app/admin/organization-units'),
                 new AppMenuItem('Roles', 'Pages.Administration.Roles', 'flaticon-suitcase', '/app/admin/roles'),
                 new AppMenuItem('Users', 'Pages.Administration.Users', 'flaticon-users', '/app/admin/users'),

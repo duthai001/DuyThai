@@ -36,7 +36,7 @@ export class EmployeeComponent extends AppComponentBase {
   selectedRow: any;
 
   body: GetReaderForInputDto = new GetReaderForInputDto();
-  
+
   isExporting = false;
   frameworkComponents;
   sorting: string = "";
@@ -53,78 +53,91 @@ export class EmployeeComponent extends AppComponentBase {
     super(injector);
     this.columnDefs = [
       {
-        headerName: "STT",
-        headerTooltip: "STT",
-        cellRenderer: (params) => params.rowIndex + 1,
-        field: "stt",
-        pinned: true,
-        width: 45,
+        headerName: this.l(""),
+        children: [
+          {
+            headerName: "STT",
+            headerTooltip: "STT",
+            cellRenderer: (params) => params.rowIndex + 1,
+            field: "stt",
+            pinned: true,
+            width: 45,
+          },
+        ],
       },
       {
-        headerName: this.l('Họ và tên'),
-        headerTooltip: this.l('Họ và tên'),
-        field: 'name',
-        flex: 1,
-        cellClass: ["text-right"],
+        headerName: this.l("Thông tin cá nhân"),
+        children: [
+          {
+            headerName: this.l('Họ và tên'),
+            headerTooltip: this.l('Họ và tên'),
+            field: 'name',
+            width: 175,
+            cellClass: ["text-right"],
+          },
+          {
+            headerName: this.l('Số điện thoại'),
+            headerTooltip: this.l('Số điện thoại'),
+            field: 'phoneNumber',
+            width: 125,
+            cellClass: ["text-right"],
+          },
+          {
+            headerName: this.l('Địa chỉ'),
+            headerTooltip: this.l('Địa chỉ'),
+            field: 'address',
+            width: 200,
+            cellClass: ["text-right"],
+          },
+        ],
       },
       {
-        headerName: this.l('Loại thẻ'),
-        headerTooltip: this.l('Loại thẻ'),
-        field: 'nameCard',
-        flex: 1,
-        cellClass: ["text-right"],
+        headerName: this.l("Thông tin thẻ"),
+        children: [
+          {
+            headerName: this.l('Loại thẻ'),
+            headerTooltip: this.l('Loại thẻ'),
+            field: 'nameCard',
+            width: 125,
+            cellClass: ["text-right"],
+          },
+          {
+            headerName: this.l('Hiệu lực'),
+            headerTooltip: this.l('Hiệu lực'),
+            field: 'isActive',
+            cellRenderer: "agCheckboxRendererComponent",
+            data: [true, false],
+            width: 75,
+            cellClass: ["text-center"],
+            disableCheckbox: true,
+            cellStyle: params => {
+              if (params.data.isActive == true)
+                return { 'background-color': '#6eeb34' }
+            }
+          },
+          {
+            headerName: this.l('Ngày Cấp'),
+            headerTooltip: this.l('Ngày Cấp'),
+            field: 'expiredDayFrom',
+            width: 125,
+            cellClass: ["text-left"],
+          },
+          {
+            headerName: this.l('Ngày hết hạn'),
+            headerTooltip: this.l('Ngày hết hạn'),
+            field: 'expiredDayTo',
+            width: 125,
+            cellClass: ["text-left"],
+          },
+          {
+            headerName: this.l('Trạng Thái'),
+            headerTooltip: this.l('Trạng Thái'),
+            field: 'isStatus',
+            width: 150,
+            cellClass: ["text-right"],
+          },
+        ],
       },
-      {
-        headerName: this.l('Số điện thoại'),
-        headerTooltip: this.l('Số điện thoại'),
-        field: 'phoneNumber',
-        flex: 1,
-        cellClass: ["text-right"],
-      },
-      {
-        headerName: this.l('Địa chỉ'),
-        headerTooltip: this.l('Địa chỉ'),
-        field: 'address',
-        flex: 1,
-        cellClass: ["text-right"],
-      },
-      {
-        headerName: this.l('Ngày Cấp'),
-        headerTooltip: this.l('Ngày Cấp'),
-        field: 'expiredDayFrom',
-        flex: 1,
-
-        cellClass: ["text-left"],
-      },
-      {
-        headerName: this.l('Ngày hết hạn'),
-        headerTooltip: this.l('Ngày hết hạn'),
-        field: 'expiredDayTo',
-        flex: 1,
-
-        cellClass: ["text-left"],
-      },
-      {
-        headerName: this.l('Trạng Thái'),
-        headerTooltip: this.l('Trạng Thái'),
-        field: 'isStatus',
-        flex: 1.2,
-        cellClass: ["text-left"],
-      },
-      {
-        headerName: this.l('Hiệu lực'),
-        headerTooltip: this.l('Hiệu lực'),
-        field: 'isActive',
-        cellRenderer: "agCheckboxRendererComponent",
-        data: [true, false],
-        flex: 0.5,
-        cellClass: ["text-left"],
-        disableCheckbox: true,
-        cellStyle: params => {
-          if (params.data.isActive == true)
-            return { 'background-color': '#6eeb34' }
-        }
-      }
     ];
     this.frameworkComponents = { agCheckboxRendererComponent: AgCheckboxRendererComponent };
     this.defaultColDef = {

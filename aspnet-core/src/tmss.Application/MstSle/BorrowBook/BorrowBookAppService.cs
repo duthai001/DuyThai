@@ -20,15 +20,17 @@ namespace tmss.MstSle.BorrowBookApp
         private readonly IRepository<BorrowDetails, long> _borrowDetails;
         private readonly IRepository<Readers, long> _readers;
         private readonly IRepository<Book, long> _book;
+        private readonly IRepository<TypeOfCard, long> _typeOfCard;
 
         public BorrowBookAppService(
             IRepository<BorrowBook, long> borrowBook
-, IRepository<Readers, long> readers, IRepository<BorrowDetails, long> borrowDetails, IRepository<Book, long> book)
+, IRepository<Readers, long> readers, IRepository<BorrowDetails, long> borrowDetails, IRepository<Book, long> book, IRepository<TypeOfBook, long> typeOfBook, IRepository<TypeOfCard, long> typeOfCard)
         {
             _borrowBook = borrowBook;
             _readers = readers;
             _borrowDetails = borrowDetails;
             _book = book;
+            _typeOfCard = typeOfCard;
         }
 
         public async Task<PagedResultDto<GetAllBorrowBookForViewDto>> GetAll(GetBorrowBookInputDto input)
@@ -91,15 +93,26 @@ namespace tmss.MstSle.BorrowBookApp
 
         public async Task Create(CreateOrEditBorrowBookDto input)
         {
-            var checkReader = _readers.FirstOrDefault(e => e.Id == input.ReaderId)?.IsStatus;
-            if(checkReader != false)
+            var checkReader = _readers.FirstOrDefault(e => e.Id == input.ReaderId);
+            if(checkReader.IsStatus != false)
             {
                 throw new UserFriendlyException("Độc giả chưa trả sách, không thể cho mượn thêm!");
-            }    
+            }
+            var typeId = _readers.FirstOrDefault(e => e.Id == input.ReaderId)?.TypeId;
+            var totalPrice = _typeOfCard.FirstOrDefault(e => e.Id == typeId);
+            {
+                if(input.TotalLoanAmount > (totalPrice.CardAmount * (long)totalPrice.Rate) / 100)
+                {
+                    throw new UserFriendlyException("Tổng tiền sách mượn vượt quá số tiền tối đa loại thẻ được mượn!");
+                }    
+            }
 
             var borrow = ObjectMapper.Map<BorrowBook>(input);
             borrow.Status = 0;
             var borrowId = await _borrowBook.InsertAndGetIdAsync(borrow);
+
+            checkReader.IsStatus = true;
+            await _readers.UpdateAsync(checkReader);
 
             foreach(CreateBorrowDetailDto detail in input.Details)
             {

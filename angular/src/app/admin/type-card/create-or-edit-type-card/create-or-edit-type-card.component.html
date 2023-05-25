@@ -5,8 +5,8 @@
       <form *ngIf="active" #TypeCardForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
         <div class="modal-header">
           <h4 class="modal-title">
-            <span *ngIf="!createOrEditTypeCard.id">{{l("Thêm thể loại sách")}}</span>
-            <span *ngIf="createOrEditTypeCard.id">{{l("Sửa thể loại sách")}}</span>
+            <span *ngIf="!createOrEditTypeCard">{{l("Thêm thể loại sách")}}</span>
+            <span *ngIf="createOrEditTypeCard">{{l("Sửa thể loại sách")}}</span>
           </h4>
           <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
             <span aria-hidden="true">&times;</span>
@@ -33,7 +33,7 @@
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <tmss-text-input [isDisabled]="false" required [isRequired]="true" type="text" [text]="l('Tỷ lệ')"
+                      <tmss-text-input [isDisabled]="false" required [isRequired]="true" type="text" [text]="l('Tỷ lệ(%)')"
                         name="rate" [(ngModel)]="createOrEditTypeCard.rate">
                       </tmss-text-input>
                     </div>

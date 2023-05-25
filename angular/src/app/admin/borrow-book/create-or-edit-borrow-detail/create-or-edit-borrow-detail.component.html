@@ -17,9 +17,13 @@
     </div>
 </div>
 
-<div style="justify-content: space-between; display: flex; margin-top: 5px;">
-    <div>
+<div class="row" style="margin-top: 5px; justify-content: space-between; align-items: center; margin-top: 5px;">
+    <div class="col-3">
         <button type="button" class="tmss-btn btn-outline-primary" (click)="createDetail()" [buttonBusy]="saving"><i class="fas fa-plus-square"></i> {{l("Thêm sách")}}</button>
         <button type="button" class="tmss-btn btn-outline-dark mr-0" (click)="cancelDetail()"><i class="fas fa-redo-alt"></i> {{l("Hủy thay đổi sách")}}</button>
     </div>
+    <div class="col-8" style="display: flex;justify-content: right;">
+        <span style="color: red; text-align: left; font-weight: bold;">Tổng số tiền sách mượn không được vượt quá giá tiền thẻ!!!</span>
+    </div>
+    <div class="col-1"></div>
 </div>

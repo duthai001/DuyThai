@@ -5,8 +5,8 @@
             <form *ngIf="active" #TypeBookForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="!createOrEditTypeCard.id">{{l("Thêm thể loại thẻ")}}</span>
-                        <span *ngIf="createOrEditTypeCard.id">{{l("Sửa thể loại thẻ")}}</span>
+                        <span *ngIf="!createOrEditTypeBook">{{l("Thêm thể loại thẻ")}}</span>
+                        <span *ngIf="createOrEditTypeBook">{{l("Sửa thể loại thẻ")}}</span>
                     </h4>
                     <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
                         <span aria-hidden="true">&times;</span>
