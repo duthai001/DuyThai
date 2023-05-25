@@ -1,0 +1,25 @@
+<!-- Vehicle Info -->
+<div class="row">
+    <div class="col-4">
+        <p>* Tổng số sách: {{totalPaymentAndPrice.amountBorrow}}</p>
+    </div>
+    <div class="col-4">
+        <p>* Tổng số tiền sách TT: {{this.dataFormatService.moneyFormat(totalPaymentAndPrice.totalLoanAmount)}}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="tbContent">{{l("Danh sách sách có trong phiếu mượn")}}</div>
+        <grid-table [columnDefs]="detailColumnDefs" [defaultColDef]="defaultColDef"
+        (cellValueChanged)="onCellValueChanged($event)" [frameworkComponents]="frameworkComponents" [showPagination]="false"
+        (callBackEvent)="callBackGrid($event)" (onChangeSelection)="onRowSelected($event)"
+            [height]="'200px'"></grid-table>
+    </div>
+</div>
+
+<div style="justify-content: space-between; display: flex; margin-top: 5px;">
+    <div>
+        <button type="button" class="tmss-btn btn-outline-primary" (click)="createDetail()" [buttonBusy]="saving"><i class="fas fa-plus-square"></i> {{l("Thêm sách")}}</button>
+        <button type="button" class="tmss-btn btn-outline-dark mr-0" (click)="cancelDetail()"><i class="fas fa-redo-alt"></i> {{l("Hủy thay đổi sách")}}</button>
+    </div>
+</div>

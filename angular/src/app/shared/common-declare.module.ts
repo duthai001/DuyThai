@@ -1,3 +1,4 @@
+import { BrowserModule } from '@angular/platform-browser';
 // Angular
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -49,7 +50,7 @@ import { AgGridModule } from "@ag-grid-community/angular";
     imports: [
         FormsModule,
         CommonModule,
-
+        //BrowserModule,
         ModalModule.forRoot(),
         TooltipModule.forRoot(),
         TabsModule.forRoot(),

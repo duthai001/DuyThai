@@ -17,6 +17,9 @@ export class CreateOrEditBooksComponent extends AppComponentBase {
 
   active: boolean = false;
   saving: boolean= false;
+
+  quantity: number = 0;
+
   createOrEditBookDto: CreateOrEditBookDto = new CreateOrEditBookDto();
   listTypeOfBookFilter = [];
   options = {
@@ -39,6 +42,7 @@ export class CreateOrEditBooksComponent extends AppComponentBase {
       re.forEach(e => this.listTypeOfBookFilter.push({ value: e.id, label: e.bookTypeName }));
   });
   }
+
   show(selected?: number): void {
     if (!selected) {
       this.createOrEditBookDto = new CreateOrEditBookDto();
@@ -53,6 +57,7 @@ export class CreateOrEditBooksComponent extends AppComponentBase {
         });
     }
   }
+  
   save(): void {
     this.saving = true;
     this._mtsSleBokServiceProxy.createOrEditBook(this.createOrEditBookDto).pipe(

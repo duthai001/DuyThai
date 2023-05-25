@@ -96,8 +96,10 @@ import { GetDataModalComponent } from './get-data-modal/get-data-modal.component
 import { NgxCurrencyModule } from 'ngx-currency';
 import { GridTableComponent } from './grid-table/grid-table.component';
 import { GridPaginationComponent } from './grid-pagination/grid-pagination.component';
-import { CommonDeclareModule } from './common-declare.module';
+import { CommonDeclareModule } from '../common-declare.module';
 import { WidgetHostTopStatsComponent } from './customizable-dashboard/widgets/widget-host-top-stats/widget-host-top-stats.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { AgCellButtonRendererComponent } from './grid/ag-cell-button-renderer/ag-cell-button-renderer.component';
 
 
 @NgModule({
@@ -119,7 +121,7 @@ import { WidgetHostTopStatsComponent } from './customizable-dashboard/widgets/wi
         CountoModule,
         AppBsModalModule,
         AutoCompleteModule,
-        // BrowserModule,
+        //BrowserModule,
         AgGridModule.withComponents([]),
         InputMaskModule,
         FileUploadModule,
@@ -195,8 +197,9 @@ import { WidgetHostTopStatsComponent } from './customizable-dashboard/widgets/wi
         GetDataModalComponent,
         SimpleAgGridComponent,
         TmssSearchInputComponent,
-        WidgetHostTopStatsComponent
+        WidgetHostTopStatsComponent,
                 // UploadFileVodComponent
+        AgCellButtonRendererComponent
     ],
     exports: [
         AgDropdownRendererComponent,
@@ -239,6 +242,7 @@ import { WidgetHostTopStatsComponent } from './customizable-dashboard/widgets/wi
         GetDataModalComponent,
         SimpleAgGridComponent,
         TmssSearchInputComponent,
+        AgCellButtonRendererComponent
         // UploadFileVodComponent
     ],
     providers: [
@@ -268,6 +272,7 @@ import { WidgetHostTopStatsComponent } from './customizable-dashboard/widgets/wi
         WidgetTopStatsComponent,
         FilterDateRangePickerComponent,
         SingleLineStringInputTypeComponent,
+        
         ComboboxInputTypeComponent,
         CheckboxInputTypeComponent,
         MultipleSelectComboboxInputTypeComponent,

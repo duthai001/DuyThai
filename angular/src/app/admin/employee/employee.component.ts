@@ -8,6 +8,7 @@ import { CreateOrEditEmployeeComponent } from './create-or-edit-employee/create-
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { FileDownloadService } from '@shared/utils/file-download.service';
 import { finalize } from 'rxjs/operators';
+import { AgCheckboxRendererComponent } from '@app/shared/common/grid/ag-checkbox-renderer/ag-checkbox-renderer.component';
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
@@ -34,7 +35,7 @@ export class EmployeeComponent extends AppComponentBase {
   selected;
   selectedRow: any;
 
-  body : GetReaderForInputDto = new GetReaderForInputDto();
+  body: GetReaderForInputDto = new GetReaderForInputDto();
 
   isExporting = false;
 
@@ -93,7 +94,7 @@ export class EmployeeComponent extends AppComponentBase {
         headerTooltip: this.l('Ngày Cấp'),
         field: 'expiredDayFrom',
         flex: 1,
-   
+
         cellClass: ["text-left"],
       },
       {
@@ -101,19 +102,32 @@ export class EmployeeComponent extends AppComponentBase {
         headerTooltip: this.l('Ngày hết hạn'),
         field: 'expiredDayTo',
         flex: 1,
-    
+
         cellClass: ["text-left"],
       },
-
       {
         headerName: this.l('Trạng Thái'),
         headerTooltip: this.l('Trạng Thái'),
         field: 'isStatus',
         flex: 1.2,
         cellClass: ["text-left"],
+      },
+      {
+        headerName: this.l('Hiệu lực'),
+        headerTooltip: this.l('Hiệu lực'),
+        field: 'isActive',
+        cellRenderer: "agCheckboxRendererComponent",
+        data: [true, false],
+        flex: 0.5,
+        cellClass: ["text-left"],
+        disableCheckbox: true,
+        cellStyle: params => {
+          if (params.data.isActive == true)
+            return { 'background-color': '#6eeb34' }
+        }
       }
     ];
-
+    this.frameworkComponents = { agCheckboxRendererComponent: AgCheckboxRendererComponent };
     this.defaultColDef = {
       floatingFilter: true,
       filter: 'agTextColumnFilter',

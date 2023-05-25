@@ -112,6 +112,9 @@ import { CreateOrEditBooksComponent } from './books/create-or-edit-books/create-
 import { NgxCurrencyModule } from 'ngx-currency';
 import { ImportBooksComponent } from './books/import-books/import-books.component';
 import { CreateOrEditOrderBookComponent } from './books/create-or-edit-order-book/create-or-edit-order-book.component';
+import { BorrowBookComponent } from './borrow-book/borrow-book.component';
+import { CreateOrEditBorrowDetailComponent } from './borrow-book/create-or-edit-borrow-detail/create-or-edit-borrow-detail.component';
+import { CreateOrEditBorrowBookComponent } from './borrow-book/create-or-edit-borrow-book/create-or-edit-borrow-book.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -149,7 +152,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         PerfectScrollbarModule,
         DropdownModule,
         AppBsModalModule,
-        NgxCurrencyModule
+        NgxCurrencyModule,
     ],
     declarations: [
         UsersComponent,
@@ -231,7 +234,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         BooksComponent,
         CreateOrEditBooksComponent,
         ImportBooksComponent,
-        CreateOrEditOrderBookComponent
+        CreateOrEditOrderBookComponent,
+        BorrowBookComponent,
+        CreateOrEditBorrowDetailComponent,
+        CreateOrEditBorrowBookComponent
     ],
     exports: [
         AddMemberModalComponent,

@@ -1,0 +1,110 @@
+<div class="kt-content kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+    <div class="kt-subheader kt-grid__item redline-header">
+        <div [class]="containerClass">
+            <div class="kt-subheader__main">
+                <h3 class="kt-subheader__title">
+                    <span>{{ l("Quản lý sách") }}</span>
+                </h3>
+                <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            </div>
+            <div class="kt-subheader__toolbar">
+                <div class="kt-subheader__wrapper">
+                    <button class="tmss-btn btn-outline-primary" *ngIf="!advancedFiltersAreShown"
+                        (click)="onChangeFilterShown()"><i class="fa fa-search"></i>
+                        {{l("ShowAdvancedFilters")}}</button>
+                    <button class="tmss-btn btn-outline-primary" *ngIf="advancedFiltersAreShown"
+                        (click)="onChangeFilterShown()"><i class="fa fa-search"></i>
+                        {{l("HideAdvancedFilters")}}</button>
+                    <button type="button" class="tmss-btn btn-outline-primary" (click)="create()">
+                        <i class="fa fa-plus"></i> {{l("Add")}}
+                    </button>
+                    <button type="button" class="tmss-btn btn-outline-primary" [disabled]="!selectedBorrow"
+                        (click)="edit()">
+                        <i class="fa fa-edit"></i> {{ l("Edit") }}
+                    </button>
+                    <button type="button" class="tmss-btn btn-outline-danger" (click)="delete()" [disabled]="!selectedBorrow">
+                        <i class="fa fa-trash"></i> {{ l("Delete") }}
+                    </button>
+                    <!-- <button (click)="importmodeal()" class="tmss-btn btn-outline-primary mr-0" type="submit">
+                        <i class="tmss-fa fas fa-file-alt mr-1"></i>{{l('Import')}}
+                    </button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+        <div class="kt-portlet kt-portlet--mobile">
+            <div class="kt-portlet__body">
+                <form class="kt-form" autocomplete="off">
+                    <div [hidden]="!advancedFiltersAreShown">
+                        <!-- <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <tmss-text-input [isDisabled]="false" (keyup)="eventEnter($event)" type="text"
+                                        [text]="l('Tên sách')" name="bookName" [(ngModel)]="bookName">
+                                    </tmss-text-input>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <tmss-text-input [isDisabled]="false" (keyup)="eventEnter($event)" type="text"
+                                        [text]="l('Tên tác giả')" name="author" [(ngModel)]="author">
+                                    </tmss-text-input>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <tmss-combobox [items]="listTypeOfBookFilter" [text]="l('Thể loại')"
+                                        name="EmpDealer1" [(ngModel)]="typeOfBookId"></tmss-combobox>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <button type="button" class="tmss-btn btn-outline-primary" (click)="refresh()">
+                                        <i class="tmss-fa fas fa-redo mr-1"></i>{{l("Refresh")}}
+                                    </button>
+                                    <button class="tmss-btn btn-outline-primary" type="submit" (click)="search()"><i
+                                            class="fa fa-search mr-1"></i>
+                                        <span>{{l('Search')}}</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </form>
+                <!--Employee table-->
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="item ">
+                            <div class="tbContent ">{{ l("Danh sách sách") }}</div>
+                            <grid-table [columnDefs]="columnDefs" [paginationParams]="paginationParams"
+                                [defaultColDef]="defaultColDef" (callBackEvent)="callBackGrid($event)"
+                                [rowData]="rowData" (changePaginationParams)="changePage($event)"
+                                (onChangeSelection)="onChangeSelection($event)" [height]="'450px'"
+                                [frameworkComponents]="frameworkComponents">
+                            </grid-table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="item ">
+                            <div class="tbContent ">{{ l("Nhập sách") }}</div>
+                            <grid-table [columnDefs]="columnDefsDetail" [paginationParams]="paginationParamsDetail"
+                                [defaultColDef]="defaultColDef" 
+                                [rowData]="rowDataDetail" 
+
+                                [height]="'200px'"
+                                [frameworkComponents]="frameworkComponents">
+                            </grid-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-create-or-edit-borrow-book #createOrEditModal (modalSave)="onGridReady(paginationParams)"></app-create-or-edit-borrow-book>

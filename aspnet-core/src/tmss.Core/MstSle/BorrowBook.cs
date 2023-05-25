@@ -10,14 +10,14 @@ namespace tmss.MstSle
     [Table("BorrowBook")]
     public class BorrowBook : FullAuditedEntity<long>, IEntity<long>
     {
-        public int RedearId { get; set; }
+        public int ReaderId { get; set; }
         public DateTime BorrowDate { get; set; }
         public DateTime DueDate { get; set; }
         public DateTime Day { get; set; }
         public long TotalLoanAmount { get; set; }
 
         public long AmountBorrow { get; set; }
-
+        //1 đang mượn, 0 chưa mượn và có thể cho mượn
         public int Status { get; set; }
     }
 }

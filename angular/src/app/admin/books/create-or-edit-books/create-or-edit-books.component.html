@@ -27,7 +27,7 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <tmss-combobox [isRequired]="true" [isDisabled]="false" [items]="listTypeOfBookFilter"
-                        [text]="l('Loại thẻ')" name="cardType"
+                        [text]="l('Thể loại sách')" name="typeOfBookId"
                         [(ngModel)]="createOrEditBookDto.typeOfBookId"></tmss-combobox>
                     </div>
                   </div>
@@ -42,8 +42,8 @@
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
-                      <tmss-text-input [isDisabled]="false" type="text" [text]="l('Số lượng')" name="amuont"
-                        [(ngModel)]="createOrEditBookDto.amuont">
+                      <tmss-text-input [isDisabled]="true" type="text" [text]="l('Số lượng')" name="amuont"
+                        [(ngModel)]="quantity">
                       </tmss-text-input>
                     </div>
                   </div>

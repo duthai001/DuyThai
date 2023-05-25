@@ -75,6 +75,7 @@ namespace tmss.MstSle.MstSleBook
         protected virtual async Task Create(CreateOrEditBookDto input)
         {
             var mstSlebook = ObjectMapper.Map<Book>(input);
+            mstSlebook.Amuont = 0;
             await _books.InsertAsync(mstSlebook);
         }
         protected virtual async Task Update(CreateOrEditBookDto input)

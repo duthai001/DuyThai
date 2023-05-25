@@ -93,6 +93,7 @@ import { AdminModule } from './admin/admin.module';
 // =======
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { EmployeeComponent } from './admin/employee/employee.component';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 
@@ -180,7 +181,8 @@ import { EmployeeComponent } from './admin/employee/employee.component';
         AppBsModalModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        BrowserModule
     ],
     providers: [
         ImpersonationService,

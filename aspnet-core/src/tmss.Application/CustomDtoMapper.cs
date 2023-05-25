@@ -32,7 +32,7 @@ using tmss.Friendships.Cache;
 using tmss.Friendships.Dto;
 using tmss.Localization.Dto;
 using tmss.MstSle;
-
+using tmss.MstSle.IBorrowBook.Dto;
 using tmss.MstSle.MstSleBook.Dto;
 
 using tmss.MstSle.Readerer.Dto;
@@ -171,6 +171,8 @@ namespace tmss
 
             configuration.CreateMap<CreateOrEditReaderDto, Readers>().ReverseMap();
             configuration.CreateMap<CreateOrEditOrderDto, OrderBook>().ReverseMap();
+            configuration.CreateMap<CreateBorrowDetailDto, BorrowDetails>().ReverseMap();
+            configuration.CreateMap<CreateOrEditBorrowBookDto, BorrowBook>().ReverseMap();
         }
     }
 }

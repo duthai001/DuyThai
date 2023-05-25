@@ -13,6 +13,7 @@ namespace tmss.MstSle.Readerer.Dto
         public DateTime ExpiredDayTo { get; set; }
         public DateTime ExpiredDayFrom { get; set; }
         public bool? IsStatus { get; set; }
+        public bool? isActive { get; set; }
         public int? typeId { get; set; }
     }
 }

@@ -214,7 +214,7 @@ export class BooksComponent extends AppComponentBase {
   }
 
   editBook() {
-    this.createOrEditBookModal.show(this.selected);
+    this.createOrEditBookModal.show(this.selectedId);
   }
   importmodeal() {
     this.importBookModal.show();
@@ -224,7 +224,7 @@ export class BooksComponent extends AppComponentBase {
     this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
       if (isConfirmed) {
         this._mtsSleBokServiceProxy
-          .deleteBook(this.selected)
+          .deleteBook(this.selectedId)
           .subscribe(() => {
             this.onGridReady(this.paginationParams);
             this.notify.success(this.l('SuccessfullyDeleted'));

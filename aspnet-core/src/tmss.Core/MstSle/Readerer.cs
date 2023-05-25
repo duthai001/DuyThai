@@ -33,5 +33,6 @@ namespace tmss.MstSle
         public DateTime ExpiredDayTo { get; set; }
 
         public bool IsStatus { get; set; }
+        public bool isActive { get; set; }
     }
 }

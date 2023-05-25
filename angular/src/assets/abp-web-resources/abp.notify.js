@@ -4,10 +4,10 @@ var abp = abp || {};
     /* DEFAULTS *************************************************/
 
     var defaultOptions = {
-        position: 'bottom-end',
+        position: 'top-right',
         showConfirmButton: false,
-        timer: 3000,
-        padding: 0,
+        timer: 4000,
+        padding: 50,
         toast: true,
         animation: false
     };

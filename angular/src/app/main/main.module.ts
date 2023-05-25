@@ -16,7 +16,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BsDatepickerConfig, BsDaterangepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgxBootstrapDatePickerConfigService } from 'assets/ngx-bootstrap/ngx-bootstrap-datepicker-config.service';
-import { CommonDeclareModule } from '@app/shared/common/common-declare.module';
+import { CommonDeclareModule } from '@app/shared/common-declare.module';
 import { AutoCompleteModule, CarouselModule, EditorModule, FileUploadModule, InputMaskModule, PaginatorModule, TableModule } from 'primeng';
 
 NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
