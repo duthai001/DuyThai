@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Threading.Tasks; 
 using tmss.Dto;
 using tmss.MstSle.Readerer.Dto;
 using tmss.Storage;
@@ -21,7 +21,7 @@ namespace tmss.MstSle.Readerer
 
         private readonly IRepository<Readers, long> _reader;
         private readonly IRepository<TypeOfCard, long> _TypeOfCard;
-        private readonly ITempFileCacheManager _tempFileCacheManager;
+        private readonly ITempFileCacheManager _tempFileCacheManager;  
 
         public MstSleReaderAppService(IRepository<Readers, long> reader,
             IRepository<TypeOfCard, long> typeOfCard, ITempFileCacheManager tempFileCacheManager)

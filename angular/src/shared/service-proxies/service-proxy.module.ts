@@ -55,6 +55,8 @@ import { ZeroTemplateHttpConfigurationService } from './zero-template-http-confi
         ApiServiceProxies.MstSleReaderServiceProxy,
         ApiServiceProxies.MstsleBookAppserviceServiceProxy,
         ApiServiceProxies.BorrowBookServiceProxy,
+        ApiServiceProxies.MstSleTypeOfBookServiceProxy,
+        ApiServiceProxies.MstSleTypeOfCardServiceProxy,
         { provide: RefreshTokenService, useClass: ZeroRefreshTokenService },
         { provide: AbpHttpConfigurationService, useClass: ZeroTemplateHttpConfigurationService },
         { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true }

@@ -27,6 +27,8 @@ import { EntityDynamicParameterValueComponent } from './dynamic-entity-parameter
 import { EmployeeComponent } from './employee/employee.component';
 import { BooksComponent } from './books/books.component';
 import { BorrowBookComponent } from './borrow-book/borrow-book.component';
+import { TypeCardComponent } from './type-card/type-card.component';
+import { TypeBookComponent } from './type-book/type-book.component';
 
 
 @NgModule({
@@ -52,6 +54,8 @@ import { BorrowBookComponent } from './borrow-book/borrow-book.component';
                     { path: 'employee', component: EmployeeComponent, data: { permission: 'Pages.Administration.Host.Dashboard' } },
                     { path: 'book', component: BooksComponent, data: { permission: 'Pages.Administration.Host.Dashboard' } },
                     { path: 'borrow-book', component: BorrowBookComponent, data: { permission: null } },
+                    { path: 'typecard', component: TypeCardComponent, data: { permission: 'Pages.Administration.Host.Dashboard' } },
+                    { path: 'typebook', component: TypeBookComponent, data: { permission: 'Pages.Administration.Host.Dashboard' } },
                     { path: 'demo-ui-components', component: DemoUiComponentsComponent, data: { permission: 'Pages.DemoUiComponents' } },                  
                     { path: 'install', component: InstallComponent },
                     { path: 'ui-customization', component: UiCustomizationComponent },

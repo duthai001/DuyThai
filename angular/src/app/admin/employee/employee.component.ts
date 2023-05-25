@@ -36,9 +36,8 @@ export class EmployeeComponent extends AppComponentBase {
   selectedRow: any;
 
   body: GetReaderForInputDto = new GetReaderForInputDto();
-
+  
   isExporting = false;
-
   frameworkComponents;
   sorting: string = "";
   paginationParams: PaginationParamsModel;

@@ -34,7 +34,8 @@ using tmss.Localization.Dto;
 using tmss.MstSle;
 using tmss.MstSle.IBorrowBook.Dto;
 using tmss.MstSle.MstSleBook.Dto;
-
+using tmss.MstSle.MstSleTypeOfBook.Dto;
+using tmss.MstSle.MstSleTypeOfCard.Dto;
 using tmss.MstSle.Readerer.Dto;
 
 using tmss.MultiTenancy;
@@ -166,6 +167,8 @@ namespace tmss
             configuration.CreateMap<CreateUserDelegationDto, UserDelegation>();
 
             configuration.CreateMap<CreateOrEditBookDto, Book>().ReverseMap();
+            configuration.CreateMap<CreateOrEditTypeBook, TypeOfBook>().ReverseMap();
+            configuration.CreateMap<CreateOrEditTypeCard, TypeOfCard>().ReverseMap();
 
             /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
 

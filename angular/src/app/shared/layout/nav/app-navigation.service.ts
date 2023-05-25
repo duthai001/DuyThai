@@ -22,7 +22,8 @@ export class AppNavigationService {
             new AppMenuItem('Quản lý độc giả', 'Pages.Administration.Host.Dashboard', 'flaticon-line-graph', '/app/admin/employee'),
             new AppMenuItem('Quản lý sách', 'Pages.Administration.Host.Dashboard', 'flaticon-line-graph', '/app/admin/book'),
             new AppMenuItem('Quản lý mượn sách', null, 'flaticon-line-graph', '/app/admin/borrow-book'),
-            
+            new AppMenuItem('Quản  lý thể loại thẻ', 'Pages.Administration.Host.Dashboard', 'flaticon-line-graph', '/app/admin/typecard'),
+            new AppMenuItem('Quản  lý thể loại sách', 'Pages.Administration.Host.Dashboard', 'flaticon-line-graph', '/app/admin/typebook'),
             new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),          
             new AppMenuItem('Administration', '', 'flaticon-interface-8', '', [], [
                 new AppMenuItem('OrganizationUnits', 'Pages.Administration.OrganizationUnits', 'flaticon-map', '/app/admin/organization-units'),
