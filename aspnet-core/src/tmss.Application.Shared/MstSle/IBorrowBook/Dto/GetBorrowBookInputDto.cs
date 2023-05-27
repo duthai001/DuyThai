@@ -7,6 +7,9 @@ namespace tmss.MstSle.IBorrowBook.Dto
 {
     public class GetBorrowBookInputDto : PagedAndSortedResultRequestDto
     {
-        public string filter { get; set; }
+        public string Reader { get; set; }
+        public DateTime? BorrowDateFrom { get; set; }
+        public DateTime? BorrowDateTo { get; set; }
+        public int? Status { get; set; }
     }
 }

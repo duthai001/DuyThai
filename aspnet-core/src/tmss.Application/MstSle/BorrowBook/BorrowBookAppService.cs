@@ -36,8 +36,12 @@ namespace tmss.MstSle.BorrowBookApp
         public async Task<PagedResultDto<GetAllBorrowBookForViewDto>> GetAll(GetBorrowBookInputDto input)
         {
             var query = from borrow in _borrowBook.GetAll().AsNoTracking()
+                        .Where(e => e.Status == input.Status || input.Status == -1)
+                        .Where(e => input.BorrowDateFrom == null || e.BorrowDate.Date >= input.BorrowDateFrom.Value.Date)
+                        .Where(e => input.BorrowDateTo == null || e.BorrowDate.Date <= input.BorrowDateTo.Value.Date)
 
                         join reader in _readers.GetAll()
+                        .Where(e => e.Name == input.Reader || input.Reader == null)
                         on borrow.ReaderId equals reader.Id
 
                         select new GetAllBorrowBookForViewDto

@@ -1186,16 +1186,25 @@ export class BorrowBookServiceProxy {
     }
 
     /**
-     * @param filter (optional) 
+     * @param reader (optional) 
+     * @param borrowDateFrom (optional) 
+     * @param borrowDateTo (optional) 
+     * @param status (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | null | undefined, sorting: string | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetAllBorrowBookForViewDto> {
+    getAll(reader: string | null | undefined, borrowDateFrom: moment.Moment | null | undefined, borrowDateTo: moment.Moment | null | undefined, status: number | null | undefined, sorting: string | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetAllBorrowBookForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/BorrowBook/GetAll?";
-        if (filter !== undefined)
-            url_ += "filter=" + encodeURIComponent("" + filter) + "&"; 
+        if (reader !== undefined)
+            url_ += "Reader=" + encodeURIComponent("" + reader) + "&"; 
+        if (borrowDateFrom !== undefined)
+            url_ += "BorrowDateFrom=" + encodeURIComponent(borrowDateFrom ? "" + borrowDateFrom.toJSON() : "") + "&"; 
+        if (borrowDateTo !== undefined)
+            url_ += "BorrowDateTo=" + encodeURIComponent(borrowDateTo ? "" + borrowDateTo.toJSON() : "") + "&"; 
+        if (status !== undefined)
+            url_ += "Status=" + encodeURIComponent("" + status) + "&"; 
         if (sorting !== undefined)
             url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
         if (skipCount === null)
