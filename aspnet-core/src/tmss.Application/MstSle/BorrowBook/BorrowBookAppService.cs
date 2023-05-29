@@ -23,8 +23,12 @@ namespace tmss.MstSle.BorrowBookApp
         private readonly IRepository<TypeOfCard, long> _typeOfCard;
 
         public BorrowBookAppService(
-            IRepository<BorrowBook, long> borrowBook
-, IRepository<Readers, long> readers, IRepository<BorrowDetails, long> borrowDetails, IRepository<Book, long> book, IRepository<TypeOfBook, long> typeOfBook, IRepository<TypeOfCard, long> typeOfCard)
+            IRepository<BorrowBook, long> borrowBook, 
+            IRepository<Readers, long> readers, 
+            IRepository<BorrowDetails, long> borrowDetails, 
+            IRepository<Book, long> book, 
+            IRepository<TypeOfBook, long> typeOfBook, 
+            IRepository<TypeOfCard, long> typeOfCard)
         {
             _borrowBook = borrowBook;
             _readers = readers;
@@ -54,6 +58,8 @@ namespace tmss.MstSle.BorrowBookApp
                             AmountBorrow = borrow.AmountBorrow,
                             TotalLoanAmount = borrow.TotalLoanAmount,
                             Status = borrow.Status == 0 ? "Đang mượn" : borrow.Status == 1 ? "Đã trả" : "Đã quá hạn",
+                            ReaderNo = reader.ReaderNo,
+                            BorrowNo = borrow.BorrowNo
                         };
             var totalCount = await query.CountAsync();
             var pagedAndFiltered = query.PageBy(input);
@@ -113,6 +119,7 @@ namespace tmss.MstSle.BorrowBookApp
 
             var borrow = ObjectMapper.Map<BorrowBook>(input);
             borrow.Status = 0;
+            borrow.BorrowNo = CreateBorrowNo();
             var borrowId = await _borrowBook.InsertAndGetIdAsync(borrow);
 
             checkReader.IsStatus = true;
@@ -278,5 +285,15 @@ namespace tmss.MstSle.BorrowBookApp
         }
         #endregion
         #endregion
+
+        public string CreateBorrowNo()
+        {
+            var count = _borrowBook.GetAll().Count() + 1;
+            DateTime currentDay = DateTime.Today;
+            string now = currentDay.ToString("yyyyMMdd");
+
+            string borrowNo = $"PM{now}{count}";
+            return borrowNo;
+        }
     }
 }

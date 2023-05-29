@@ -100,7 +100,7 @@ import { CommonDeclareModule } from '../common-declare.module';
 import { WidgetHostTopStatsComponent } from './customizable-dashboard/widgets/widget-host-top-stats/widget-host-top-stats.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { AgCellButtonRendererComponent } from './grid/ag-cell-button-renderer/ag-cell-button-renderer.component';
-
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
     imports: [
@@ -143,6 +143,7 @@ import { AgCellButtonRendererComponent } from './grid/ag-cell-button-renderer/ag
         DropdownModule,
         ColorPickerModule,
         EditorModule,
+        NgSelectModule
     ],
     declarations: [
         AgDropdownRendererComponent,

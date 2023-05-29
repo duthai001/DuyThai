@@ -12,9 +12,10 @@ namespace tmss.MstSle.IBorrowBook.Dto
         public string DueDate { get; set; }
         public string Day { get; set; }
         public long? TotalLoanAmount { get; set; }
-
+        public string BorrowNo { get; set; }
         public long? AmountBorrow { get; set; }
 
         public string Status { get; set; }
+        public string ReaderNo { get; set; }
     }
 }

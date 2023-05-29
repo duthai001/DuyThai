@@ -98,5 +98,9 @@ export class CreateOrEditBorrowBookComponent extends AppComponentBase {
   updateQuantityOrPayment(totalPaymentAndPrice: { totalLoanAmount: number; amountBorrow: number; }) {
     this.borrowBook.totalLoanAmount = totalPaymentAndPrice.totalLoanAmount;
     this.borrowBook.amountBorrow = totalPaymentAndPrice.amountBorrow;
-}
+  }
+
+  changeReader() {
+    //this.borrowBook.readerId = this.reader;
+  }
 }

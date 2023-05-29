@@ -51,7 +51,8 @@ namespace tmss.MstSle.Readerer
                             ExpiredDayFrom = reader.ExpiredDayFrom.ToString("dd/MM/yyyy"),
                             ExpiredDayTo = reader.ExpiredDayTo.ToString("dd/MM/yyyy"),
                             IsStatus = reader.IsStatus == true ? "Đang mượn sách" : "Chưa mượn sách",
-                            isActive = reader.isActive
+                            isActive = reader.isActive,
+                            ReaderNo = reader.ReaderNo
                         };
             var totalCount = await query.CountAsync();
             var pagedAndFiltered = query.PageBy(input);
@@ -86,6 +87,7 @@ namespace tmss.MstSle.Readerer
                 var mstSleReader = ObjectMapper.Map<Readers>(input);
                 mstSleReader.IsStatus = false;
                 mstSleReader.isActive = true;
+                mstSleReader.ReaderNo = CreateReaderNo();
                 await _reader.InsertAsync(mstSleReader);
             }
         }
@@ -182,5 +184,15 @@ namespace tmss.MstSle.Readerer
             return await Task.Run(() => file);
         }
         #endregion
+
+        private string CreateReaderNo()
+        {
+            var count = _reader.GetAll().Count() + 1;
+            DateTime currentDay = DateTime.Today;
+            string now = currentDay.ToString("yyyyMMdd");
+
+            string readerNo = $"R{now}{count}";
+            return readerNo;
+        }
     }
 }

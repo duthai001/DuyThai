@@ -1,13 +1,28 @@
 <div class="input-group" [ngClass]="className ? className : ''">
-	<span class="input-group-text left-text" *ngIf="text">{{ text }}</span>
+	<span class="input-group-text left-text" *ngIf="text">{{ text }}<a href="javascript:void(0)" *ngIf="isShowInfo" (click)="viewInfo()" class="fas fa-question-circle" style="padding-left: 5px;"></a>
+	  <p *ngIf="isValidate" style="color: red; margin: 0.2rem 0 0.2rem 0.5rem;">*</p></span>
 	<select
-		#input
-		[class.required]="isRequired"
-		class="form-control tmss-form-control"
-		[(ngModel)]="value"
-		[disabled]="isDisabled ? true : null"
-		(change)="changeValue($event)"
+	  #input
+	  *ngIf="!hasFilter"
+	  [class.required]="isRequired"
+	  class="form-control tmss-form-control"
+	  [(ngModel)]="value"
+	  [disabled]="isDisabled ? true : null"
+	  (change)="changeValue($event)"
+	  type="text"
 	>
-		<option *ngFor="let item of items" [value]="item[key]" [selected]="selectedItem !== null && item[key] === selectedItem ? true : false">{{ item[label] }}</option>
+	  <!-- <option [value]="0" disabled selected hidden>{{ placeholder }}</option> -->
+	  <option *ngFor="let item of items" [value]="item ? item[key] : undefined" [selected]="selectedItem !== null && item && item[key] === selectedItem ? true : false">{{ item ? item[label] : undefined }}</option>
 	</select>
-</div>
+  
+	<ng-select #ngSelectComponent [disabled]="isDisabled ? true : null" [class]="isRequired ? 'ng-select-require' : ''" [class.basicHeight]="items?.length != 0" class="ng-custom" [virtualScroll]="true" *ngIf="hasFilter"  [(ngModel)]="value" style="flex:1;display: inline-grid;" (change)="changeValueFilterCbb($event)">
+	  <!-- <ng-option *ngIf="items.length == 0" [value]="undefined"></ng-option> -->
+	  <!-- <ng-template ng-label-tmp let-item="item">
+		  {{inputLabel}}
+		</ng-template> -->
+	  <ng-option *ngFor="let item of items" [value]="item ? item[key] : undefined" >{{ item ? item[label] : "" }}</ng-option>
+   </ng-select>
+  </div>
+  
+  <div *ngIf="hasCheck && isRequired && !isDisabled && (value == null || value == undefined || (value != null && value != undefined && value?.toString().trim() == ''))" class="err-message" style="padding-left: 10px; font-size: 9px;color:red">*Required</div>
+  

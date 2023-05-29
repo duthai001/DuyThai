@@ -27,6 +27,8 @@ namespace tmss.MstSle
 
         [MaxLength(MaxNameLength)]
         public string Address { get; set; }
+        [MaxLength(50)]
+        public string ReaderNo { get; set; }
 
         public DateTime ExpiredDayFrom { get; set; }
 

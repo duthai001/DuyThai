@@ -15,5 +15,6 @@ namespace tmss.MstSle.Readerer.Dto
         public string ExpiredDayTo { get; set; }
         public string IsStatus { get; set; }
         public bool? isActive { get; set; }
+        public string ReaderNo { get; set; }
     }
 }

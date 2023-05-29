@@ -13,6 +13,7 @@ namespace tmss.MstSle
         public int BorrowBookId { get; set; }
         public int ReaderId { get; set; }
         public int IsStatus { get; set; }
+        public long? ReturnBookId { get; set; }
         public long? PunisnhMoney { get; set; }
     }
 }

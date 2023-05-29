@@ -2009,6 +2009,57 @@ export class BorrowBookServiceProxy {
         }
         return _observableOf<GetListReaderForBorrowDto[]>(<any>null);
     }
+
+    /**
+     * @return Success
+     */
+    createBorrowNo(): Observable<string> {
+        let url_ = this.baseUrl + "/api/services/app/BorrowBook/CreateBorrowNo";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateBorrowNo(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateBorrowNo(<any>response_);
+                } catch (e) {
+                    return <Observable<string>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<string>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateBorrowNo(response: HttpResponseBase): Observable<string> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<string>(<any>null);
+    }
 }
 
 @Injectable()
@@ -11143,6 +11194,91 @@ export class ProfileServiceProxy {
 }
 
 @Injectable()
+export class ReturnBookAppserviceServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param reader (optional) 
+     * @param borrowDateFrom (optional) 
+     * @param borrowDateTo (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(reader: string | null | undefined, borrowDateFrom: moment.Moment | null | undefined, borrowDateTo: moment.Moment | null | undefined, sorting: string | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetAllReturnBookForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/ReturnBookAppservice/GetAll?";
+        if (reader !== undefined)
+            url_ += "Reader=" + encodeURIComponent("" + reader) + "&"; 
+        if (borrowDateFrom !== undefined)
+            url_ += "BorrowDateFrom=" + encodeURIComponent(borrowDateFrom ? "" + borrowDateFrom.toJSON() : "") + "&"; 
+        if (borrowDateTo !== undefined)
+            url_ += "BorrowDateTo=" + encodeURIComponent(borrowDateTo ? "" + borrowDateTo.toJSON() : "") + "&"; 
+        if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(<any>response_);
+                } catch (e) {
+                    return <Observable<PagedResultDtoOfGetAllReturnBookForViewDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PagedResultDtoOfGetAllReturnBookForViewDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetAllReturnBookForViewDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetAllReturnBookForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PagedResultDtoOfGetAllReturnBookForViewDto>(<any>null);
+    }
+}
+
+@Injectable()
 export class RoleServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -17077,8 +17213,10 @@ export class GetAllBorrowBookForViewDto implements IGetAllBorrowBookForViewDto {
     dueDate!: string | undefined;
     day!: string | undefined;
     totalLoanAmount!: number | undefined;
+    borrowNo!: string | undefined;
     amountBorrow!: number | undefined;
     status!: string | undefined;
+    readerNo!: string | undefined;
     id!: number | undefined;
 
     constructor(data?: IGetAllBorrowBookForViewDto) {
@@ -17097,8 +17235,10 @@ export class GetAllBorrowBookForViewDto implements IGetAllBorrowBookForViewDto {
             this.dueDate = _data["dueDate"];
             this.day = _data["day"];
             this.totalLoanAmount = _data["totalLoanAmount"];
+            this.borrowNo = _data["borrowNo"];
             this.amountBorrow = _data["amountBorrow"];
             this.status = _data["status"];
+            this.readerNo = _data["readerNo"];
             this.id = _data["id"];
         }
     }
@@ -17117,8 +17257,10 @@ export class GetAllBorrowBookForViewDto implements IGetAllBorrowBookForViewDto {
         data["dueDate"] = this.dueDate;
         data["day"] = this.day;
         data["totalLoanAmount"] = this.totalLoanAmount;
+        data["borrowNo"] = this.borrowNo;
         data["amountBorrow"] = this.amountBorrow;
         data["status"] = this.status;
+        data["readerNo"] = this.readerNo;
         data["id"] = this.id;
         return data; 
     }
@@ -17130,8 +17272,10 @@ export interface IGetAllBorrowBookForViewDto {
     dueDate: string | undefined;
     day: string | undefined;
     totalLoanAmount: number | undefined;
+    borrowNo: string | undefined;
     amountBorrow: number | undefined;
     status: string | undefined;
+    readerNo: string | undefined;
     id: number | undefined;
 }
 
@@ -22871,6 +23015,7 @@ export class GetReaderForViewDto implements IGetReaderForViewDto {
     expiredDayTo!: string | undefined;
     isStatus!: string | undefined;
     isActive!: boolean | undefined;
+    readerNo!: string | undefined;
     id!: number | undefined;
 
     constructor(data?: IGetReaderForViewDto) {
@@ -22892,6 +23037,7 @@ export class GetReaderForViewDto implements IGetReaderForViewDto {
             this.expiredDayTo = _data["expiredDayTo"];
             this.isStatus = _data["isStatus"];
             this.isActive = _data["isActive"];
+            this.readerNo = _data["readerNo"];
             this.id = _data["id"];
         }
     }
@@ -22913,6 +23059,7 @@ export class GetReaderForViewDto implements IGetReaderForViewDto {
         data["expiredDayTo"] = this.expiredDayTo;
         data["isStatus"] = this.isStatus;
         data["isActive"] = this.isActive;
+        data["readerNo"] = this.readerNo;
         data["id"] = this.id;
         return data; 
     }
@@ -22927,6 +23074,7 @@ export interface IGetReaderForViewDto {
     expiredDayTo: string | undefined;
     isStatus: string | undefined;
     isActive: boolean | undefined;
+    readerNo: string | undefined;
     id: number | undefined;
 }
 
@@ -25668,6 +25816,114 @@ export class ChangeUserLanguageDto implements IChangeUserLanguageDto {
 
 export interface IChangeUserLanguageDto {
     languageName: string;
+}
+
+export class GetAllReturnBookForViewDto implements IGetAllReturnBookForViewDto {
+    returnNo!: string | undefined;
+    borrowNo!: string | undefined;
+    readerNo!: string | undefined;
+    readerName!: string | undefined;
+    quantity!: number | undefined;
+    returnBookDate!: string | undefined;
+    id!: number | undefined;
+
+    constructor(data?: IGetAllReturnBookForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.returnNo = _data["returnNo"];
+            this.borrowNo = _data["borrowNo"];
+            this.readerNo = _data["readerNo"];
+            this.readerName = _data["readerName"];
+            this.quantity = _data["quantity"];
+            this.returnBookDate = _data["returnBookDate"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): GetAllReturnBookForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetAllReturnBookForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["returnNo"] = this.returnNo;
+        data["borrowNo"] = this.borrowNo;
+        data["readerNo"] = this.readerNo;
+        data["readerName"] = this.readerName;
+        data["quantity"] = this.quantity;
+        data["returnBookDate"] = this.returnBookDate;
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface IGetAllReturnBookForViewDto {
+    returnNo: string | undefined;
+    borrowNo: string | undefined;
+    readerNo: string | undefined;
+    readerName: string | undefined;
+    quantity: number | undefined;
+    returnBookDate: string | undefined;
+    id: number | undefined;
+}
+
+export class PagedResultDtoOfGetAllReturnBookForViewDto implements IPagedResultDtoOfGetAllReturnBookForViewDto {
+    totalCount!: number;
+    items!: GetAllReturnBookForViewDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfGetAllReturnBookForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetAllReturnBookForViewDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetAllReturnBookForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetAllReturnBookForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface IPagedResultDtoOfGetAllReturnBookForViewDto {
+    totalCount: number;
+    items: GetAllReturnBookForViewDto[] | undefined;
 }
 
 export class RoleListDto implements IRoleListDto {

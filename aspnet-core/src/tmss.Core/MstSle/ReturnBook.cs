@@ -12,7 +12,7 @@ namespace tmss.MstSle
     {
         public int BorrowId { get; set; }
         public int ReaderId { get; set; }
-
+        public long? TotalQuantity { get; set; }
         public DateTime ReturnBookDate { get; set; }
     }
 }

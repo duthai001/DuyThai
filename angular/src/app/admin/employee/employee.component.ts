@@ -63,6 +63,13 @@ export class EmployeeComponent extends AppComponentBase {
             pinned: true,
             width: 45,
           },
+          {
+            headerName: this.l('Mã độc giả'),
+            headerTooltip: this.l('Mã độc giả'),
+            field: 'readerNo',
+            width: 100,
+            cellClass: ["text-right"],
+          },
         ],
       },
       {

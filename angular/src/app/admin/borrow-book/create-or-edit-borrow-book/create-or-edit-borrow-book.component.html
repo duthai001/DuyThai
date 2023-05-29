@@ -19,6 +19,19 @@
                 <div class="form-group">
                   <tmss-combobox required [isRequired]="true" [items]="listReader" [text]="l('Reader')" name="reader"
                   [(ngModel)]="borrowBook.readerId"></tmss-combobox>
+                  <!-- <div class="input-group-text left-text col-2" [ngClass]="textClass">
+                    {{ l('Độc giả') }}
+                  </div>
+                  <p-dropdown class="col-4" [style]="{
+                        width: '100%',
+                        height: '100%',
+                        'border-radius': '0',
+                        'padding-right': '0px',
+                        'background-color': '#ffc'
+                    }" [options]="listReader" [(ngModel)]="borrowBook.readerId" optionLabel="label" optionValue="value"
+                    [dropdownIcon]="" [required]="true" [showClear]="false" [filter]="true" name="SalesPersonId"
+                    (onChange)="changeReader()"></p-dropdown> -->
+                  <!-- <tmss-combobox [items]="salesPersons" [text]="l('SalesCustomerSalesPerson')" [isDisabled]="!isSaleAdmin" name="SalesPersonId" [isRequired]="true" [(ngModel)]="saleContract.salesPersonId"></tmss-combobox> -->
                 </div>
               </div>
               <div class="col-4">
@@ -30,30 +43,29 @@
               </div>
               <div class="col-4">
                 <div class="form-group">
-                  <tmss-datepicker [isRequired]="true" [text]="l('Hạn trả')" required
-                    [(ngModel)]="borrowBook.dueDate" name="dueDate">
+                  <tmss-datepicker [isRequired]="true" [text]="l('Hạn trả')" required [(ngModel)]="borrowBook.dueDate"
+                    name="dueDate">
                   </tmss-datepicker>
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-4">
-                  <div class="form-group">
-                      <tmss-text-input [text]="l('Tổng số sách')" [isDisabled]="true" name="amountBorrow"
-                          [(ngModel)]="borrowBook.amountBorrow"></tmss-text-input>
-                  </div>
+                <div class="form-group">
+                  <tmss-text-input [text]="l('Tổng số sách')" [isDisabled]="true" name="amountBorrow"
+                    [(ngModel)]="borrowBook.amountBorrow"></tmss-text-input>
+                </div>
               </div>
               <div class="col-4">
-                  <div class="form-group">
-                      <div class="form-group input-group">
-                          <span class="col-md-4 input-group-text left-text">{{ l('Tổng tiền sách') }}</span>
-                          <input class="form-control tmss-form-control right-text" currencyMask disabled
-                              [(ngModel)]="borrowBook.totalLoanAmount" [options]="options"
-                              name="totalLoanAmount" />
-                      </div>
+                <div class="form-group">
+                  <div class="form-group input-group">
+                    <span class="col-md-4 input-group-text left-text">{{ l('Tổng tiền sách') }}</span>
+                    <input class="form-control tmss-form-control right-text" currencyMask disabled
+                      [(ngModel)]="borrowBook.totalLoanAmount" [options]="options" name="totalLoanAmount" />
                   </div>
+                </div>
               </div>
-          </div>
+            </div>
           </fieldset>
 
           <!-- Thông tin sách -->

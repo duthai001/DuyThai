@@ -15,7 +15,7 @@ namespace tmss.MstSle
         public DateTime DueDate { get; set; }
         public DateTime Day { get; set; }
         public long TotalLoanAmount { get; set; }
-
+        public string BorrowNo { get; set; }
         public long AmountBorrow { get; set; }
         //1 đang mượn, 0 chưa mượn và có thể cho mượn
         public int Status { get; set; }

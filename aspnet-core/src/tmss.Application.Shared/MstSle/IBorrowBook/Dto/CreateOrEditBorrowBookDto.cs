@@ -17,4 +17,14 @@ namespace tmss.MstSle.IBorrowBook.Dto
 
         public List<CreateBorrowDetailDto> Details { get; set; }
     }
+
+    public class CreateOrEditReturnBookDto : EntityDto<long?>
+    {
+        public int BorrowId { get; set; }
+        public int ReaderId { get; set; }
+        public long? TotalQuantity { get; set; }
+        public DateTime ReturnBookDate { get; set; }
+
+        public List<CreateReturnDetailDto> Details { get; set; }
+    }
 }

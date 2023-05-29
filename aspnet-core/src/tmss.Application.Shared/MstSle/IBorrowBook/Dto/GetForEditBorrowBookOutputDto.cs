@@ -8,4 +8,9 @@ namespace tmss.MstSle.IBorrowBook.Dto
     {
         public CreateOrEditBorrowBookDto BorrowBook { get; set; }
     }
+
+    public class GetForEditReturnBookOutputDto
+    {
+        public CreateOrEditReturnBookDto ReturnBook { get; set; }
+    }
 }

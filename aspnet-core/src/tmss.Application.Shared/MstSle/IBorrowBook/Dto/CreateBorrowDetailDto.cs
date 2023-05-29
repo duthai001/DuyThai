@@ -14,4 +14,11 @@ namespace tmss.MstSle.IBorrowBook.Dto
         public long Money { get; set; }
         public long? SuggestedPrice { get; set; }
     }
+
+    public class CreateReturnDetailDto : EntityDto<long?>
+    {
+        public int ReturnBookId { get; set; }
+        public int BookId { get; set; }
+        public int Quantity { get; set; }
+    }
 }

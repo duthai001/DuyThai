@@ -12,4 +12,10 @@ namespace tmss.MstSle.IBorrowBook.Dto
         public int Quantity { get; set; }
         public long Money { get; set; }
     }
+    public class GetListReturnDetailByIdDto : EntityDto<long>
+    {
+        public string Book { get; set; }
+
+        public int Quantity { get; set; }
+    }
 }
