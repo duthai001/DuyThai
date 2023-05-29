@@ -29,6 +29,8 @@ import { BooksComponent } from './books/books.component';
 import { BorrowBookComponent } from './borrow-book/borrow-book.component';
 import { TypeCardComponent } from './type-card/type-card.component';
 import { TypeBookComponent } from './type-book/type-book.component';
+import { ReturnBookComponent } from './return-book/return-book.component';
+import { PunishComponent } from './punish/punish.component';
 
 
 @NgModule({
@@ -54,6 +56,8 @@ import { TypeBookComponent } from './type-book/type-book.component';
                     { path: 'employee', component: EmployeeComponent, data: { permission: 'Pages.Administration.Host.Dashboard' } },
                     { path: 'book', component: BooksComponent, data: { permission: 'Pages.Administration.Host.Dashboard' } },
                     { path: 'borrow-book', component: BorrowBookComponent, data: { permission: null } },
+                    { path: 'return-book', component: ReturnBookComponent, data: { permission: null } },
+                    { path: 'punish', component: PunishComponent, data: { permission: null } },
                     { path: 'typecard', component: TypeCardComponent, data: { permission: 'Pages.Administration.Host.Dashboard' } },
                     { path: 'typebook', component: TypeBookComponent, data: { permission: 'Pages.Administration.Host.Dashboard' } },
                     { path: 'demo-ui-components', component: DemoUiComponentsComponent, data: { permission: 'Pages.DemoUiComponents' } },                  

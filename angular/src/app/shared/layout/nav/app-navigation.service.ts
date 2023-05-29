@@ -28,8 +28,8 @@ export class AppNavigationService {
             ]),
             new AppMenuItem('4. Quản lý mượn trả', '', 'flaticon2-list', '', [], [
                 new AppMenuItem('4.1 Mượn sách', null, 'flaticon-file-1', '/app/admin/borrow-book'),
-                new AppMenuItem('4.2 Trả sách', null, 'flaticon-interface-4', null),
-                new AppMenuItem('4.3 Phạt', null, 'flaticon-coins', null),
+                new AppMenuItem('4.2 Trả sách', null, 'flaticon-interface-4', '/app/admin/return-book'),
+                new AppMenuItem('4.3 Phạt', null, 'flaticon-coins', '/app/admin/punish'),
             ]),
             //new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),          
             

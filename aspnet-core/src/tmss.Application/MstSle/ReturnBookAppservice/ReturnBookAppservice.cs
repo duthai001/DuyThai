@@ -12,16 +12,16 @@ using System.Threading.Tasks;
 using tmss.MstSle.IBorrowBook.Dto;
 using tmss.MstSle.IReturnBookAppservice.Dto;
 
-namespace tmss.MstSle.ReturnBookAppservice
+namespace tmss.MstSle.ReturnBookAppService
 {
-    public class ReturnBookAppservice : tmssAppServiceBase, IApplicationService
+    public class ReturnBookAppService : tmssAppServiceBase, IApplicationService
     {
         private readonly IRepository<ReturnBook, long> _returnBook;
         private readonly IRepository<ReturnBookDetails, long> _returnBookDetails;
         private readonly IRepository<Readers, long> _readers;
         private readonly IRepository<BorrowBook, long> _borrowBook;
         private readonly IRepository<Book, long> _book;
-        public ReturnBookAppservice
+        public ReturnBookAppService
             (IRepository<ReturnBook, long> returnBook,
             IRepository<Readers, long> readers,
             IRepository<BorrowBook, long> borrowBook,

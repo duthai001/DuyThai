@@ -3,20 +3,19 @@ import { AppCommonModule } from "@app/shared/common/app-common.module";
 import { AgCheckboxRendererComponent } from "@app/shared/common/grid/ag-checkbox-renderer/ag-checkbox-renderer.component";
 import { CustomColDef, FrameworkComponent, GridParams, PaginationParamsModel } from "@app/shared/common/models/base.model";
 import { AppComponentBase } from "@shared/common/app-component-base";
-import { BorrowBookServiceProxy } from "@shared/service-proxies/service-proxies";
 import { ceil } from "lodash";
 import { finalize } from "rxjs/operators";
-import { CreateOrEditBorrowBookComponent } from "./create-or-edit-borrow-book/create-or-edit-borrow-book.component";
 import * as moment from "moment";
+import { ReturnBookServiceProxy } from "@shared/service-proxies/service-proxies";
 
 @Component({
-    selector: 'borrow-book',
-    templateUrl: './borrow-book.component.html',
-    styleUrls: ['./borrow-book.component.less'],
+    selector: 'return-book',
+    templateUrl: './return-book.component.html',
+    styleUrls: ['./return-book.component.less'],
 })
 
-export class BorrowBookComponent extends AppComponentBase {
-    @ViewChild("createOrEditModal") createOrEditModal: CreateOrEditBorrowBookComponent;
+export class ReturnBookComponent extends AppComponentBase {
+    //@ViewChild("createOrEditModal") createOrEditModal: CreateOrEditBorrowBookComponent;
 
     defaultColDef = {
         floatingFilter: true,
@@ -33,7 +32,7 @@ export class BorrowBookComponent extends AppComponentBase {
 
     listStatus = [
         { value: -1, label: "Tất cả" }, 
-        { value: 0, label: "Đang mượn" }, 
+        { value: 0, label: "Đang trả" }, 
         { value: 1, label: "Đã trả" }, 
         { value: 2, label: "Đã quá hạn" }
     ]
@@ -42,8 +41,8 @@ export class BorrowBookComponent extends AppComponentBase {
     status: number = -1;
     firstDay = moment().subtract(1, 'months').startOf('month')
     lastDay = moment();
-    borrowDate: moment.Moment[] = [this.firstDay, this.lastDay];
-    isBorrowDate: boolean;
+    returnDate: moment.Moment[] = [this.firstDay, this.lastDay];
+    isReturnDate: boolean;
 
     columnDefs: CustomColDef[];
     paginationParams: PaginationParamsModel = { pageNum: 1, pageSize: 1000, totalCount: 0 };
@@ -61,14 +60,14 @@ export class BorrowBookComponent extends AppComponentBase {
     loading: boolean = false;
     advancedFiltersAreShown;
 
-    selectedBorrow;
-    selectedBorrowId: number;
+    selectedReturn;
+    selectedReturnId: number;
 
     frameworkComponents: FrameworkComponent = { agCheckboxRendererComponent: AgCheckboxRendererComponent };
 
     constructor(
         injector: Injector,
-        private _borrowBookServiceProxy: BorrowBookServiceProxy,
+        private _returnBookServiceProxy: ReturnBookServiceProxy,
     ) {
         super(injector);
         this.columnDefs = [
@@ -84,56 +83,35 @@ export class BorrowBookComponent extends AppComponentBase {
                 headerName: this.l('Mã độc giả'),
                 headerTooltip: this.l('Mã độc giả'),
                 field: 'readerNo',
-                width: 115,
+                width: 150,
                 cellClass: ["text-right"],
             },
             {
                 headerName: this.l('Tên độc giả'),
                 headerTooltip: this.l('Tên độc giả'),
-                field: 'reader',
-                width: 165,
+                field: 'readerName',
+                width: 200,
                 cellClass: ["text-right"],
             },
             {
-                headerName: this.l('Mã phiếu mượn'),
-                headerTooltip: this.l('Mã phiếu mượn'),
-                field: 'borrowNo',
-                width: 130,
+                headerName: this.l('Mã phiếu trả'),
+                headerTooltip: this.l('Mã phiếu trả'),
+                field: 'returnNo',
+                width: 150,
                 cellClass: ["text-right"],
             },
             {
-                headerName: this.l('Ngày mượn'),
-                headerTooltip: this.l('Ngày mượn'),
-                field: 'borrowDate',
-                width: 115,
+                headerName: this.l('Ngày trả'),
+                headerTooltip: this.l('Ngày trả'),
+                field: 'returnBookDate',
+                width: 150,
                 cellClass: ["text-center"],
-            },
-            {
-                headerName: this.l('Hạn trả'),
-                headerTooltip: this.l('Hạn trả'),
-                field: 'dueDate',
-                width: 115,
-                cellClass: ["text-left"],
             },
             {
                 headerName: this.l('Tổng SL'),
                 headerTooltip: this.l('Tổng SL'),
-                field: 'amountBorrow',
-                width: 50,
-                cellClass: ["text-left"],
-            },
-            {
-                headerName: this.l('Tổng tiền'),
-                headerTooltip: this.l('Tổng tiền'),
-                field: 'totalLoanAmount',
-                width: 90,
-                cellClass: ["text-left"],
-            },
-            {
-                headerName: this.l('Trạng thái'),
-                headerTooltip: this.l('Trạng thái'),
-                field: 'status',
-                width: 115,
+                field: 'quantity',
+                width: 75,
                 cellClass: ["text-left"],
             },
         ];
@@ -160,13 +138,6 @@ export class BorrowBookComponent extends AppComponentBase {
                 field: 'quantity',
                 flex: 1,
                 cellClass: ["text-center"],
-            },
-            {
-                headerName: this.l('Giá niêm yết'),
-                headerTooltip: this.l('Giá niêm yết'),
-                field: 'money',
-                flex: 1,
-                cellClass: ["text-left"],
             },
         ];
     }
@@ -201,11 +172,10 @@ export class BorrowBookComponent extends AppComponentBase {
     getAllProposal() {
         //this.rowData = [];
         this.rowData.length = 0;
-        this._borrowBookServiceProxy.getAll(
+        this._returnBookServiceProxy.getAll(
             this.reader,
-            this.isBorrowDate == true ? this.borrowDate[0] : null,
-            this.isBorrowDate == true ? this.borrowDate[1] : null,
-            this.status,
+            this.isReturnDate == true ? this.returnDate[0] : null,
+            this.isReturnDate == true ? this.returnDate[1] : null,
             this.sorting ?? null,
             this.skipCount,
             this.maxResultCount
@@ -219,7 +189,7 @@ export class BorrowBookComponent extends AppComponentBase {
                 this.params.api.setRowData(this.rowData);
 
                 setTimeout(() => {
-                    if (this.rowData.length && !this.selectedBorrowId) {
+                    if (this.rowData.length && !this.selectedReturnId) {
                         var selectedRow = this.params.api.getSelectedNodes();
                         if (selectedRow.length == 0) {
                             this.params.api.getRowNode('0').selectThisNode(true);
@@ -231,9 +201,9 @@ export class BorrowBookComponent extends AppComponentBase {
     }
 
     onChangeSelection(params) {
-        this.selectedBorrow = params.api.getSelectedRows()[0];
-        if (this.selectedBorrow) {
-            this.selectedBorrowId = this.selectedBorrow.id; //lấy Id của hàng đang select
+        this.selectedReturn = params.api.getSelectedRows()[0];
+        if (this.selectedReturn) {
+            this.selectedReturnId = this.selectedReturn.id; //lấy Id của hàng đang select
         }
         this.getAllDetail();
     }
@@ -244,18 +214,18 @@ export class BorrowBookComponent extends AppComponentBase {
     }
 
     // Create or Edit Borrow Book
-    create() {
-        this.createOrEditModal.show();
-    }
+    // create() {
+    //     this.createOrEditModal.show();
+    // }
 
-    edit() {
-        this.createOrEditModal.show(this.selectedBorrowId);
-    }
+    // edit() {
+    //     this.createOrEditModal.show(this.selectedReturnId);
+    // }
 
     delete() {
         this.message.confirm('', this.l('Anh/Chị có chắc chắn xoá vĩnh viễn đề xuất này?'), (isConfirmed) => {
             if (isConfirmed) {
-                this._borrowBookServiceProxy.delete(this.selectedBorrowId).subscribe(() => {
+                this._returnBookServiceProxy.delete(this.selectedReturnId).subscribe(() => {
                     this.notify.info(this.l("SuccessfullyDeleted"));
                     this.onGridReady(this.paginationParams);
                 })
@@ -264,7 +234,7 @@ export class BorrowBookComponent extends AppComponentBase {
     }
 
     getAllDetail() {
-        this._borrowBookServiceProxy.getListDetail(this.selectedBorrowId)
+        this._returnBookServiceProxy.getListDetail(this.selectedReturnId)
             .subscribe((re) => {
                 this.rowDataDetail = re;
                 //this.paramsDetail.api.setRowData(this.rowDataDetail);
@@ -280,7 +250,7 @@ export class BorrowBookComponent extends AppComponentBase {
     refresh() {
         this.reader = "";
         this.status = undefined;
-        this.isBorrowDate = undefined;
+        this.isReturnDate = undefined;
     }
 
     onChangeFilterShown() {

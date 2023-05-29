@@ -119,6 +119,8 @@ import { TypeCardComponent } from './type-card/type-card.component';
 import { TypeBookComponent } from './type-book/type-book.component';
 import { CreateOrEditTypeBookComponent } from './type-book/create-or-edit-type-book/create-or-edit-type-book.component';
 import { CreateOrEditTypeCardComponent } from './type-card/create-or-edit-type-card/create-or-edit-type-card.component';
+import { ReturnBookComponent } from './return-book/return-book.component';
+import { PunishComponent } from './punish/punish.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -245,7 +247,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         TypeCardComponent,
         TypeBookComponent,
         CreateOrEditTypeBookComponent,
-        CreateOrEditTypeCardComponent
+        CreateOrEditTypeCardComponent,
+        ReturnBookComponent,
+        PunishComponent
     ],
     exports: [
         AddMemberModalComponent,

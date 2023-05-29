@@ -14,5 +14,6 @@ namespace tmss.MstSle
         public int ReaderId { get; set; }
         public long? TotalQuantity { get; set; }
         public DateTime ReturnBookDate { get; set; }
+        public string ReturnNo { get; set; }
     }
 }
