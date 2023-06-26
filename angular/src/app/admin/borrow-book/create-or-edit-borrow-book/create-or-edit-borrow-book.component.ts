@@ -100,7 +100,4 @@ export class CreateOrEditBorrowBookComponent extends AppComponentBase {
     this.borrowBook.amountBorrow = totalPaymentAndPrice.amountBorrow;
   }
 
-  changeReader() {
-    //this.borrowBook.readerId = this.reader;
-  }
 }

@@ -8,7 +8,7 @@ namespace tmss.MstSle.IReturnBookAppservice.Dto
     public class GetReturnBookForInputDto : PagedAndSortedResultRequestDto
     {
         public string Reader { get; set; }
-        public DateTime? BorrowDateFrom { get; set; }
-        public DateTime? BorrowDateTo { get; set; }
+        public DateTime? ReturnDateFrom { get; set; }
+        public DateTime? ReturnDateTo { get; set; }
     }
 }

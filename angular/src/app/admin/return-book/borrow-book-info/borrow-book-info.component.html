@@ -1,0 +1,83 @@
+<div appBsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+  <div class="modal-dialog tmss-modal-md" [busyIf]="loading">
+    <div class="modal-content">
+      <div class="modal-header redline-header">
+        <h4 class="modal-title"><span>{{l("SalesCustomerInfo")}}</span></h4>
+        <button type="button" class="close" (click)="close()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <!-- <div class="col-3">
+            <div class="form-group">
+              <tmss-text-input [(ngModel)]="customerName" [text]="l('SalesCustomerName')"
+                name="IndividualCustomerName"></tmss-text-input>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="form-group">
+              <tmss-text-input [(ngModel)]="customerTel" [text]="l('Phone')" name="customerTel1"></tmss-text-input>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="form-group">
+              <tmss-combobox [items]="hotnesses" [text]="l('SalesCustomerHotness')" name="IndividualCustomerHotness"
+                [(ngModel)]="hotnessId"></tmss-combobox>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="form-group">
+              <tmss-combobox [items]="salesPersons" [text]="l('SalesCustomerSalesPerson')" name="salesPersons"
+                [(ngModel)]="salesPersonId"></tmss-combobox>
+            </div>
+          </div> -->
+        </div>
+        <div class="row">
+          <!-- <div class="col-3">
+            <div class="form-group">
+              <tmss-combobox [items]="provinces" [text]="l('SalesCustomerProvince')" name="provinceId"
+                [(ngModel)]="provinceId" (change)="getDistrictByProvince($event)"></tmss-combobox>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="form-group">
+              <tmss-combobox [items]="districts" [text]="l('SalesCustomerDistrict')" name="districtId"
+                [(ngModel)]="districtId"></tmss-combobox>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="form-group">
+              <tmss-text-input [(ngModel)]="address" [text]="l('Address')" name="address"></tmss-text-input>
+            </div>
+          </div> -->
+          <div class="col-3 text-right">
+            <div class="form-group" style="display: flex;">
+              <button class="tmss-btn btn-outline-primary" type="button" (click)="search()"><i
+                  class="tmss-fa fa fa-search mr-1"></i>{{l("Search")}}</button>
+              <button type="button" class="tmss-btn btn-outline-primary mr-0" (click)="refresh()">
+                <i class="tmss-fa fas fa-redo mr-1"></i>{{l("SalesContractRestore")}}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <grid-table [columnDefs]="columnDefs" [paginationParams]="paginationParams" [defaultColDef]="defaultColDef"
+            (callBackEvent)="callBackGrid($event)" [rowData]="rowData" (changePaginationParams)="changePage($event)"
+            (onChangeSelection)="onChangeSelection($event)" [height]="'450px'"
+            [frameworkComponents]="frameworkComponents">
+          </grid-table>
+        </div>
+        <div class="text-right mt-1">
+          <button class="tmss-btn btn-outline-primary" (click)="save()" [disabled]="!selectedBorrowId">
+            <i class="tmss-fa fas fa-check mr-1"></i>{{l("Select")}}
+          </button>
+          <button type="button" class="tmss-btn btn-outline-dark" (click)="close()"><i class="fas fa-power-off"></i>
+            {{l("Close")}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

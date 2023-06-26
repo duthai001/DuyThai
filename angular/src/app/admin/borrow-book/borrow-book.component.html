@@ -39,7 +39,7 @@
                 <form class="kt-form" autocomplete="off">
                     <div [hidden]="!advancedFiltersAreShown">
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <tmss-text-input [isDisabled]="false" (keyup)="eventEnter($event)" type="text"
                                         [text]="l('Tên độc giả')" name="reader" [(ngModel)]="reader">
@@ -72,7 +72,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <button type="button" class="tmss-btn btn-outline-primary" (click)="refresh()">
                                         <i class="tmss-fa fas fa-redo mr-1"></i>{{l("Refresh")}}

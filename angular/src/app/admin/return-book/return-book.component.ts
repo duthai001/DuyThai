@@ -7,6 +7,7 @@ import { ceil } from "lodash";
 import { finalize } from "rxjs/operators";
 import * as moment from "moment";
 import { ReturnBookServiceProxy } from "@shared/service-proxies/service-proxies";
+import { CreateOrEditReturnBookComponent } from "./create-or-edit-return-book/create-or-edit-return-book.component";
 
 @Component({
     selector: 'return-book',
@@ -15,7 +16,7 @@ import { ReturnBookServiceProxy } from "@shared/service-proxies/service-proxies"
 })
 
 export class ReturnBookComponent extends AppComponentBase {
-    //@ViewChild("createOrEditModal") createOrEditModal: CreateOrEditBorrowBookComponent;
+    @ViewChild("createOrEditModal") createOrEditModal: CreateOrEditReturnBookComponent;
 
     defaultColDef = {
         floatingFilter: true,
@@ -58,7 +59,7 @@ export class ReturnBookComponent extends AppComponentBase {
     totalPages: number = 0;
     params: GridParams;
     loading: boolean = false;
-    advancedFiltersAreShown;
+    advancedFiltersAreShown: boolean = false;
 
     selectedReturn;
     selectedReturnId: number;
@@ -213,14 +214,14 @@ export class ReturnBookComponent extends AppComponentBase {
         this.onGridReady(this.paginationParams);
     }
 
-    // Create or Edit Borrow Book
-    // create() {
-    //     this.createOrEditModal.show();
-    // }
+    //Create or Edit Return Book
+    create() {
+        this.createOrEditModal.show();
+    }
 
-    // edit() {
-    //     this.createOrEditModal.show(this.selectedReturnId);
-    // }
+    edit() {
+        this.createOrEditModal.show(this.selectedReturnId);
+    }
 
     delete() {
         this.message.confirm('', this.l('Anh/Chị có chắc chắn xoá vĩnh viễn đề xuất này?'), (isConfirmed) => {

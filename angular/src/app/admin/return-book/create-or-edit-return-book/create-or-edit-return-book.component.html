@@ -1,0 +1,82 @@
+<div appBsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{ backdrop: 'static' }">
+    <div class="modal-dialog tmss-modal-lg" [busyIf]="loading">
+        <div class="modal-content">
+            <div class="modal-header redline-header">
+                <h4 class="modal-title">
+                    <span>{{ l('Tạo mới/Cập nhật') }}</span>
+                </h4>
+                <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form *ngIf="active" #packageForm="ngForm" novalidate autocomplete="off">
+                <div class="modal-body" style="padding-top: 5px">
+                    <!-- Thông tin người liên hệ -->
+                    <fieldset class="fieldset-border" style="width: 100%; border: 1px solid" *ngIf="!isShowContactInfo">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <tmss-combobox required [isRequired]="true" [items]="listReader" [isDisabled]="true"
+                                        [text]="l('Reader')" name="reader"
+                                        [(ngModel)]="returnBook.readerId"></tmss-combobox>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <tmss-datepicker [isRequired]="true" [text]="l('Ngày trả')" required [isDisabled]="true"
+                                        [(ngModel)]="returnBookDate" name="borrowDate">
+                                    </tmss-datepicker>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <tmss-text-input [text]="l('Tổng số sách')" [isDisabled]="true" name="amountBorrow"
+                                        [(ngModel)]="returnBook.totalQuantity" ></tmss-text-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <button type="button" class="tmss-btn btn-outline-primary ml-0"
+                                        (click)="showBorrowModal()">
+                                        {{
+                                        l(
+                                        'SaleContractGenerateFromInquiryCustomers'
+                                        )
+                                        }}
+                                        <i class="fas fa-user-plus"></i>
+                                    </button>
+                                    <!-- <button type="button" class="tmss-btn btn-outline-primary"
+                                        (click)="refreshCustomer()">
+                                        {{ l('Refresh') }}
+                                        <i class="fas fa-redo"></i>
+                                    </button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Thông tin sách -->
+                    <fieldset class="fieldset-border" style="width: 100%; border: 1px solid" *ngIf="!isShowDetailInfo">
+                        <app-create-or-edit-return-book-detail #detailReturnModal [selectedBorrowId]="selectedBorrowId"
+                            (modalSave)="showVehicleDetail()"
+                            (updateQuantityOrPayment)="updateQuantityOrPayment($event)">
+                        </app-create-or-edit-return-book-detail>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="tmss-btn btn-outline-primary" (click)="save()" [buttonBusy]="saving">
+                        <i class="fa fa-save mr-1"></i>
+                        <span>{{ l('Lưu tất cả') }}</span>
+                    </button>
+                    <button [disabled]="saving" type="button" class="tmss-btn btn-outline-dark" (click)="close()">
+                        <i class="fas fa-power-off"></i> {{ l('Close') }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<app-borrow-book-info #borrowModal (modalSave)="getSelectedBorrow($event)"></app-borrow-book-info>

@@ -20,44 +20,43 @@ namespace tmss.MstSle.ReturnBookAppService
         private readonly IRepository<ReturnBookDetails, long> _returnBookDetails;
         private readonly IRepository<Readers, long> _readers;
         private readonly IRepository<BorrowBook, long> _borrowBook;
+        private readonly IRepository<BorrowDetails, long> _borrowDetails;
         private readonly IRepository<Book, long> _book;
         public ReturnBookAppService
             (IRepository<ReturnBook, long> returnBook,
             IRepository<Readers, long> readers,
             IRepository<BorrowBook, long> borrowBook,
-            IRepository<ReturnBookDetails, long> returnBookDetails, 
+            IRepository<ReturnBookDetails, long> returnBookDetails,
             IRepository<Book, long> book
-            )
+, IRepository<BorrowDetails, long> borrowDetails)
         {
             _returnBook = returnBook;
             _readers = readers;
             _borrowBook = borrowBook;
             _returnBookDetails = returnBookDetails;
             _book = book;
+            _borrowDetails = borrowDetails;
         }
 
         public async Task<PagedResultDto<GetAllReturnBookForViewDto>> GetAll(GetReturnBookForInputDto input)
         {
             var query = from re in _returnBook.GetAll().AsNoTracking()
-                        .Where(e => input.BorrowDateFrom == null || e.ReturnBookDate.Date >= input.BorrowDateFrom.Value.Date)
-                        .Where(e => input.BorrowDateTo == null || e.ReturnBookDate.Date <= input.BorrowDateTo.Value.Date)
-
+                        .Where(e => input.ReturnDateFrom == null || e.ReturnBookDate.Date >= input.ReturnDateFrom.Value.Date)
+                        .Where(e => input.ReturnDateTo == null || e.ReturnBookDate.Date <= input.ReturnDateTo.Value.Date)
                         join reader in _readers.GetAll()
-                        .Where(e => e.Name == input.Reader || input.Reader == null)
+                        .Where(e => e.Name.Contains(input.Reader) || input.Reader == null)
                         on re.ReaderId equals reader.Id
-
                         select new GetAllReturnBookForViewDto
                         {
                             Id = re.Id,
                             ReaderName = reader.Name,
                             ReaderNo = reader.ReaderNo,
-                            //ReturnNo = re.re,
                             ReturnBookDate = re.ReturnBookDate.ToString("dd/MM/yyyy"),
                             Quantity = re.TotalQuantity,
+                            ReturnNo=re.ReturnNo,
                         };
             var totalCount = await query.CountAsync();
             var pagedAndFiltered = query.PageBy(input);
-
             return new PagedResultDto<GetAllReturnBookForViewDto>(
                 totalCount,
                 await pagedAndFiltered.ToListAsync()
@@ -70,7 +69,6 @@ namespace tmss.MstSle.ReturnBookAppService
 
                         join book in _book.GetAll()
                         on br.BookId equals book.Id
-
                         select new GetListReturnDetailByIdDto
                         {
                             Id = br.Id,
@@ -95,10 +93,12 @@ namespace tmss.MstSle.ReturnBookAppService
 
         public async Task Create(CreateOrEditReturnBookDto input)
         {
-            var re = ObjectMapper.Map<BorrowBook>(input);
-            re.Status = 0;
-            re.BorrowNo = CreateReturnNo();
-            var returnId = await _borrowBook.InsertAndGetIdAsync(re);
+            var re = ObjectMapper.Map<ReturnBook>(input);
+            re.ReturnNo = CreateReturnNo();
+            var returnId = await _returnBook.InsertAndGetIdAsync(re);
+            var reader = await _readers.FirstOrDefaultAsync(e => e.Id == input.ReaderId);
+            reader.IsStatus = false;
+            await _readers.UpdateAsync(reader);
 
             foreach (CreateReturnDetailDto detail in input.Details)
             {
@@ -109,7 +109,7 @@ namespace tmss.MstSle.ReturnBookAppService
 
         public async Task<GetForEditReturnBookOutputDto> GetForEdit(EntityDto<long> input)
         {
-            var re = await _borrowBook.FirstOrDefaultAsync(input.Id);
+            var re = await _returnBook.FirstOrDefaultAsync(input.Id);
 
             var output = new GetForEditReturnBookOutputDto { ReturnBook = ObjectMapper.Map<CreateOrEditReturnBookDto>(re) };
 
@@ -118,7 +118,7 @@ namespace tmss.MstSle.ReturnBookAppService
 
         public async Task Update(CreateOrEditReturnBookDto input)
         {
-            var re = await _borrowBook.FirstOrDefaultAsync((long)input.Id);
+            var re = await _returnBook.FirstOrDefaultAsync((long)input.Id);
 
             foreach (CreateReturnDetailDto detail in input.Details)
             {
@@ -131,7 +131,7 @@ namespace tmss.MstSle.ReturnBookAppService
 
         public async Task Delete(long Id)
         {
-            await _borrowBook.DeleteAsync(Id);
+            await _returnBook.DeleteAsync(Id);
         }
         #endregion
 
@@ -142,48 +142,45 @@ namespace tmss.MstSle.ReturnBookAppService
             {
                 await CreateDetail(input);
             }
-            else
-            {
-                await UpdateDetail(input);
-            }
+           
         }
 
         public async Task CreateDetail(CreateReturnDetailDto input)
         {
             var checkQuantity = _book.FirstOrDefault(e => e.Id == input.BookId);
-
-            if (checkQuantity.Amuont < input.Quantity)
+            var checkslmuon = _borrowDetails.FirstOrDefault(e => e.BookId == input.BookId);
+            if(checkslmuon.Quantity<input.Quantity)
             {
-                throw new UserFriendlyException("Số lượng sách mượn vượt quá số lượng sách hiện có!");
+                throw new UserFriendlyException("Số lượng sách trả lớn hơn số lượng sách mượn!");
+               
             }
-
             var detail = ObjectMapper.Map<ReturnBookDetails>(input);
             detail.ReturnBookId = input.ReturnBookId;
             await _returnBookDetails.InsertAsync(detail);
 
-            checkQuantity.Amuont = checkQuantity.Amuont - input.Quantity;
+            checkQuantity.Amuont = checkQuantity.Amuont + input.Quantity;
             await _book.UpdateAsync(checkQuantity);
         }
 
-        public async Task UpdateDetail(CreateReturnDetailDto input)
-        {
-            var detail = await _returnBookDetails.FirstOrDefaultAsync(e => e.Id == input.Id);
+        //public async Task UpdateDetail(CreateReturnDetailDto input)
+        //{
+        //    var detail = await _returnBookDetails.FirstOrDefaultAsync(e => e.Id == input.Id);
 
-            var checkQuantity = _book.FirstOrDefault(e => e.Id == input.BookId);
+        //    var checkQuantity = _book.FirstOrDefault(e => e.Id == input.BookId);
 
-            if (detail.Quantity > input.Quantity)
-            {
-                checkQuantity.Amuont = checkQuantity.Amuont + (detail.Quantity - input.Quantity);
-            }
-            if (detail.Quantity < input.Quantity)
-            {
-                checkQuantity.Amuont = checkQuantity.Amuont - (input.Quantity - detail.Quantity);
-            }
+        //    if (detail.Quantity > input.Quantity)
+        //    {
+        //        checkQuantity.Amuont = checkQuantity.Amuont + (detail.Quantity - input.Quantity);
+        //    }
+        //    if (detail.Quantity < input.Quantity)
+        //    {
+        //        checkQuantity.Amuont = checkQuantity.Amuont - (input.Quantity - detail.Quantity);
+        //    }
 
-            await _book.UpdateAsync(checkQuantity);
+        //    await _book.UpdateAsync(checkQuantity);
 
-            ObjectMapper.Map(input, detail);
-        }
+        //    ObjectMapper.Map(input, detail);
+        //}
 
         public async Task DeleteDetail(long DetailId)
         {
@@ -246,12 +243,76 @@ namespace tmss.MstSle.ReturnBookAppService
 
         public string CreateReturnNo()
         {
-            var count = _borrowBook.GetAll().Count() + 1;
+            var count = _returnBook.GetAll().Count() + 1;
             DateTime currentDay = DateTime.Today;
             string now = currentDay.ToString("yyyyMMdd");
-
             string borrowNo = $"PT{now}{count}";
             return borrowNo;
+        }
+
+        public async Task<List<CreateReturnDetailDto>> GetListDetailByBorrow(long? borrowId)
+        {
+            var query = from borrowDetail in _borrowDetails.GetAll().AsNoTracking().Where(e => e.BorrowId == borrowId)
+
+                        join book in _book.GetAll().AsNoTracking()
+                        on borrowDetail.BookId equals book.Id
+
+                        select new CreateReturnDetailDto()
+                        {
+                            BookId = book.Id,
+                            Quantity = borrowDetail.Quantity,
+                        };
+
+            return await query.ToListAsync();
+        }
+
+        public async Task<PagedResultDto<GetListBorrowBookForReturnDto>> GetListBorrow(GetBorrowBookInputDto input)
+        {
+            var query = from borrow in _borrowBook.GetAll().AsNoTracking()
+                        .Where(e => e.Status == 1)
+                        .Where(e => input.BorrowDateFrom == null || e.BorrowDate.Date >= input.BorrowDateFrom.Value.Date)
+                        .Where(e => input.BorrowDateTo == null || e.BorrowDate.Date <= input.BorrowDateTo.Value.Date)
+
+                        join reader in _readers.GetAll()
+                        .Where(e => e.Name == input.Reader || input.Reader == null)
+                        on borrow.ReaderId equals reader.Id
+
+                        select new GetListBorrowBookForReturnDto
+                        {
+                            Id = borrow.Id,
+                            BorrowId = borrow.Id,
+                            Reader = reader.Name,
+                            BorrowDate = borrow.BorrowDate.ToString("dd/MM/yyyy"),
+                            DueDate = borrow.DueDate.ToString("dd/MM/yyyy"),
+                            //Day = borrow.Day.ToString("dd/MM/yyyy"),
+                            AmountBorrow = borrow.AmountBorrow,
+                            TotalLoanAmount = borrow.TotalLoanAmount,
+                            BorrowNo = borrow.BorrowNo,
+                            ReaderId = reader.Id,
+                        };
+            var totalCount = await query.CountAsync();
+            var pagedAndFiltered = query.PageBy(input);
+
+            return new PagedResultDto<GetListBorrowBookForReturnDto>(
+                totalCount,
+                await pagedAndFiltered.ToListAsync()
+            );
+        }
+
+        public async Task<List<ReturnBookDetails>> GetListDetailFromBorrow(long? borrowId)
+        {
+            var query = from borrow in _borrowBook.GetAll().AsNoTracking().Where(e => e.Status == 1 && e.Id == borrowId)
+
+                        join brDetail in _borrowDetails.GetAll().AsNoTracking()
+                        on borrow.Id equals brDetail.BorrowId
+
+                        select new ReturnBookDetails()
+                        {
+                            BookId = brDetail.BookId,
+                            Quantity = brDetail.Quantity,
+                        };
+
+            return await query.ToListAsync();
         }
     }
 }

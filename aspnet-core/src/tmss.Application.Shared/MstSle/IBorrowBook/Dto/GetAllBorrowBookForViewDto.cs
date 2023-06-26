@@ -14,7 +14,6 @@ namespace tmss.MstSle.IBorrowBook.Dto
         public long? TotalLoanAmount { get; set; }
         public string BorrowNo { get; set; }
         public long? AmountBorrow { get; set; }
-
         public string Status { get; set; }
         public string ReaderNo { get; set; }
     }

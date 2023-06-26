@@ -3,7 +3,7 @@
         <div [class]="containerClass">
             <div class="kt-subheader__main">
                 <h3 class="kt-subheader__title">
-                    <span>{{ l("Quản lý sách") }}</span>
+                    <span>{{ l("Quản lý phạt") }}</span>
                 </h3>
                 <span class="kt-subheader__separator kt-subheader__separator--v"></span>
             </div>
@@ -31,7 +31,7 @@
                             <grid-table [columnDefs]="columnDefs" [paginationParams]="paginationParams"
                                 [defaultColDef]="defaultColDef" (callBackEvent)="callBackGrid($event)"
                                 [rowData]="rowData" (changePaginationParams)="changePage($event)"
-                                [height]="'300px'"
+                                [height]="'600px'"
                                 [frameworkComponents]="frameworkComponents">
                             </grid-table>
                         </div>

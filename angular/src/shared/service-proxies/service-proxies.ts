@@ -11282,21 +11282,21 @@ export class ReturnBookServiceProxy {
 
     /**
      * @param reader (optional) 
-     * @param borrowDateFrom (optional) 
-     * @param borrowDateTo (optional) 
+     * @param returnDateFrom (optional) 
+     * @param returnDateTo (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(reader: string | null | undefined, borrowDateFrom: moment.Moment | null | undefined, borrowDateTo: moment.Moment | null | undefined, sorting: string | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetAllReturnBookForViewDto> {
+    getAll(reader: string | null | undefined, returnDateFrom: moment.Moment | null | undefined, returnDateTo: moment.Moment | null | undefined, sorting: string | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetAllReturnBookForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/ReturnBook/GetAll?";
         if (reader !== undefined)
             url_ += "Reader=" + encodeURIComponent("" + reader) + "&"; 
-        if (borrowDateFrom !== undefined)
-            url_ += "BorrowDateFrom=" + encodeURIComponent(borrowDateFrom ? "" + borrowDateFrom.toJSON() : "") + "&"; 
-        if (borrowDateTo !== undefined)
-            url_ += "BorrowDateTo=" + encodeURIComponent(borrowDateTo ? "" + borrowDateTo.toJSON() : "") + "&"; 
+        if (returnDateFrom !== undefined)
+            url_ += "ReturnDateFrom=" + encodeURIComponent(returnDateFrom ? "" + returnDateFrom.toJSON() : "") + "&"; 
+        if (returnDateTo !== undefined)
+            url_ += "ReturnDateTo=" + encodeURIComponent(returnDateTo ? "" + returnDateTo.toJSON() : "") + "&"; 
         if (sorting !== undefined)
             url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
         if (skipCount === null)
@@ -11780,58 +11780,6 @@ export class ReturnBookServiceProxy {
     }
 
     /**
-     * @param body (optional) 
-     * @return Success
-     */
-    updateDetail(body: CreateReturnDetailDto | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/ReturnBook/UpdateDetail";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",			
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json", 
-            })
-        };
-
-        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processUpdateDetail(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processUpdateDetail(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processUpdateDetail(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
-    }
-
-    /**
      * @param detailId (optional) 
      * @return Success
      */
@@ -12151,6 +12099,198 @@ export class ReturnBookServiceProxy {
             }));
         }
         return _observableOf<string>(<any>null);
+    }
+
+    /**
+     * @param borrowId (optional) 
+     * @return Success
+     */
+    getListDetailByBorrow(borrowId: number | null | undefined): Observable<CreateReturnDetailDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/ReturnBook/GetListDetailByBorrow?";
+        if (borrowId !== undefined)
+            url_ += "borrowId=" + encodeURIComponent("" + borrowId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetListDetailByBorrow(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetListDetailByBorrow(<any>response_);
+                } catch (e) {
+                    return <Observable<CreateReturnDetailDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<CreateReturnDetailDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetListDetailByBorrow(response: HttpResponseBase): Observable<CreateReturnDetailDto[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(CreateReturnDetailDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<CreateReturnDetailDto[]>(<any>null);
+    }
+
+    /**
+     * @param reader (optional) 
+     * @param borrowDateFrom (optional) 
+     * @param borrowDateTo (optional) 
+     * @param status (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getListBorrow(reader: string | null | undefined, borrowDateFrom: moment.Moment | null | undefined, borrowDateTo: moment.Moment | null | undefined, status: number | null | undefined, sorting: string | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetListBorrowBookForReturnDto> {
+        let url_ = this.baseUrl + "/api/services/app/ReturnBook/GetListBorrow?";
+        if (reader !== undefined)
+            url_ += "Reader=" + encodeURIComponent("" + reader) + "&"; 
+        if (borrowDateFrom !== undefined)
+            url_ += "BorrowDateFrom=" + encodeURIComponent(borrowDateFrom ? "" + borrowDateFrom.toJSON() : "") + "&"; 
+        if (borrowDateTo !== undefined)
+            url_ += "BorrowDateTo=" + encodeURIComponent(borrowDateTo ? "" + borrowDateTo.toJSON() : "") + "&"; 
+        if (status !== undefined)
+            url_ += "Status=" + encodeURIComponent("" + status) + "&"; 
+        if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetListBorrow(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetListBorrow(<any>response_);
+                } catch (e) {
+                    return <Observable<PagedResultDtoOfGetListBorrowBookForReturnDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PagedResultDtoOfGetListBorrowBookForReturnDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetListBorrow(response: HttpResponseBase): Observable<PagedResultDtoOfGetListBorrowBookForReturnDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetListBorrowBookForReturnDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PagedResultDtoOfGetListBorrowBookForReturnDto>(<any>null);
+    }
+
+    /**
+     * @param borrowId (optional) 
+     * @return Success
+     */
+    getListDetailFromBorrow(borrowId: number | null | undefined): Observable<ReturnBookDetails[]> {
+        let url_ = this.baseUrl + "/api/services/app/ReturnBook/GetListDetailFromBorrow?";
+        if (borrowId !== undefined)
+            url_ += "borrowId=" + encodeURIComponent("" + borrowId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetListDetailFromBorrow(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetListDetailFromBorrow(<any>response_);
+                } catch (e) {
+                    return <Observable<ReturnBookDetails[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ReturnBookDetails[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetListDetailFromBorrow(response: HttpResponseBase): Observable<ReturnBookDetails[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(ReturnBookDetails.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ReturnBookDetails[]>(<any>null);
     }
 }
 
@@ -27100,6 +27240,202 @@ export class GetForEditReturnBookOutputDto implements IGetForEditReturnBookOutpu
 
 export interface IGetForEditReturnBookOutputDto {
     returnBook: CreateOrEditReturnBookDto;
+}
+
+export class GetListBorrowBookForReturnDto implements IGetListBorrowBookForReturnDto {
+    borrowId!: number;
+    readerId!: number;
+    totalQuantity!: number | undefined;
+    borrowNo!: string | undefined;
+    reader!: string | undefined;
+    totalLoanAmount!: number | undefined;
+    amountBorrow!: number | undefined;
+    borrowDate!: string | undefined;
+    dueDate!: string | undefined;
+    id!: number;
+
+    constructor(data?: IGetListBorrowBookForReturnDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.borrowId = _data["borrowId"];
+            this.readerId = _data["readerId"];
+            this.totalQuantity = _data["totalQuantity"];
+            this.borrowNo = _data["borrowNo"];
+            this.reader = _data["reader"];
+            this.totalLoanAmount = _data["totalLoanAmount"];
+            this.amountBorrow = _data["amountBorrow"];
+            this.borrowDate = _data["borrowDate"];
+            this.dueDate = _data["dueDate"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): GetListBorrowBookForReturnDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetListBorrowBookForReturnDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["borrowId"] = this.borrowId;
+        data["readerId"] = this.readerId;
+        data["totalQuantity"] = this.totalQuantity;
+        data["borrowNo"] = this.borrowNo;
+        data["reader"] = this.reader;
+        data["totalLoanAmount"] = this.totalLoanAmount;
+        data["amountBorrow"] = this.amountBorrow;
+        data["borrowDate"] = this.borrowDate;
+        data["dueDate"] = this.dueDate;
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface IGetListBorrowBookForReturnDto {
+    borrowId: number;
+    readerId: number;
+    totalQuantity: number | undefined;
+    borrowNo: string | undefined;
+    reader: string | undefined;
+    totalLoanAmount: number | undefined;
+    amountBorrow: number | undefined;
+    borrowDate: string | undefined;
+    dueDate: string | undefined;
+    id: number;
+}
+
+export class PagedResultDtoOfGetListBorrowBookForReturnDto implements IPagedResultDtoOfGetListBorrowBookForReturnDto {
+    totalCount!: number;
+    items!: GetListBorrowBookForReturnDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfGetListBorrowBookForReturnDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetListBorrowBookForReturnDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetListBorrowBookForReturnDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetListBorrowBookForReturnDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface IPagedResultDtoOfGetListBorrowBookForReturnDto {
+    totalCount: number;
+    items: GetListBorrowBookForReturnDto[] | undefined;
+}
+
+export class ReturnBookDetails implements IReturnBookDetails {
+    returnBookId!: number;
+    bookId!: number;
+    quantity!: number;
+    isDeleted!: boolean;
+    deleterUserId!: number | undefined;
+    deletionTime!: moment.Moment | undefined;
+    lastModificationTime!: moment.Moment | undefined;
+    lastModifierUserId!: number | undefined;
+    creationTime!: moment.Moment;
+    creatorUserId!: number | undefined;
+    id!: number;
+
+    constructor(data?: IReturnBookDetails) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.returnBookId = _data["returnBookId"];
+            this.bookId = _data["bookId"];
+            this.quantity = _data["quantity"];
+            this.isDeleted = _data["isDeleted"];
+            this.deleterUserId = _data["deleterUserId"];
+            this.deletionTime = _data["deletionTime"] ? moment(_data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = _data["lastModifierUserId"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): ReturnBookDetails {
+        data = typeof data === 'object' ? data : {};
+        let result = new ReturnBookDetails();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["returnBookId"] = this.returnBookId;
+        data["bookId"] = this.bookId;
+        data["quantity"] = this.quantity;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface IReturnBookDetails {
+    returnBookId: number;
+    bookId: number;
+    quantity: number;
+    isDeleted: boolean;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    id: number;
 }
 
 export class RoleListDto implements IRoleListDto {

@@ -121,6 +121,9 @@ import { CreateOrEditTypeBookComponent } from './type-book/create-or-edit-type-b
 import { CreateOrEditTypeCardComponent } from './type-card/create-or-edit-type-card/create-or-edit-type-card.component';
 import { ReturnBookComponent } from './return-book/return-book.component';
 import { PunishComponent } from './punish/punish.component';
+import { CreateOrEditReturnBookComponent } from './return-book/create-or-edit-return-book/create-or-edit-return-book.component';
+import { CreateOrEditReturnBookDetailComponent } from './return-book/create-or-edit-return-book-detail/create-or-edit-return-book-detail.component';
+import { BorrowBookInfoComponent } from './return-book/borrow-book-info/borrow-book-info.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -249,7 +252,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         CreateOrEditTypeBookComponent,
         CreateOrEditTypeCardComponent,
         ReturnBookComponent,
-        PunishComponent
+        PunishComponent,
+        CreateOrEditReturnBookComponent,
+        CreateOrEditReturnBookDetailComponent,
+        BorrowBookInfoComponent
     ],
     exports: [
         AddMemberModalComponent,

@@ -3,7 +3,7 @@
         <div [class]="containerClass">
             <div class="kt-subheader__main">
                 <h3 class="kt-subheader__title">
-                    <span>{{ l("Quản lý mượn sách") }}</span>
+                    <span>{{ l("Quản lý trả sách") }}</span>
                 </h3>
                 <span class="kt-subheader__separator kt-subheader__separator--v"></span>
             </div>
@@ -15,13 +15,13 @@
                     <button class="tmss-btn btn-outline-primary" *ngIf="advancedFiltersAreShown"
                         (click)="onChangeFilterShown()"><i class="fa fa-search"></i>
                         {{l("HideAdvancedFilters")}}</button>
-                    <!-- <button type="button" class="tmss-btn btn-outline-primary" (click)="create()">
+                    <button type="button" class="tmss-btn btn-outline-primary" (click)="create()">
                         <i class="fa fa-plus"></i> {{l("Add")}}
                     </button>
                     <button type="button" class="tmss-btn btn-outline-primary" [disabled]="!selectedReturn"
                         (click)="edit()">
                         <i class="fa fa-edit"></i> {{ l("Edit") }}
-                    </button> -->
+                    </button>
                     <button type="button" class="tmss-btn btn-outline-danger" (click)="delete()" [disabled]="!selectedReturn">
                         <i class="fa fa-trash"></i> {{ l("Delete") }}
                     </button>
@@ -64,7 +64,7 @@
                                         [(date)]="returnDate" />
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <button type="button" class="tmss-btn btn-outline-primary" (click)="refresh()">
                                         <i class="tmss-fa fas fa-redo mr-1"></i>{{l("Refresh")}}
@@ -79,7 +79,7 @@
                     </div>
                 </form>
                 <!--Employee table-->
-                <div class="row align-items-center">
+                <!-- <div class="row align-items-center">
                     <div class="col-md-12">
                         <div class="item ">
                             <div class="tbContent ">{{ l("Danh sách mượn sách") }}</div>
@@ -91,7 +91,7 @@
                             </grid-table>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="row align-items-center">
                     <div class="col-md-12">
@@ -111,4 +111,4 @@
         </div>
     </div>
 </div>
-<!-- <app-create-or-edit-borrow-book #createOrEditModal (modalSave)="onGridReady(paginationParams)"></app-create-or-edit-borrow-book> -->
+<app-create-or-edit-return-book #createOrEditModal (modalSave)="onGridReady(paginationParams)"></app-create-or-edit-return-book>
