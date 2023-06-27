@@ -269,12 +269,12 @@ namespace tmss.MstSle.ReturnBookAppService
         public async Task<PagedResultDto<GetListBorrowBookForReturnDto>> GetListBorrow(GetBorrowBookInputDto input)
         {
             var query = from borrow in _borrowBook.GetAll().AsNoTracking()
-                        .Where(e => e.Status == 1)
+                        .Where(e => e.Status == 0)
                         .Where(e => input.BorrowDateFrom == null || e.BorrowDate.Date >= input.BorrowDateFrom.Value.Date)
                         .Where(e => input.BorrowDateTo == null || e.BorrowDate.Date <= input.BorrowDateTo.Value.Date)
 
                         join reader in _readers.GetAll()
-                        .Where(e => e.Name == input.Reader || input.Reader == null)
+                        .Where(e => e.Name.Contains(input.Reader) || input.Reader == null)
                         on borrow.ReaderId equals reader.Id
 
                         select new GetListBorrowBookForReturnDto
@@ -301,7 +301,7 @@ namespace tmss.MstSle.ReturnBookAppService
 
         public async Task<List<ReturnBookDetails>> GetListDetailFromBorrow(long? borrowId)
         {
-            var query = from borrow in _borrowBook.GetAll().AsNoTracking().Where(e => e.Status == 1 && e.Id == borrowId)
+            var query = from borrow in _borrowBook.GetAll().AsNoTracking().Where(e => e.Status == 0 && e.Id == borrowId)
 
                         join brDetail in _borrowDetails.GetAll().AsNoTracking()
                         on borrow.Id equals brDetail.BorrowId

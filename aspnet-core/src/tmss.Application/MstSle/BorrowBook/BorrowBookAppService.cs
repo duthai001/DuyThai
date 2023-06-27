@@ -47,7 +47,8 @@ namespace tmss.MstSle.BorrowBookApp
                         join reader in _readers.GetAll()
                         .Where(e => e.Name == input.Reader || input.Reader == null)
                         on borrow.ReaderId equals reader.Id
-
+                          into readers
+                        from reader in readers.DefaultIfEmpty()
                         select new GetAllBorrowBookForViewDto
                         {
                             Id = borrow.Id,

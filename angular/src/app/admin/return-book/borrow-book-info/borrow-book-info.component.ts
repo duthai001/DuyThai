@@ -122,13 +122,7 @@ export class BorrowBookInfoComponent extends AppComponentBase {
               width: 90,
               cellClass: ["text-left"],
           },
-          {
-              headerName: this.l('Trạng thái'),
-              headerTooltip: this.l('Trạng thái'),
-              field: 'status',
-              width: 115,
-              cellClass: ["text-left"],
-          },
+         
       ];
   }
   ngOnInit() {
