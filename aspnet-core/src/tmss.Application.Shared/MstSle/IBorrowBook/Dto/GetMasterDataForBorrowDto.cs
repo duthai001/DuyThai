@@ -8,5 +8,7 @@ namespace tmss.MstSle.IBorrowBook.Dto
     {
         public List<GetListBookForBorrowDto> ListBook { get; set; }
         public List<GetListBookPriceForBorrowDto> ListPrice { get; set; }
+        public List<GetListBookQuantityForBorrowDto> ListQuantity { get; set; }
+
     }
 }

@@ -17,6 +17,12 @@ namespace tmss.MstSle.IBorrowBook.Dto
         public long? Price { get; set; }
     }
 
+    public class GetListBookQuantityForBorrowDto : EntityDto<long?>
+    {
+        public long? BookId { get; set; }
+        public long? Quantity { get; set; }
+    }
+
     public class GetListReaderForBorrowDto : EntityDto<long?>
     {
         public string Name { get; set; }

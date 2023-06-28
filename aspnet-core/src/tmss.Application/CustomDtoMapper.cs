@@ -176,6 +176,8 @@ namespace tmss
             configuration.CreateMap<CreateOrEditOrderDto, OrderBook>().ReverseMap();
             configuration.CreateMap<CreateBorrowDetailDto, BorrowDetails>().ReverseMap();
             configuration.CreateMap<CreateOrEditBorrowBookDto, BorrowBook>().ReverseMap();
+            configuration.CreateMap<CreateReturnDetailDto, ReturnBookDetails>().ReverseMap();
+            configuration.CreateMap<CreateOrEditReturnBookDto, ReturnBook>().ReverseMap();
         }
     }
 }

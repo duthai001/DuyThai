@@ -42,36 +42,6 @@
             </div>
           </div>
         </div>
-        <!-- <div class="row">
-          <div class="col-3">
-            <div class="form-group">
-              <tmss-text-input [(ngModel)]="reader" [text]="l('Reader')"
-                name="IndividualCustomerName"></tmss-text-input>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="form-group">
-              <tmss-checkbox name="isBorrowDate" [rightCheckbox]="true" [(ngModel)]="isBorrowDate"
-                [text]="l('Ngày mượn sách')">
-              </tmss-checkbox>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="form-group">
-              <input name="deliveryDateFilter" type="text" class="form-control dateRangePicker right-picker"
-                [disabled]="!isBorrowDate" bsDaterangepicker dateRangePickerMomentModifier [(date)]="borrowDate" />
-            </div>
-          </div>
-          <div class="col-3 ">
-            <div class="form-group" style="display: flex;">
-              <button class="tmss-btn btn-outline-primary" type="button" (click)="search()"><i
-                  class="tmss-fa fa fa-search mr-1"></i>{{l("Tìm")}}</button>
-              <button type="button" class="tmss-btn btn-outline-primary mr-0" (click)="refresh()">
-                <i class="tmss-fa fas fa-redo mr-1"></i>{{l("Làm mới")}}
-              </button>
-            </div>
-          </div>
-        </div> -->
         <div class="row align-items-center">
           <div class="col-md-12">
             <grid-table [columnDefs]="columnDefs" [paginationParams]="paginationParams" [defaultColDef]="defaultColDef"

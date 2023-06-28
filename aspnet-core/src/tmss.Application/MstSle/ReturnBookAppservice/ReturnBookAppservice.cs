@@ -22,13 +22,15 @@ namespace tmss.MstSle.ReturnBookAppService
         private readonly IRepository<BorrowBook, long> _borrowBook;
         private readonly IRepository<BorrowDetails, long> _borrowDetails;
         private readonly IRepository<Book, long> _book;
+        private readonly IRepository<Punish, long> _punish;
         public ReturnBookAppService
             (IRepository<ReturnBook, long> returnBook,
             IRepository<Readers, long> readers,
             IRepository<BorrowBook, long> borrowBook,
             IRepository<ReturnBookDetails, long> returnBookDetails,
-            IRepository<Book, long> book
-, IRepository<BorrowDetails, long> borrowDetails)
+            IRepository<Book, long> book,   
+            IRepository<BorrowDetails, long> borrowDetails,
+            IRepository<Punish, long> punish)
         {
             _returnBook = returnBook;
             _readers = readers;
@@ -36,6 +38,7 @@ namespace tmss.MstSle.ReturnBookAppService
             _returnBookDetails = returnBookDetails;
             _book = book;
             _borrowDetails = borrowDetails;
+            _punish = punish;
         }
 
         public async Task<PagedResultDto<GetAllReturnBookForViewDto>> GetAll(GetReturnBookForInputDto input)
@@ -94,17 +97,40 @@ namespace tmss.MstSle.ReturnBookAppService
         public async Task Create(CreateOrEditReturnBookDto input)
         {
             var re = ObjectMapper.Map<ReturnBook>(input);
+            int a = 1;
             re.ReturnNo = CreateReturnNo();
             var returnId = await _returnBook.InsertAndGetIdAsync(re);
             var reader = await _readers.FirstOrDefaultAsync(e => e.Id == input.ReaderId);
             reader.IsStatus = false;
             await _readers.UpdateAsync(reader);
-
+            var borrow = await _borrowBook.FirstOrDefaultAsync(e => e.Id == input.BorrowId);
+            if (borrow != null)
+            {
+                borrow.Status = a;
+                await _borrowBook.UpdateAsync(borrow);
+            }
+            var money = 0;
             foreach (CreateReturnDetailDto detail in input.Details)
             {
                 detail.ReturnBookId = (int)returnId;
                 await CreateOrEditDetail(detail);
+                var checkslmuon = _borrowDetails.FirstOrDefault(e => e.BorrowId == input.BorrowId && e.BookId==detail.BookId).Quantity;
+                var bookmoney = _borrowDetails.FirstOrDefault(e => e.BookId == detail.BookId).Money;
+                if (checkslmuon>detail.Quantity)
+                {
+                    money+= (checkslmuon -(int)detail.Quantity)*(int)bookmoney;
+                }    
             }
+            if(money !=0)
+            {
+                Punish ps= new Punish();
+                ps.BorrowBookId = input.BorrowId;
+                ps.ReaderId= input.ReaderId;
+                ps.IsStatus = 1;
+                ps.PunisnhMoney= money;
+                ps.ReturnBookId= returnId;
+                _punish.Insert(ps);
+            }    
         }
 
         public async Task<GetForEditReturnBookOutputDto> GetForEdit(EntityDto<long> input)
@@ -138,7 +164,7 @@ namespace tmss.MstSle.ReturnBookAppService
         #region Thêm - Sửa - Xóa chi tiết mượn sách
         public async Task CreateOrEditDetail(CreateReturnDetailDto input)
         {
-            if (input.Id == null)
+            if (input.Id == 0)
             {
                 await CreateDetail(input);
             }
@@ -152,7 +178,6 @@ namespace tmss.MstSle.ReturnBookAppService
             if(checkslmuon.Quantity<input.Quantity)
             {
                 throw new UserFriendlyException("Số lượng sách trả lớn hơn số lượng sách mượn!");
-               
             }
             var detail = ObjectMapper.Map<ReturnBookDetails>(input);
             detail.ReturnBookId = input.ReturnBookId;
@@ -161,27 +186,6 @@ namespace tmss.MstSle.ReturnBookAppService
             checkQuantity.Amuont = checkQuantity.Amuont + input.Quantity;
             await _book.UpdateAsync(checkQuantity);
         }
-
-        //public async Task UpdateDetail(CreateReturnDetailDto input)
-        //{
-        //    var detail = await _returnBookDetails.FirstOrDefaultAsync(e => e.Id == input.Id);
-
-        //    var checkQuantity = _book.FirstOrDefault(e => e.Id == input.BookId);
-
-        //    if (detail.Quantity > input.Quantity)
-        //    {
-        //        checkQuantity.Amuont = checkQuantity.Amuont + (detail.Quantity - input.Quantity);
-        //    }
-        //    if (detail.Quantity < input.Quantity)
-        //    {
-        //        checkQuantity.Amuont = checkQuantity.Amuont - (input.Quantity - detail.Quantity);
-        //    }
-
-        //    await _book.UpdateAsync(checkQuantity);
-
-        //    ObjectMapper.Map(input, detail);
-        //}
-
         public async Task DeleteDetail(long DetailId)
         {
             await _returnBookDetails.DeleteAsync(DetailId);
@@ -313,6 +317,23 @@ namespace tmss.MstSle.ReturnBookAppService
                         };
 
             return await query.ToListAsync();
+        }
+
+        public async Task Siu(CreateReturnDetailDto input)
+        {
+            var re = ObjectMapper.Map<ReturnBookDetails>(input);
+            await _returnBookDetails.InsertAsync(re);
+            //re.ReturnNo = CreateReturnNo();
+            //var returnId = await _returnBook.InsertAndGetIdAsync(re);
+            //var reader = await _readers.FirstOrDefaultAsync(e => e.Id == input.ReaderId);
+            //reader.IsStatus = false;
+            //await _readers.UpdateAsync(reader);
+
+            //foreach (CreateReturnDetailDto detail in input.Details)
+            //{
+            //    detail.ReturnBookId = (int)returnId;
+            //    await CreateOrEditDetail(detail);
+            //}
         }
     }
 }

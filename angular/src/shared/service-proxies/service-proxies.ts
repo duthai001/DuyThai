@@ -12292,6 +12292,58 @@ export class ReturnBookServiceProxy {
         }
         return _observableOf<ReturnBookDetails[]>(<any>null);
     }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    siu(body: CreateReturnDetailDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ReturnBook/Siu";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processSiu(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processSiu(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processSiu(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
 }
 
 @Injectable()
@@ -18647,9 +18699,54 @@ export interface IGetListBookPriceForBorrowDto {
     id: number | undefined;
 }
 
+export class GetListBookQuantityForBorrowDto implements IGetListBookQuantityForBorrowDto {
+    bookId!: number | undefined;
+    quantity!: number | undefined;
+    id!: number | undefined;
+
+    constructor(data?: IGetListBookQuantityForBorrowDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.bookId = _data["bookId"];
+            this.quantity = _data["quantity"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): GetListBookQuantityForBorrowDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetListBookQuantityForBorrowDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["bookId"] = this.bookId;
+        data["quantity"] = this.quantity;
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface IGetListBookQuantityForBorrowDto {
+    bookId: number | undefined;
+    quantity: number | undefined;
+    id: number | undefined;
+}
+
 export class GetMasterDataForBorrowDto implements IGetMasterDataForBorrowDto {
     listBook!: GetListBookForBorrowDto[] | undefined;
     listPrice!: GetListBookPriceForBorrowDto[] | undefined;
+    listQuantity!: GetListBookQuantityForBorrowDto[] | undefined;
 
     constructor(data?: IGetMasterDataForBorrowDto) {
         if (data) {
@@ -18671,6 +18768,11 @@ export class GetMasterDataForBorrowDto implements IGetMasterDataForBorrowDto {
                 this.listPrice = [] as any;
                 for (let item of _data["listPrice"])
                     this.listPrice!.push(GetListBookPriceForBorrowDto.fromJS(item));
+            }
+            if (Array.isArray(_data["listQuantity"])) {
+                this.listQuantity = [] as any;
+                for (let item of _data["listQuantity"])
+                    this.listQuantity!.push(GetListBookQuantityForBorrowDto.fromJS(item));
             }
         }
     }
@@ -18694,6 +18796,11 @@ export class GetMasterDataForBorrowDto implements IGetMasterDataForBorrowDto {
             for (let item of this.listPrice)
                 data["listPrice"].push(item.toJSON());
         }
+        if (Array.isArray(this.listQuantity)) {
+            data["listQuantity"] = [];
+            for (let item of this.listQuantity)
+                data["listQuantity"].push(item.toJSON());
+        }
         return data; 
     }
 }
@@ -18701,6 +18808,7 @@ export class GetMasterDataForBorrowDto implements IGetMasterDataForBorrowDto {
 export interface IGetMasterDataForBorrowDto {
     listBook: GetListBookForBorrowDto[] | undefined;
     listPrice: GetListBookPriceForBorrowDto[] | undefined;
+    listQuantity: GetListBookQuantityForBorrowDto[] | undefined;
 }
 
 export class GetListReaderForBorrowDto implements IGetListReaderForBorrowDto {

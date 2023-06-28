@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Injector, OnInit, Output, ViewChild } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { CreateOrEditReturnBookDto, GetListBorrowBookForReturnDto, ReturnBookServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateOrEditReturnBookDto, CreateReturnDetailDto, GetListBorrowBookForReturnDto, ReturnBookDetails, ReturnBookServiceProxy } from '@shared/service-proxies/service-proxies';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
 import { CreateOrEditReturnBookDetailComponent } from '../create-or-edit-return-book-detail/create-or-edit-return-book-detail.component';
 import * as moment from 'moment';
 import { BorrowBookInfoComponent } from '../borrow-book-info/borrow-book-info.component';
+import { forEach } from 'lodash';
 
 @Component({
   selector: 'app-create-or-edit-return-book',
@@ -35,6 +36,9 @@ export class CreateOrEditReturnBookComponent extends AppComponentBase {
   selectedBorrow: GetListBorrowBookForReturnDto = new GetListBorrowBookForReturnDto();
   isShowDetailInfo: boolean = false;
 
+
+  returnBookDetail  : CreateReturnDetailDto[]= [];
+  // rowData: CreateBorrowDetailDto[] = [];
   emit: boolean = false;
 
   constructor(
@@ -65,7 +69,7 @@ export class CreateOrEditReturnBookComponent extends AppComponentBase {
         });
     }
   }
-
+a;
   save(): void {
     this.saving = true;
     if (this.detailReturnModal.rowData.length == 0) {
@@ -73,18 +77,18 @@ export class CreateOrEditReturnBookComponent extends AppComponentBase {
       this.saving = false;
       return;
     }
-    this.returnBook.details = this.detailReturnModal.rowData;
-    this.returnBook.returnBookDate = this.returnBookDate;
-    this._returnBookServiceProxy.createOrEdit(this.returnBook).pipe(
-      finalize(() => {
-        this.saving = false;
-      })).subscribe(() => {
-        this.notify.info(this.l("SavedSuccessfully"));
-        this.close();
-        this.modalSave.emit(null);
-        this.returnBook = null;
-        this.saving = false;
-      });
+      this.returnBook.details = this.detailReturnModal.rowData;
+      this.returnBook.returnBookDate = this.returnBookDate;
+      this._returnBookServiceProxy.create(this.returnBook).pipe(
+        finalize(() => {
+          this.saving = false;
+        })).subscribe(() => {
+          this.notify.info(this.l("SavedSuccessfully"));
+          this.close();
+          this.modalSave.emit(null);
+          this.returnBook = null;
+          this.saving = false;
+        });
   }
 
   close() {
@@ -119,16 +123,17 @@ export class CreateOrEditReturnBookComponent extends AppComponentBase {
 
     this.returnBook.borrowId = this.selectedBorrow.borrowId;
     this.returnBook.readerId = this.selectedBorrow.readerId;
-    this.returnBook.totalQuantity = this.selectedBorrow.totalLoanAmount;
-    // if (!this.selectedBorrowId) {
-    //   this.getCarAttention(this.returnBook.borrowId);
-    // }
+    this.returnBook.totalQuantity = this.selectedBorrow.amountBorrow;
+    if (!this.selectedBorrowId) {
+      this.getReturnDetai(this.returnBook.borrowId);
+    }
 
   }
 
-  getCarAttention(borrowId) {
+  getReturnDetai(borrowId) {
       this._returnBookServiceProxy.getListDetailFromBorrow(borrowId).subscribe(result => {
           this.detailReturnModal.getListDetailByBorrow(result);
+          this.returnBookDetail=result;
       })
   }
 }

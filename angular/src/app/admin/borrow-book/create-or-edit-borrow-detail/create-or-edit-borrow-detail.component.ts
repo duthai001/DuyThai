@@ -31,7 +31,7 @@ export class CreateOrEditBorrowDetailComponent extends AppComponentBase {
   checkClickBtn: boolean = false;
   loadingSave: boolean = false;
   saving: boolean = false;
-
+	
   totalPaymentAndPrice = {
     totalLoanAmount: 0,
     amountBorrow: 0

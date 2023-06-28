@@ -9,6 +9,7 @@ import { CustomFunctionService } from '@app/shared/common/services/custom-functi
 import { DataFormatService } from '@app/shared/common/services/data-format.service';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { CreateReturnDetailDto, ReturnBookServiceProxy } from '@shared/service-proxies/service-proxies';
+import { log } from 'console';
 import { finalize } from 'rxjs/operators';
 
 @Component({
@@ -37,7 +38,7 @@ export class CreateOrEditReturnBookDetailComponent extends AppComponentBase {
   };
 
 	listBook = [];
-	listPrice = [];
+	listQuantity = [];
 
   defaultColDef = {
 		rowHeight: 50,
@@ -89,10 +90,11 @@ export class CreateOrEditReturnBookDetailComponent extends AppComponentBase {
 	this.rowData = [];
 	this.getMasterVehicleData();
   }
-
+  
   //Detail tab
 
   getMasterVehicleData() {
+	//console.log(this.selectedBorrowId.borrowId);
 		this._returnBookServiceProxy.getMasterData()
 			.pipe(finalize(() => {
 				this.detailColumnDefs = [
@@ -137,7 +139,7 @@ export class CreateOrEditReturnBookDetailComponent extends AppComponentBase {
 			}))
 			.subscribe((result) => {
 				this.listBook = result.listBook;
-				this.listPrice = result.listPrice;
+				this.listQuantity = result.listQuantity;
         		this.getListVehicle();
 				this.params.api.setRowData(this.rowData);
 			})
@@ -246,6 +248,8 @@ export class CreateOrEditReturnBookDetailComponent extends AppComponentBase {
 
   getListDetailByBorrow(listDetail) {
 		this.rowData = listDetail;
+		console.log(listDetail);
+		
 		this.params.api.setRowData(this.rowData);
 		this.getTotal();
 	}

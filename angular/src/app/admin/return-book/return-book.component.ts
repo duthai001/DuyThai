@@ -8,6 +8,7 @@ import { finalize } from "rxjs/operators";
 import * as moment from "moment";
 import { ReturnBookServiceProxy } from "@shared/service-proxies/service-proxies";
 import { CreateOrEditReturnBookComponent } from "./create-or-edit-return-book/create-or-edit-return-book.component";
+import { CreateOrEditReturnBookDetailComponent } from "./create-or-edit-return-book-detail/create-or-edit-return-book-detail.component";
 
 @Component({
     selector: 'return-book',
@@ -17,7 +18,7 @@ import { CreateOrEditReturnBookComponent } from "./create-or-edit-return-book/cr
 
 export class ReturnBookComponent extends AppComponentBase {
     @ViewChild("createOrEditModal") createOrEditModal: CreateOrEditReturnBookComponent;
-
+    @ViewChild("returnbooldetailModal") returnbooldetailModal: CreateOrEditReturnBookDetailComponent;
     defaultColDef = {
         floatingFilter: true,
         filter: 'agTextColumnFilter',

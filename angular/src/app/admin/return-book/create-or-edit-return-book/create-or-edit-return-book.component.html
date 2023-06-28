@@ -31,7 +31,7 @@
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
-                                    <tmss-text-input [text]="l('Tổng số sách')" [isDisabled]="true" name="amountBorrow"
+                                    <tmss-text-input [text]="l('Tổng số sách đã mượn')" [isDisabled]="true" name="amountBorrow"
                                         [(ngModel)]="returnBook.totalQuantity" ></tmss-text-input>
                                 </div>
                             </div>
@@ -43,16 +43,11 @@
                                         (click)="showBorrowModal()">
                                         {{
                                         l(
-                                        'SaleContractGenerateFromInquiryCustomers'
+                                        'Chọn độc giả trả sách'
                                         )
                                         }}
                                         <i class="fas fa-user-plus"></i>
                                     </button>
-                                    <!-- <button type="button" class="tmss-btn btn-outline-primary"
-                                        (click)="refreshCustomer()">
-                                        {{ l('Refresh') }}
-                                        <i class="fas fa-redo"></i>
-                                    </button> -->
                                 </div>
                             </div>
                         </div>
