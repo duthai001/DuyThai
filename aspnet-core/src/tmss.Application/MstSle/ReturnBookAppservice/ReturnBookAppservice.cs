@@ -116,12 +116,17 @@ namespace tmss.MstSle.ReturnBookAppService
                 await CreateOrEditDetail(detail);
                 var checkslmuon = _borrowDetails.FirstOrDefault(e => e.BorrowId == input.BorrowId && e.BookId==detail.BookId).Quantity;
                 var bookmoney = _borrowDetails.FirstOrDefault(e => e.BookId == detail.BookId).Money;
+                if (checkslmuon < detail.Quantity)
+                {
+                    throw new UserFriendlyException("Số lượng sách trả lớn hơn số lượng sách mượn!");
+                }
                 if (checkslmuon>detail.Quantity)
                 {
                     money+= (checkslmuon -(int)detail.Quantity)*(int)bookmoney;
                 }    
             }
-            if(money !=0)
+           
+            if (money !=0)
             {
                 Punish ps= new Punish();
                 ps.BorrowBookId = input.BorrowId;
@@ -175,10 +180,7 @@ namespace tmss.MstSle.ReturnBookAppService
         {
             var checkQuantity = _book.FirstOrDefault(e => e.Id == input.BookId);
             var checkslmuon = _borrowDetails.FirstOrDefault(e => e.BookId == input.BookId);
-            if(checkslmuon.Quantity<input.Quantity)
-            {
-                throw new UserFriendlyException("Số lượng sách trả lớn hơn số lượng sách mượn!");
-            }
+            
             var detail = ObjectMapper.Map<ReturnBookDetails>(input);
             detail.ReturnBookId = input.ReturnBookId;
             await _returnBookDetails.InsertAsync(detail);
