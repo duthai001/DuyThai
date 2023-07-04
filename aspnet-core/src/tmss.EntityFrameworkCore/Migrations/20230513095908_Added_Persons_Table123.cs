@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using tmss.MstSle;
 
 namespace tmss.Migrations
 {
@@ -53,13 +54,14 @@ namespace tmss.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeleterUserId = table.Column<long>(nullable: true),
                     DeletionTime = table.Column<DateTime>(nullable: true),
-                    RedearId = table.Column<int>(nullable: false),
+                    ReaderId = table.Column<int>(nullable: false),
                     BorrowDate = table.Column<DateTime>(nullable: false),
                     DueDate = table.Column<DateTime>(nullable: false),
                     Day = table.Column<DateTime>(nullable: false),
                     TotalLoanAmount = table.Column<long>(nullable: false),
                     AmountBorrow = table.Column<long>(nullable: false),
-                    Status = table.Column<int>(nullable: false)
+                    Status = table.Column<int>(nullable: false),
+                    BorrowNo=table.Column<string>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -105,7 +107,8 @@ namespace tmss.Migrations
                     BorrowBookId = table.Column<int>(nullable: false),
                     ReaderId = table.Column<int>(nullable: false),
                     IsStatus = table.Column<int>(nullable: false),
-                    PunisnhMoney = table.Column<long>(nullable: true)
+                    PunisnhMoney = table.Column<long>(nullable: true),
+                    ReturnBookId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -127,7 +130,9 @@ namespace tmss.Migrations
                     DeletionTime = table.Column<DateTime>(nullable: true),
                     BorrowId = table.Column<int>(nullable: false),
                     ReaderId = table.Column<int>(nullable: false),
-                    ReturnBookDate = table.Column<DateTime>(nullable: false)
+                    ReturnBookDate = table.Column<DateTime>(nullable: false),
+                    TotalQuantity= table.Column<long>(nullable: true),
+                    ReturnNo=table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

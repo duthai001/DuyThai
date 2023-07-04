@@ -26,7 +26,9 @@ namespace tmss.Migrations
                     Address = table.Column<string>(maxLength: 255, nullable: false),
                     ExpiredDayFrom = table.Column<DateTime>(nullable: false),
                     ExpiredDayTo = table.Column<DateTime>(nullable: false),
-                    IsStatus = table.Column<bool>(nullable: false)
+                    IsStatus = table.Column<bool>(nullable: false),
+                    isActive=table.Column<bool>(nullable: true),
+                    ReaderNo=table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
