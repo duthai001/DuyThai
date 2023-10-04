@@ -48,7 +48,7 @@ export function appInitializerFactory(
 
             AppPreBootstrap.run(appBaseUrl, () => {
 
-                handleLogoutRequest(injector.get(AppAuthService));
+               handleLogoutRequest(injector.get(AppAuthService));
                 initializeLocalForage();
 
                 if (UrlHelper.isInstallUrl(location.href)) {

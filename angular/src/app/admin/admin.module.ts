@@ -105,25 +105,8 @@ import { EntityDynamicParameterComponent } from './dynamic-entity-parameters/ent
 import { CreateEntityDynamicParameterModalComponent } from './dynamic-entity-parameters/entity-dynamic-parameter/create-entity-dynamic-parameter-modal.component';
 import { EntityDynamicParameterValueComponent } from './dynamic-entity-parameters/entity-dynamic-parameter/entity-dynamic-parameter-value/entity-dynamic-parameter-value.component';
 import { ManageEntityDynamicParameterValuesModalComponent } from './dynamic-entity-parameters/entity-dynamic-parameter/entity-dynamic-parameter-value/manage-entity-dynamic-parameter-values-modal.component';
-import { EmployeeComponent } from './employee/employee.component';
-import { CreateOrEditEmployeeComponent } from './employee/create-or-edit-employee/create-or-edit-employee.component';
-import { BooksComponent } from './books/books.component';
-import { CreateOrEditBooksComponent } from './books/create-or-edit-books/create-or-edit-books.component';
+
 import { NgxCurrencyModule } from 'ngx-currency';
-import { ImportBooksComponent } from './books/import-books/import-books.component';
-import { CreateOrEditOrderBookComponent } from './books/create-or-edit-order-book/create-or-edit-order-book.component';
-import { BorrowBookComponent } from './borrow-book/borrow-book.component';
-import { CreateOrEditBorrowDetailComponent } from './borrow-book/create-or-edit-borrow-detail/create-or-edit-borrow-detail.component';
-import { CreateOrEditBorrowBookComponent } from './borrow-book/create-or-edit-borrow-book/create-or-edit-borrow-book.component';
-import { TypeCardComponent } from './type-card/type-card.component';
-import { TypeBookComponent } from './type-book/type-book.component';
-import { CreateOrEditTypeBookComponent } from './type-book/create-or-edit-type-book/create-or-edit-type-book.component';
-import { CreateOrEditTypeCardComponent } from './type-card/create-or-edit-type-card/create-or-edit-type-card.component';
-import { ReturnBookComponent } from './return-book/return-book.component';
-import { PunishComponent } from './punish/punish.component';
-import { CreateOrEditReturnBookComponent } from './return-book/create-or-edit-return-book/create-or-edit-return-book.component';
-import { CreateOrEditReturnBookDetailComponent } from './return-book/create-or-edit-return-book-detail/create-or-edit-return-book-detail.component';
-import { BorrowBookInfoComponent } from './return-book/borrow-book-info/borrow-book-info.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -237,25 +220,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         EntityDynamicParameterComponent,
         CreateEntityDynamicParameterModalComponent,
         EntityDynamicParameterValueComponent,
-        ManageEntityDynamicParameterValuesModalComponent,
-        EmployeeComponent,
-        CreateOrEditEmployeeComponent,
-        BooksComponent,
-        CreateOrEditBooksComponent,
-        ImportBooksComponent,
-        CreateOrEditOrderBookComponent,
-        BorrowBookComponent,
-        CreateOrEditBorrowDetailComponent,
-        CreateOrEditBorrowBookComponent,
-        TypeCardComponent,
-        TypeBookComponent,
-        CreateOrEditTypeBookComponent,
-        CreateOrEditTypeCardComponent,
-        ReturnBookComponent,
-        PunishComponent,
-        CreateOrEditReturnBookComponent,
-        CreateOrEditReturnBookDetailComponent,
-        BorrowBookInfoComponent
+        ManageEntityDynamicParameterValuesModalComponent
+       
     ],
     exports: [
         AddMemberModalComponent,

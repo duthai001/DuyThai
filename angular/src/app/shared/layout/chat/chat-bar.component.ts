@@ -455,17 +455,17 @@ export class ChatBarComponent extends AppComponentBase implements OnInit, AfterV
 
         this.sendingMessage = true;
         const tenancyName = this.appSession.tenant ? this.appSession.tenant.tenancyName : null;
-        this._chatSignalrService.sendMessage({
-            tenantId: this.selectedUser.friendTenantId,
-            userId: this.selectedUser.friendUserId,
-            message: this.chatMessage,
-            tenancyName: tenancyName,
-            userName: this.appSession.user.userName,
-            profilePictureId: this.appSession.user.profilePictureId
-        }, () => {
-            this.chatMessage = '';
-            this.sendingMessage = false;
-        });
+        // this._chatSignalrService.sendMessage({
+        //     tenantId: this.selectedUser.friendTenantId,
+        //     userId: this.selectedUser.friendUserId,
+        //     message: this.chatMessage,
+        //     tenancyName: tenancyName,
+        //     userName: this.appSession.user.userName,
+        //     profilePictureId: this.appSession.user.profilePictureId
+        // }, () => {
+        //     this.chatMessage = '';
+        //     this.sendingMessage = false;
+        // });
     }
 
     reversePinned(): void {

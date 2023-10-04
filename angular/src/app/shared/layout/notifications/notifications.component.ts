@@ -50,23 +50,23 @@ export class NotificationsComponent extends AppComponentBase {
         return moment(date).fromNow();
     }
 
-    formatRecord(record: any): IFormattedUserNotification {
-        return this._userNotificationHelper.format(record, false);
-    }
+    // formatRecord(record: any): IFormattedUserNotification {
+    //     return this._userNotificationHelper.format(record, false);
+    // }
 
-    formatNotification(record: any): string {
-        const formattedRecord = this.formatRecord(record);
-        return abp.utils.truncateStringWithPostfix(formattedRecord.text, 120);
-    }
+    // formatNotification(record: any): string {
+    //     const formattedRecord = this.formatRecord(record);
+    //     return abp.utils.truncateStringWithPostfix(formattedRecord.text, 120);
+    // }
 
-    formatNotifications(records: any[]): any[] {
-        const formattedRecords = [];
-        for (const record of records) {
-            record.formattedNotification = this.formatRecord(record);
-            formattedRecords.push(record);
-        }
-        return formattedRecords;
-    }
+    // formatNotifications(records: any[]): any[] {
+    //     const formattedRecords = [];
+    //     for (const record of records) {
+    //         record.formattedNotification = this.formatRecord(record);
+    //         formattedRecords.push(record);
+    //     }
+    //     return formattedRecords;
+    // }
 
     truncateString(text: any, length: number): string {
         return abp.utils.truncateStringWithPostfix(text, length);
@@ -81,17 +81,17 @@ export class NotificationsComponent extends AppComponentBase {
 
         this.primengTableHelper.showLoadingIndicator();
 
-        this._notificationService.getUserNotifications(
-            this.readStateFilter === 'ALL' ? undefined : UserNotificationState.Unread,
-            moment(this.dateRange[0]),
-            moment(this.dateRange[1]).endOf('day'),
-            this.primengTableHelper.getMaxResultCount(this.paginator, event),
-            this.primengTableHelper.getSkipCount(this.paginator, event)
-        ).pipe(finalize(() => this.primengTableHelper.hideLoadingIndicator())).subscribe((result) => {
-            this.primengTableHelper.totalRecordsCount = result.totalCount;
-            this.primengTableHelper.records = this.formatNotifications(result.items);
-            this.primengTableHelper.hideLoadingIndicator();
-        });
+        // this._notificationService.getUserNotifications(
+        //     this.readStateFilter === 'ALL' ? undefined : UserNotificationState.Unread,
+        //     moment(this.dateRange[0]),
+        //     moment(this.dateRange[1]).endOf('day'),
+        //     this.primengTableHelper.getMaxResultCount(this.paginator, event),
+        //     this.primengTableHelper.getSkipCount(this.paginator, event)
+        // ).pipe(finalize(() => this.primengTableHelper.hideLoadingIndicator())).subscribe((result) => {
+        //     this.primengTableHelper.totalRecordsCount = result.totalCount;
+        //     this.primengTableHelper.records = this.formatNotifications(result.items);
+        //     this.primengTableHelper.hideLoadingIndicator();
+        // });
     }
 
     setAllNotificationsAsRead(): void {

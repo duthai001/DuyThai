@@ -1,11 +1,10 @@
 <div [@routerTransition]>
     <div id="kt_header_mobile" class="kt-header-mobile">
-        <div class="kt-header-mobile__logo">
+      <div class="kt-header-mobile__logo">
             <a routerLink="/" target="_blank">
                 <img *ngIf="!appSession.tenant || !appSession.tenant.logoId" src="/assets/common/images/app-logo-on-dark.svg" alt="logo" height="28" />
-                <img *ngIf="appSession.tenant && appSession.tenant.logoId" [src]="remoteServiceBaseUrl + '/TenantCustomization/GetTenantLogo?skin=' + currentTheme.baseSettings.menu.asideSkin + '&tenantId=' + appSession.tenant.id + '&id=' + appSession.tenant.logoId" alt="logo" height="38" />
             </a>
-        </div>
+        </div> 
         <div class="kt-header-mobile__toolbar">
             <button class="kt-header-mobile__toolbar-toggler" id="kt_header_mobile_toggler" (click)="toggleLeftAside()">
                 <span></span>
@@ -19,23 +18,25 @@
         <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
             <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
 
-                <!-- begin:: Header -->
+          
                 <div id="kt_header" ktHeader #ktHeader class="kt-header kt-grid__item" data-ktheader-minimize="1">
-                    <div class="kt-header__top">
+           
+                    <div class="kt-header__top"   style="display: flex;">
                         <div [class]="containerClass">
-                            <!-- begin:: Brand -->
-                            <theme2-brand></theme2-brand>
-                            <!-- end:: Brand -->
-                            <!-- begin:: Header Topbar -->
-                            <topbar></topbar>
-                            <!-- end:: Header Topbar -->
+                            <theme2-brand ></theme2-brand> 
+                            
+                        </div>                       
+                        <div [class]="containerClass"  style="justify-content: right;">
+                            <button *ngIf="!userId " class="login-button" routerLink="/account/login"   type="submit">Login</button>
+                         <topbar *ngIf="userId"></topbar> 
+                        
                         </div>
                     </div>
                     <div class="kt-header__bottom">
                         <div [class]="containerClass">
-                            <!-- begin: Header Menu -->
+           
                             <top-bar-menu style="width: 100%"></top-bar-menu>
-                            <!-- end: Header Menu -->
+                
                         </div>
                         <div class="d-lg-none p-3 mobile-subscription-warning">
                             <div *ngIf="subscriptionStatusBarVisible()"
@@ -59,10 +60,26 @@
                 </div>
                 
                 <!-- begin:: Footer -->
-                <stacked-footer-bar></stacked-footer-bar>
+                <stacked-footer-bar></stacked-footer-bar> 
                 <!-- end:: Footer -->
             </div>
         </div>
     </div>
     <kt-scroll-top></kt-scroll-top> 
 </div>
+<style>
+    /* CSS để tạo nút đăng nhập đẹp */
+    .login-button {
+        background-color: #007BFF; /* Màu nền */
+        color: #fff; /* Màu chữ */
+        border: none; /* Không có viền */
+        padding: 10px 20px; /* Kích thước nút */
+        border-radius: 5px; /* Bo tròn viền */
+        cursor: pointer; /* Con trỏ khi rê chuột vào */
+    }
+
+    /* Hover effect */
+    .login-button:hover {
+        background-color: #0056b3; /* Màu nền khi hover */
+    }
+</style>

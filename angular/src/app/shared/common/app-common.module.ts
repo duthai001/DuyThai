@@ -297,8 +297,8 @@ export class AppCommonModule {
         return {
             ngModule: AppCommonModule,
             providers: [
-                AppAuthService,
-                AppRouteGuard
+                AppAuthService
+               // AppRouteGuard
             ]
         };
     }

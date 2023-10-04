@@ -65,25 +65,25 @@ export class UserNotificationHelper extends AppComponentBase {
         }
     }
 
-    format(userNotification: abp.notifications.IUserNotification, truncateText?: boolean): IFormattedUserNotification {
-        let formatted: IFormattedUserNotification = {
-            userNotificationId: userNotification.id,
-            text: abp.notifications.getFormattedMessageFromUserNotification(userNotification),
-            time: moment(userNotification.notification.creationTime).format('YYYY-MM-DD HH:mm:ss'),
-            creationTime: userNotification.notification.creationTime,
-            icon: this.getUiIconBySeverity(userNotification.notification.severity),
-            state: abp.notifications.getUserNotificationStateAsString(userNotification.state),
-            data: userNotification.notification.data,
-            url: this.getUrl(userNotification),
-            isUnread: userNotification.state === abp.notifications.userNotificationState.UNREAD
-        };
+    // format(userNotification: abp.notifications.IUserNotification, truncateText?: boolean): IFormattedUserNotification {
+    //     let formatted: IFormattedUserNotification = {
+    //         userNotificationId: userNotification.id,
+    //         text: abp.notifications.getFormattedMessageFromUserNotification(userNotification),
+    //         time: moment(userNotification.notification.creationTime).format('YYYY-MM-DD HH:mm:ss'),
+    //         creationTime: userNotification.notification.creationTime,
+    //         icon: this.getUiIconBySeverity(userNotification.notification.severity),
+    //         state: abp.notifications.getUserNotificationStateAsString(userNotification.state),
+    //         data: userNotification.notification.data,
+    //         url: this.getUrl(userNotification),
+    //         isUnread: userNotification.state === abp.notifications.userNotificationState.UNREAD
+    //     };
 
-        if (truncateText || truncateText === undefined) {
-            formatted.text = abp.utils.truncateStringWithPostfix(formatted.text, 100);
-        }
+    //     if (truncateText || truncateText === undefined) {
+    //         formatted.text = abp.utils.truncateStringWithPostfix(formatted.text, 100);
+    //     }
 
-        return formatted;
-    }
+    //     return formatted;
+    // }
 
     show(userNotification: abp.notifications.IUserNotification): void {
         let url = this.getUrl(userNotification);
@@ -98,18 +98,18 @@ export class UserNotificationHelper extends AppComponentBase {
                 });
             }
         });
-        if (Push.default.Permission.has()) {
-            //Desktop notification
-            Push.default.create('tmss', {
-                body: this.format(userNotification).text,
-                icon: abp.appPath + 'assets/common/images/app-logo-on-dark-sm.svg',
-                timeout: 6000,
-                onClick: function () {
-                    window.focus();
-                    this.close();
-                }
-            });
-        }
+        // if (Push.default.Permission.has()) {
+        //     //Desktop notification
+        //     Push.default.create('tmss', {
+        //         body: this.format(userNotification).text,
+        //         icon: abp.appPath + 'assets/common/images/app-logo-on-dark-sm.svg',
+        //         timeout: 6000,
+        //         onClick: function () {
+        //             window.focus();
+        //             this.close();
+        //         }
+        //     });
+        // }
     }
 
     setAllAsRead(callback?: () => void): void {

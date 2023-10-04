@@ -256,17 +256,17 @@ var abp = abp || {};
         READ: 1
     };
 
-    abp.notifications.getUserNotificationStateAsString = function (userNotificationState) {
-        switch (userNotificationState) {
-            case abp.notifications.userNotificationState.READ:
-                return 'READ';
-            case abp.notifications.userNotificationState.UNREAD:
-                return 'UNREAD';
-            default:
-                abp.log.warn('Unknown user notification state value: ' + userNotificationState)
-                return '?';
-        }
-    };
+    // abp.notifications.getUserNotificationStateAsString = function (userNotificationState) {
+    //     switch (userNotificationState) {
+    //         case abp.notifications.userNotificationState.READ:
+    //             return 'READ';
+    //         case abp.notifications.userNotificationState.UNREAD:
+    //             return 'UNREAD';
+    //         default:
+    //             abp.log.warn('Unknown user notification state value: ' + userNotificationState)
+    //             return '?';
+    //     }
+    // };
 
     abp.notifications.getUiNotifyFuncBySeverity = function (severity) {
         switch (severity) {

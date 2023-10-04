@@ -32,7 +32,7 @@ import { SessionLockScreenComponent } from './login/session-lock-screen.componen
                 component: AccountComponent,
                 children: [
                     { path: '', redirectTo: 'login' },
-                    { path: 'login', component: LoginComponent, canActivate: [AccountRouteGuard] },
+                    { path: 'login', component: LoginComponent },
                     { path: 'register', component: RegisterComponent, canActivate: [AccountRouteGuard] },
                     { path: 'register-tenant', component: RegisterTenantComponent, canActivate: [AccountRouteGuard] },
                     { path: 'register-tenant-result', component: RegisterTenantResultComponent, canActivate: [AccountRouteGuard] },

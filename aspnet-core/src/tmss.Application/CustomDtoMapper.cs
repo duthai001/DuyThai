@@ -31,13 +31,6 @@ using tmss.Friendships;
 using tmss.Friendships.Cache;
 using tmss.Friendships.Dto;
 using tmss.Localization.Dto;
-using tmss.MstSle;
-using tmss.MstSle.IBorrowBook.Dto;
-using tmss.MstSle.MstSleBook.Dto;
-using tmss.MstSle.MstSleTypeOfBook.Dto;
-using tmss.MstSle.MstSleTypeOfCard.Dto;
-using tmss.MstSle.Readerer.Dto;
-
 using tmss.MultiTenancy;
 using tmss.MultiTenancy.Dto;
 using tmss.MultiTenancy.HostDashboard.Dto;
@@ -166,18 +159,7 @@ namespace tmss
             //User Delegations
             configuration.CreateMap<CreateUserDelegationDto, UserDelegation>();
 
-            configuration.CreateMap<CreateOrEditBookDto, Book>().ReverseMap();
-            configuration.CreateMap<CreateOrEditTypeBook, TypeOfBook>().ReverseMap();
-            configuration.CreateMap<CreateOrEditTypeCard, TypeOfCard>().ReverseMap();
-
-            /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
-
-            configuration.CreateMap<CreateOrEditReaderDto, Readers>().ReverseMap();
-            configuration.CreateMap<CreateOrEditOrderDto, OrderBook>().ReverseMap();
-            configuration.CreateMap<CreateBorrowDetailDto, BorrowDetails>().ReverseMap();
-            configuration.CreateMap<CreateOrEditBorrowBookDto, BorrowBook>().ReverseMap();
-            configuration.CreateMap<CreateReturnDetailDto, ReturnBookDetails>().ReverseMap();
-            configuration.CreateMap<CreateOrEditReturnBookDto, ReturnBook>().ReverseMap();
+         
         }
     }
 }

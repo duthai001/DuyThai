@@ -11,8 +11,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
             {
                 path: 'app',
                 component: AppComponent,
-                canActivate: [AppRouteGuard],
-                canActivateChild: [AppRouteGuard],
+               // canActivate: [AppRouteGuard],
+              //  canActivateChild: [AppRouteGuard],
                 children: [
                     {
                         path: '',
@@ -30,13 +30,13 @@ import { NgxSpinnerService } from 'ngx-spinner';
                         path: 'admin',
                         loadChildren: () => import('app/admin/admin.module').then(m => m.AdminModule), //Lazy load admin module
                         data: { preload: true },
-                        canLoad: [AppRouteGuard]
+                       // canLoad: [AppRouteGuard]
                     },
                     {
                         path: 'admin',
                         loadChildren: () => import('app/admin/admin.module').then(m => m.AdminModule), //Lazy load admin module
                         data: { preload: true },
-                        canLoad: [AppRouteGuard]
+                      //  canLoad: [AppRouteGuard]
                     },
                     {
                         path: '**', redirectTo: 'main/home'

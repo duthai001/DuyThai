@@ -5,6 +5,7 @@ import { UrlHelper } from '@shared/helpers/UrlHelper';
 import { DOCUMENT } from '@angular/common';
 import { LayoutRefService } from '@metronic/app/core/_base/layout/services/layout-ref.service';
 import { AppConsts } from '@shared/AppConsts';
+import { BookAppserviceServiceProxy } from '@shared/service-proxies/service-proxies';
 
 @Component({
     templateUrl: './theme2-layout.component.html',
@@ -14,10 +15,11 @@ import { AppConsts } from '@shared/AppConsts';
 export class Theme2LayoutComponent extends ThemesLayoutBaseComponent implements OnInit, AfterViewInit {
 
     @ViewChild('ktHeader', {static: true}) ktHeader: ElementRef;
-
+    userId: number;
     constructor(
         injector: Injector,
-        private layoutRefService: LayoutRefService,
+    private layoutRefService: LayoutRefService,
+        private _book: BookAppserviceServiceProxy,
         @Inject(DOCUMENT) private document: Document
     ) {
         super(injector);
@@ -27,6 +29,13 @@ export class Theme2LayoutComponent extends ThemesLayoutBaseComponent implements 
 
     ngOnInit() {
         this.installationMode = UrlHelper.isInstallUrl(location.href);
+        this.getUserLogin();
+    }
+    getUserLogin() {
+        this._book.getUser().subscribe(re => {
+            this.userId = re;
+            console.log(this.userId);
+        });
     }
 
     ngAfterViewInit(): void {

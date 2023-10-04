@@ -136,14 +136,14 @@ export class ChatSignalrService extends AppComponentBase {
     }
 
     init(): void {
-        this._zone.runOutsideAngular(() => {
-            abp.signalr.connect();
-            abp.signalr.startConnection(abp.appPath + 'signalr-chat', connection => {
-                this.configureConnection(connection);
-            }).then(() => {
-                abp.event.trigger('app.chat.connected');
-                this.isChatConnected = true;
-            });
-        });
+        // this._zone.runOutsideAngular(() => {
+        //     abp.signalr.connect();
+        //     abp.signalr.startConnection(abp.appPath + 'signalr-chat', connection => {
+        //         this.configureConnection(connection);
+        //     }).then(() => {
+        //         abp.event.trigger('app.chat.connected');
+        //         this.isChatConnected = true;
+        //     });
+        // });
     }
 }

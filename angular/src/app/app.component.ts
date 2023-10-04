@@ -52,7 +52,7 @@ export class AppComponent extends AppComponentBase implements OnInit {
         this.registerModalOpenEvents();
 
         if (this.appSession.application) {
-            SignalRHelper.initSignalR(() => { this._chatSignalrService.init(); });
+           // SignalRHelper.initSignalR(() => { this._chatSignalrService.init(); });
         }
     }
 

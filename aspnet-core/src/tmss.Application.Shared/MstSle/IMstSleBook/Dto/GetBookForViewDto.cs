@@ -1,14 +1,11 @@
-﻿using Abp.Domain.Entities.Auditing;
-using Abp.Domain.Entities;
+﻿using Abp.Application.Services.Dto;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace tmss.MstSle
+namespace tmss.MstSle.IMstSleBook.Dto
 {
-    [Table("Book")]
-    public class Book : FullAuditedEntity<long>, IEntity<long>
+    public class GetBookForViewDto : EntityDto<long?>
     {
         public string NameBook { get; set; }
         public string AuthorName { get; set; }
